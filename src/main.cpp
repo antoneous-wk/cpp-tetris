@@ -1,27 +1,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "shader.hpp"
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
-
-/* vertex shader */
-const char* vertexShaderSource = 
-"#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-
-/* fragment shader */
-const char* fragmentShaderSource =
-"#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-"}\0";
 
 int main()
 {
@@ -85,73 +68,7 @@ int main()
 	 */
 	 glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-///////////////////////////* start shader creation */////////////////////////////////////////
-
-	/*
-	 * Create vertex shader object 
-	 *
-	 * glShaderSource sets sets source code in shader to source in vertexShaderSource
-	 * glCompileShader compiles the source code stored in shader
-	 *
-	 */
-	unsigned int vertexShader;
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-	
-	/* check to see if compilation was successful */
-	int success_vs;
-	char infoLog_vs[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success_vs);
-	if(!success_vs)
-	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog_vs);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog_vs << std::endl;
-	}
-
-	/*
-	 * Create fragment shader object 
-	 * 
-	 * glShaderSource sets source code in shader to source in fragmentShaderSource
-	 * glCompileShader compiles the source code stored in shader
-	 *
-	 */
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	/* check to see if compilation was successful */
-	int success_fs;	
-	char infoLog_fs[512];
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success_fs);
-	if(!success_fs)
-	{
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog_fs);
-		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog_fs << std::endl;
-	}	
-
-	/* after compiling the shaders, we must link them into a program */
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	/* check to see if linking was successful */
-	int success_sp;
-	char infoLog_sp[512];
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success_sp);
-	if(!success_sp)
-	{
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog_sp);
-	}	
-
-	/* delete shader objects (we don't need them anymore) */
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
-///////////////////////////////* start set up for render */////////////////////////////////// 
+////////////////////////////* end window & context creation */////////////////////////////// 
 
 	float vertices[]{ 
 		-0.5f, -0.5f, 0.0f,
@@ -184,7 +101,8 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-////////////////////////////////* end setup up for render *//////////////////////////////////
+	/* create shader objects */
+	cpp_tetris::Shader shader("/home/gummo/Local-Repo/cpp-tetris/src/vertex_shader.s", "/home/gummo/Local-Repo/cpp-tetris/src/fragment_shader.s");
 
 	/* render loop */
 	while(!glfwWindowShouldClose(window))
@@ -194,7 +112,7 @@ int main()
 		/* render commands */
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		glUseProgram(shaderProgram);
+		shader.use();
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		

@@ -1,4 +1,3 @@
-#include "dummy.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h> 
 #include "gtest/gtest.h"
