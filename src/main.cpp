@@ -1,75 +1,15 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "window.hpp"
 #include "shader.hpp"
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow *window);
+void process_input(GLFWwindow *window);
 
 int main()
 {
-	glfwInit();
-
-	/* 
-	 * Set window creation hints 
-	 *  
-	 * Creation hints are reset every time glfwInit is called
-	 * Set minor and major versions of OpenGL to 3
-	 * Set OpenGL profile to core-profile
-	 *
-     */
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	/* 
-	 * Create window object and its associated OpenGL context
-	 *
-	 * An OpenGL context stores the state associated with a single instance of OpenGL
-	 * Before context can be used it must be made current with glfwMakeConextCurrent()
-	 *
-	 */
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
-	if (window == NULL)
-	{
-		std::cout << "Failed to create GLFW window" << std::endl;
-		return -1;
-	}
+	cpp_tetris::Init();	
+	cpp_tetris::Window win{800, 600, "cpp-tetris"};
 	
-	glfwMakeContextCurrent(window);
-
-	/*
-	 * glfwGetProcAddress function returns address of a specified OpenGL function pointer
-	 * The returned address is implicitly converted to pointer by C++
-	 * The pointer is then explictly cast to GLADloadproc type defined in glad.h
-	 *
-	 */
-	if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))	
-	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
-		return -1;
-	}
-
-	/*	
-	 * \args: x, y, width, height
-	 * 
-	 * x,y specify lower left corner of viewport rectangle (normalized device coordinates)
-	 * width, height specify width and height of viewport (window coordinates)
-	 
-	 */
-	glViewport(0, 0, 800, 600);
-
-	/*
-	 * Register the callback function that gets called by GLFW when window is resized
-	 *
-     * Resizes the viewport based on new window size
-	 * Callback functions registered after window creation and before render loop
-	 *
-	 */
-	 glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-////////////////////////////* end window & context creation */////////////////////////////// 
-
 	float vertices[]{ 
 		-0.5f, -0.5f, 0.0f,
 		 0.5f, -0.5f, 0.0f,
@@ -101,13 +41,15 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	/* create shader objects */
-	cpp_tetris::Shader shader("/home/gummo/Local-Repo/cpp-tetris/src/vertex_shader.s", "/home/gummo/Local-Repo/cpp-tetris/src/fragment_shader.s");
+	/* create shader object */
+	cpp_tetris::Shader shader(
+	"/home/gummo/Local-Repo/cpp-tetris/src/vertex_shader.s", 
+	"/home/gummo/Local-Repo/cpp-tetris/src/fragment_shader.s");
 
 	/* render loop */
-	while(!glfwWindowShouldClose(window))
+	while(!glfwWindowShouldClose(win.getWin()))
 	{
-		processInput(window);
+		cpp_tetris::process_input(win.getWin());
 		
 		/* render commands */
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -121,7 +63,7 @@ int main()
 		 * We must swap the front and back buffers.
 		 *
 		 */
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(win.getWin());
 
 		glfwPollEvents();
 	}
@@ -129,18 +71,8 @@ int main()
 	glDeleteVertexArrays(1, &VAO);
    	glDeleteBuffers(1, &VBO);
 
-	glfwTerminate();
+//	glfwTerminate();
 
 	return 0;
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-	glViewport(0, 0, width, height);
-}
-
-void processInput(GLFWwindow *window)
-{
-	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-}	
