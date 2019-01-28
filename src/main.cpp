@@ -43,8 +43,8 @@ int main()
 
 	/* create shader object */
 	cpp_tetris::Shader shader(
-	"/home/gummo/Local-Repo/cpp-tetris/src/vertex_shader.s", 
-	"/home/gummo/Local-Repo/cpp-tetris/src/fragment_shader.s");
+	"../src/vertex_shader.glsl", 
+	"../src/fragment_shader.glsl");
 
 	/* render loop */
 	while(!glfwWindowShouldClose(win.getWin()))

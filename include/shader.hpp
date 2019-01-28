@@ -14,7 +14,7 @@ namespace cpp_tetris
 class Shader
 {
 	public:
-	Shader(const char* vertexPath, const char* fragmentPath);
+	Shader(const std::string& vertexPath, const std::string& fragmentPath);
 	
 	void use();
 
@@ -26,6 +26,6 @@ class Shader
 	unsigned int ID;
 };	
 	
-} // end namespace cpp_tetris
+} // namespace cpp_tetris
 
 #endif // header guard

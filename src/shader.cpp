@@ -1,9 +1,10 @@
 #include "shader.hpp"
+#include <stdexcept>
 
 namespace cpp_tetris
 {
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath)
+Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
 {
 	std::string vertexCode;
 	std::string fragmentCode;
@@ -15,9 +16,19 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 
 	try
 	{
-		vShaderFile.open(vertexPath);
-		fShaderFile.open(fragmentPath);
-
+		try
+		{	
+			vShaderFile.open(vertexPath);
+			fShaderFile.open(fragmentPath);
+		}	
+		catch(const std::ifstream::failure& e)
+		{
+			std::string vPath = "../" + vertexPath;
+			std::string fPath = "../" + fragmentPath;	
+			vShaderFile.open(vPath);
+			fShaderFile.open(fPath);
+		}
+		
 		std::stringstream vShaderStream, fShaderStream;
 		
 		vShaderStream << vShaderFile.rdbuf();
@@ -29,9 +40,9 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 		vertexCode = vShaderStream.str();
 		fragmentCode = fShaderStream.str();
 	}
-	catch(std::ifstream::failure e)
+	catch(const std::ifstream::failure& e)
 	{
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ" << std::endl;
+		throw std::runtime_error("Failed to load shader source");	
 	}
 
 	const char* vShaderCode = vertexCode.c_str();
@@ -57,7 +68,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     if(!success)
     {
         glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+		throw std::runtime_error("Vertex shader compilation failed");
     }
 
     /*
@@ -76,7 +87,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     if(!success)
     {
         glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+		throw std::runtime_error("Fragment shader compilation failed");
     }
 	
 	/* after compiling the shaders, we must link them into a program */
@@ -91,7 +102,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     if(!success)
     {
         glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-	    std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+		throw std::runtime_error("Shader program linking failed");
     }
 
     /* delete shader objects (we don't need them anymore) */
