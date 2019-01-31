@@ -81,17 +81,16 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
     }
 	
 	/* after compiling the shaders, we must link them into a program */
-    unsigned int shaderProgram;
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
+    ID = glCreateProgram();
+    glAttachShader(ID, vertexShader);
+    glAttachShader(ID, fragmentShader);
+    glLinkProgram(ID);
 
     /* check to see if linking was successful */
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    glGetProgramiv(ID, GL_LINK_STATUS, &success);
     if(!success)
     {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        glGetProgramInfoLog(ID, 512, NULL, infoLog);
 		throw std::runtime_error("Shader program linking failed");
     }
 
@@ -105,19 +104,15 @@ void Shader::use()
 	glUseProgram(ID);
 }
 
-void Shader::setBool(const std::string &name, bool value) const
+
+void Shader::setInt(const std::string &name, int v0, int v1, int v2, int v3) const
 {
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+	glUniform4i(glGetUniformLocation(ID, name.c_str()), v0, v1, v2, v3);
 }
 
-void Shader::setInt(const std::string &name, int value) const
+void Shader::setFloat(const std::string &name, float f0, float f1, float f2, float f3) const
 {
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
-}
-
-void Shader::setFloat(const std::string &name, float value) const
-{
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+	glUniform4f(glGetUniformLocation(ID, name.c_str()), f0, f1, f2, f3);
 }
 
 } // end namespace cpp_tetris
