@@ -115,4 +115,10 @@ void Shader::setFloat(const std::string &name, float f0, float f1, float f2, flo
 	glUniform4f(glGetUniformLocation(ID, name.c_str()), f0, f1, f2, f3);
 }
 
+void Shader::setMatrix4fv(const std::string &name, const glm::mat4& mat) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+}  
+	
+
 } // end namespace cpp_tetris
