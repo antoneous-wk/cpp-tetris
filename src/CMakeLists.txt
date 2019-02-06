@@ -1,5 +1,6 @@
 set(SOURCE_FILES 
 	main.cpp
+	resource_manager.cpp
 	shader.cpp
 	glad.c)
 

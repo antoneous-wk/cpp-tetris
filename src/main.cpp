@@ -4,6 +4,8 @@
 
 #include "window.hpp"
 #include "shader.hpp"
+#include "resource_manager.hpp"
+
 #include <iostream>
 
 // must define before including stb_image.h
@@ -12,26 +14,29 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void process_input(GLFWwindow *window);
-std::string get_project_path(const std::string& name);
 
 int main(int argc, char* argv[])
 {
-	cpp_tetris::Init();	
-	cpp_tetris::Window win{800, 600, "cpp-tetris"};
-	
-	float vertices[]
-	{	// position			// colors			// texture coords
-		0.5f,  0.5f, 0.0f,	1.0f, 0.0f, 0.0f,	1.0f, 1.0f,
-		0.5f, -0.5f, 0.0f,	0.0f, 1.0f, 0.0f,	1.0f, 0.0f,
-	   -0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,	0.0f, 0.0f,
-	   -0.5f,  0.5f, 0.0f,	1.0f, 1.0f, 0.0f,	0.0f, 1.0f
-	};
+  cpp_tetris::Init();	
+  cpp_tetris::Window win{800, 600, "cpp-tetris"};
+  cpp_tetris::ResourceManager rm(argv[0]);
 
-	unsigned int indices[]
-	{
-		0, 1, 3,
-		1, 2, 3
-	};	
+  rm.loadShader("myProgram", "src/vertex_shader.glsl", "src/fragment_shader.glsl");
+
+  float vertices[]
+  {	// position			// colors			// texture coords
+    0.5f,  0.5f, 0.0f,	1.0f, 0.0f, 0.0f,	1.0f, 1.0f,
+	0.5f, -0.5f, 0.0f,	0.0f, 1.0f, 0.0f,	1.0f, 0.0f,
+   -0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,	0.0f, 0.0f,
+   -0.5f,  0.5f, 0.0f,	1.0f, 1.0f, 0.0f,	0.0f, 1.0f
+  };
+
+  unsigned indices[]
+  {
+    0, 1, 3,
+    1, 2 ,3
+  }; 
+	
 
 	/*
 	 * create VAO (vertex array object)
@@ -73,8 +78,6 @@ int main(int argc, char* argv[])
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	/* get project path	*/
-	const std::string path{get_project_path(argv[0])};
 
 	/* generate and bind texture object */
 	unsigned int texture;
@@ -91,7 +94,7 @@ int main(int argc, char* argv[])
 	stbi_set_flip_vertically_on_load(true);
 	int width, height, nrChannels;
 	unsigned char *data{
-		stbi_load((path + "/resources/textures/chile.png").c_str(), 
+		stbi_load((rm.getPath() + "resources/textures/chile.png").c_str(), 
 		&width, &height, &nrChannels, 0)};
 
 	if (data)
@@ -107,10 +110,6 @@ int main(int argc, char* argv[])
 
 	stbi_image_free(data);
 
-	/* create shader object */
-	cpp_tetris::Shader shader(
-	path + "/src/vertex_shader.glsl", 
-	path + "/src/fragment_shader.glsl");
 
 	/* glm::mat4 constructor that takes a single value constructs diagonal (identity) matrix */
 	glm::mat4 trans{1.0f};
@@ -120,6 +119,8 @@ int main(int argc, char* argv[])
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	cpp_tetris::Shader& shader = rm.getShader("myProgram");
+
 	/* render loop */
 	while(!glfwWindowShouldClose(win.getWin()))
 	{
@@ -128,9 +129,9 @@ int main(int argc, char* argv[])
 		/* render commands */
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		shader.use();
+		shader.useProgram();	
 		trans = glm::rotate(trans, glm::radians(1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		shader.setMatrix4fv("transform", trans);
+		shader.setUniformMatrix4fv("transform", trans);
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -149,38 +150,4 @@ int main(int argc, char* argv[])
 	glDeleteBuffers(1, &EBO);
 
 	return 0;
-}
-
-	/*
-	 * Resolves path of project root directory from argv[0].
-	 * Usage: Prepend the return value to the relative path of desired resource file.
-	 * Compatible with Unix filesystems.
- 	 */
-std::string get_project_path(const std::string& name)
-{
-	/* if we are in /build/src directory */
-	if (name == "./demo") return "../..";
-	/* if we are in build directory	*/
-	if (name == "./src/demo") return "..";
-	/* if we are in project directory */
-	if (name == "./build/src/demo") return "."; 
-	/* if we are above or nested above project directory */
-	std::string project{"cpp-tetris"}; 
-	std::string path{name};
-	std::size_t pos{name.find(project)};
-	if(pos != std::string::npos)
-	{	
-		path.erase((path.begin()+pos+project.length()), path.end());
-		return path;
-	}
-	/* if we are below or nested below build directory */
-	else if(name[1] == '.')
-	{
-		pos = name.rfind("../");
-		path.erase(path.begin()+pos+3, path.end());
-		std::cout << path + ".." << std::endl;
-		return path + "..";
-	}
-
-	throw std::runtime_error("Please call target from project directory");
 }

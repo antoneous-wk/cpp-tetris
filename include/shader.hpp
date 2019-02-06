@@ -11,23 +11,30 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <stdexcept>
 
 namespace cpp_tetris
 {
 
 class Shader
 {
-	public:
-	Shader(const std::string& vertexPath, const std::string& fragmentPath);
-	
-	void use();
+  public:
+	Shader() = default;
+    Shader(const char* vShaderCode, const char* fShaderCode);
 
-	void setInt(const std::string &name, int, int, int, int) const;
-	void setFloat(const std::string &name, float, float, float, float) const;
-	void setMatrix4fv(const std::string &name, const glm::mat4&) const;
+	void compileProgram();	
+    void useProgram();
 
-	private:
-	unsigned int ID;
+    void setUniform4i(const std::string &name, int, int, int, int) const;
+    void setUniform4f(const std::string &name, float, float, float, float) const;
+    void setUniformMatrix4fv(const std::string &name, const glm::mat4&) const;
+
+  private:
+	void error(unsigned name, bool is_shader, const char* error_message);
+
+    unsigned ID;
+	const char* vertexShaderCode;
+	const char* fragmentShaderCode;
 };	
 	
 } // namespace cpp_tetris
