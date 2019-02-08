@@ -20,6 +20,7 @@ class ResourceManager
 	/* get project path */
 	const string& getPath() const { return project_path; }
     Shader& getShader(const string& name) { return *Shaders[name]; } 
+    Texture2D& getTexture2D(const string& name) { return *Textures2D[name]; }
 
     void loadShader(const string& name, const char* vertexShaderPath, 
 					const char* fragmentShaderPath);

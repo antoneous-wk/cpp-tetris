@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 
   cpp_tetris::ResourceManager rm(argv[0]);
   rm.loadShader("myProgram", "src/vertex_shader.glsl", "src/fragment_shader.glsl");
-  rm.loadTexture2D("myTexture1", "resources/textures/chile.png", GL_REPEAT, GL_REPEAT,
+  rm.loadTexture2D("chile1", "resources/textures/chile.png", GL_REPEAT, GL_REPEAT,
     GL_LINEAR, GL_LINEAR, GL_RGBA);
 
   float vertices[]
