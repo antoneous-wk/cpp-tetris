@@ -16,7 +16,7 @@ void Shader::compileProgram()
   glCompileShader(vertexShader);
 
   /* check to see if compilation was successful */	
-  error(vertexShader, true, "Vertex shader compilation failed.");
+  checkCompileErrors(vertexShader, true, "Vertex shader compilation failed.");
 
   /* create fragment shader object and compile */
   fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -24,7 +24,7 @@ void Shader::compileProgram()
   glCompileShader(fragmentShader);
 	
   /* check to see if compilation was sucessful */
-  error(fragmentShader, true, "Fragment shader compilation failed."); 
+  checkCompileErrors(fragmentShader, true, "Fragment shader compilation failed."); 
 	
   /* after compiling the shaders, we must link them into a program */
   ID = glCreateProgram();
@@ -33,14 +33,14 @@ void Shader::compileProgram()
   glLinkProgram(ID);
 
   /* check to see if linking was successful */
-  error(ID, false, "Shader program linking failed."); 
+  checkCompileErrors(ID, false, "Shader program linking failed."); 
 
   /* delete shader objects (we don't need them anymore) */
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
 }	
 
-void Shader::error(unsigned name, bool is_shader, const char* error_message)
+void Shader::checkCompileErrors(unsigned name, bool is_shader, const std::string& error)
 {
   int success;
   char infoLog[512];   
@@ -50,7 +50,7 @@ void Shader::error(unsigned name, bool is_shader, const char* error_message)
   	glGetShaderiv(name, GL_COMPILE_STATUS, &success);
     if(!success) {
       glGetShaderInfoLog(name, 512, NULL, infoLog);
-	  throw std::runtime_error(error_message);
+	  throw std::runtime_error(error);
     }
   }
 
@@ -59,7 +59,7 @@ void Shader::error(unsigned name, bool is_shader, const char* error_message)
     glGetProgramiv(name, GL_LINK_STATUS, &success);
     if(!success) {
       glGetProgramInfoLog(name, 512, NULL, infoLog);
-	  throw std::runtime_error(error_message);
+	  throw std::runtime_error(error);
     }
   }
 }

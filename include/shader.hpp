@@ -30,7 +30,7 @@ class Shader
     void setUniformMatrix4fv(const std::string &name, const glm::mat4&) const;
 
   private:
-	void error(unsigned name, bool is_shader, const char* error_message);
+	void checkCompileErrors(unsigned name, bool is_shader, const std::string& error);
 
     unsigned ID;
 	const char* vertexShaderCode;

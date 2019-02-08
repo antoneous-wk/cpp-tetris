@@ -2,6 +2,7 @@ set(SOURCE_FILES
 	main.cpp
 	resource_manager.cpp
 	shader.cpp
+    texture.cpp
 	glad.c)
 
 # set variable in parent scope
