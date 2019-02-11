@@ -49,8 +49,9 @@ void ResourceManager::loadShader(const std::string& name, const char* vertexShad
   Shaders[name] = shader;
 }	
 
-void ResourceManager::loadTexture2D(std::string name, const char* texturePath, int wrap_S, 
-									int wrap_T, int filterMin, int filterMax, int format)
+void ResourceManager::loadTexture2D(const std::string& name, const char* texturePath, 
+									int wrap_S, int wrap_T, int filterMin, int filterMax, 
+									int format)
 {
   stbi_set_flip_vertically_on_load(true);
   int width, height, nrChannels;
