@@ -12,6 +12,7 @@
 #include "resource_manager.hpp"
 #include "game_object.hpp"
 #include "block.hpp"
+#include "game.hpp"
 
 #include "gtest/gtest.h"
 
@@ -41,5 +42,7 @@ TEST_F(WindowTest, isInitTrue2) {
   myWin.init();
   ASSERT_EQ(cpp_tetris::Window::isInit, true);
 }
+
+
 
 } // namespace
