@@ -6,30 +6,28 @@
 /* forward declaration */
 class ResourceManager;
 
-namespace cpp_tetris
-{
+namespace cpp_tetris {
 
-class Texture2D
-{
+class Texture2D {
   friend class ResourceManager;
 	
   public:
-  Texture2D(int wrap_s, int wrap_t, int filterMin, int filterMax, int width, int height,
-			int format, unsigned char* data); 
+    Texture2D(int wrap_s, int wrap_t, int filterMin, int filterMax, 
+			  int width, int height, int format, unsigned char* data); 
 
-  void Bind();
+    void bind();
 
   private:
-  void Generate();
-  unsigned ID;
-  int Wrap_S;
-  int Wrap_T;
-  int Filter_min;
-  int Filter_max;
-  int Format;
-  int Width;
-  int Height; 
-  unsigned char* Data;
+    void generate();
+    unsigned ID;
+    int wrapS_;
+    int wrapT_;
+    int filterMin_;
+    int filterMax_;
+    int format_;
+    int width_;
+    int height_; 
+    unsigned char* data_;
 };
 
 } // namespace cpp_tetris

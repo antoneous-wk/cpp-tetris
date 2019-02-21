@@ -17,7 +17,7 @@ class ResourceManager
   public:
     ResourceManager(const string argv);    
 	
-    /* get project path */
+    // get project path 
     const string& getPath() const { return project_path; }
     Shader& getShader(const string& name) { return *Shaders[name]; } 
     Texture2D& getTexture2D(const string& name) { return *Textures2D[name]; }
@@ -25,8 +25,9 @@ class ResourceManager
     void loadShader(const string& name, const char* vertexShaderPath, 
  				    const char* fragmentShaderPath);
 
-    void loadTexture2D(const string& name, const char* texturePath, int wrap_S, int wrap_T,
-			           int filterMin, int filterMax, int format);
+    void loadTexture2D(const string& name, const char* texturePath, 
+					   int wrapS, int wrapT, int filterMin, int filterMax, 
+					   int format);
 
   private:
     string resolveProjectPath(const string& argv);

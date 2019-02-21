@@ -1,32 +1,28 @@
 #include "texture.hpp"
 
-namespace cpp_tetris
-{
+namespace cpp_tetris {
 
-Texture2D::Texture2D(int wrap_s, int wrap_t, int filterMin, int filterMax, int width,
-                     int height, int format, unsigned char* data)
-  : Wrap_S{wrap_s}, Wrap_T{wrap_t}, Filter_min{filterMin}, Filter_max{filterMax},
-    Width{width}, Height{height}, Format{format}, Data{data} { }
+Texture2D::Texture2D(int wrapS, int wrapT, int filterMin, int filterMax, 
+					 int width, int height, int format, unsigned char* data)
+  : wrapS_{wrapS}, wrapT_{wrapT}, filterMin_{filterMin}, filterMax_{filterMax},
+    width_{width}, height_{height}, format_{format}, data_{data} { }
 
-void Texture2D::Generate()
-{
+void Texture2D::generate() {
   glGenTextures(1, &(this->ID));
-
-  this->Bind();
+  this->bind();
    
-   /* set the texture wrapping/filtering options (for currently bound texture) */
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->Wrap_S);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->Wrap_T);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->Filter_min);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->Filter_max);
+  // set the texture wrapping/filtering options (for currently bound texture) 
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->wrapS_);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->wrapT_);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->filterMin_);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->filterMax_);
   
-  glTexImage2D(GL_TEXTURE_2D, 0, this->Format, this->Width, this->Height, 0, this->Format,
-    GL_UNSIGNED_BYTE, this->Data);
+  glTexImage2D(GL_TEXTURE_2D, 0, this->format_, this->width_, this->height_, 0, 
+			   this->format_, GL_UNSIGNED_BYTE, this->data_);
   glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void Texture2D::Bind()
-{
+void Texture2D::bind() {
   glBindTexture(GL_TEXTURE_2D, this->ID);
 }
 

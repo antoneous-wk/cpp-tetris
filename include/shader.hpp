@@ -25,9 +25,9 @@ class Shader
 	void compileProgram();	
     void useProgram();
 
-    void setUniform4i(const std::string &name, int, int, int, int) const;
-    void setUniform4f(const std::string &name, float, float, float, float) const;
-    void setUniformMatrix4fv(const std::string &name, const glm::mat4&) const;
+    void setUniform4i(const std::string& name, int, int, int, int) const;
+    void setUniform4f(const std::string& name, float, float, float, float) const;     void setUniform3f(const std::string& name, const glm::vec3&) const;
+    void setUniformMatrix4f(const std::string& name, const glm::mat4&) const;
 
   private:
 	void checkCompileErrors(unsigned name, bool is_shader, const std::string& error);

@@ -1,9 +1,12 @@
 set(SOURCE_FILES 
-	main.cpp
-	resource_manager.cpp
+    glad.c	
+	window.cpp
 	shader.cpp
     texture.cpp
-	glad.c)
+	resource_manager.cpp
+	sprite_renderer.cpp
+	game.cpp
+	main.cpp)
 
 # set variable in parent scope
 set(SOURCE_FILES ${SOURCE_FILES} PARENT_SCOPE)

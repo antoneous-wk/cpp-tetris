@@ -1,32 +1,31 @@
 #include "resource_manager.hpp"
 
-/* STB_IMAGE_IMPLEMENTATION must be defined before including stb_image.h */
+// STB_IMAGE_IMPLEMENTATION must be defined before including stb_image.h 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
 
-namespace cpp_tetris
-{
+namespace cpp_tetris {
 
-ResourceManager::ResourceManager(const std::string argv)
+ResourceManager::ResourceManager(const string argv)
   : project_path{resolveProjectPath(argv)} { }
 
-void ResourceManager::loadShader(const std::string& name, const char* vertexShaderPath,
-								 const char* fragmentShaderPath) 
-{ 
-  std::string vertexShaderCode;
-  std::string fragmentShaderCode;
+void ResourceManager::loadShader(const string& name, 
+								 const char* vertexShaderPath,
+								 const char* fragmentShaderPath) { 
+  string vertexShaderCode;
+  string fragmentShaderCode;
 
-  std::ifstream vShaderFile;
-  std::ifstream fShaderFile;
+  ifstream vShaderFile;
+  ifstream fShaderFile;
 
-  vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-  fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+  vShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
+  fShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
 
   try {
     vShaderFile.open(project_path + vertexShaderPath);
     fShaderFile.open(project_path + fragmentShaderPath);
 
-    std::stringstream vShaderStream, fShaderStream;
+    stringstream vShaderStream, fShaderStream;
 
     vShaderStream << vShaderFile.rdbuf();
     fShaderStream << fShaderFile.rdbuf();
@@ -37,38 +36,38 @@ void ResourceManager::loadShader(const std::string& name, const char* vertexShad
     vertexShaderCode = vShaderStream.str();
     fragmentShaderCode = fShaderStream.str();
     }
-    catch(const std::ifstream::failure& e) {
-      throw std::runtime_error("Failed to load shader source");
+    catch(const ifstream::failure& e) {
+      throw runtime_error("Failed to load shader source");
     }
 
   const char* vShaderCode{vertexShaderCode.c_str()};
   const char* fShaderCode{fragmentShaderCode.c_str()};
 
-  std::shared_ptr<Shader> shader{std::make_shared<Shader>(vShaderCode, fShaderCode)};
+  shared_ptr<Shader> shader{make_shared<Shader>(vShaderCode, fShaderCode)};
   shader->compileProgram();
   Shaders[name] = shader;
 }	
 
-void ResourceManager::loadTexture2D(const std::string& name, const char* texturePath, 
-									int wrap_S, int wrap_T, int filterMin, int filterMax, 
-									int format)
-{
+void ResourceManager::loadTexture2D(const string& name, 
+									const char* texturePath, 
+									int wrapS, int wrapT, int filterMin, 
+									int filterMax, int format) {
+
   stbi_set_flip_vertically_on_load(true);
   int width, height, nrChannels;
-
-  unsigned char *data{stbi_load((project_path + texturePath).c_str(), &width, &height,
-    &nrChannels, 0)};
+  unsigned char *data{stbi_load((project_path + texturePath).c_str(), 
+    &width, &height, &nrChannels, 0)};
 
   if (data) {
-    std::shared_ptr<Texture2D> texture{std::make_shared<Texture2D>(wrap_S, wrap_T, filterMin,
-      filterMax, width, height, format, data)};
-    texture->Generate();
+    shared_ptr<Texture2D> texture{make_shared<Texture2D>(wrapS, wrapT, 
+	  filterMin, filterMax, width, height,  format, data)};
+    texture->generate();
     Textures2D[name] = texture;
     stbi_image_free(data);
   }
   else {
     stbi_image_free(data);
-    throw std::runtime_error("Failed to load texture");
+    throw runtime_error("Failed to load texture");
   }
 }
 
@@ -77,31 +76,31 @@ void ResourceManager::loadTexture2D(const std::string& name, const char* texture
  * Usage: Prepend the return value to the relative path of desired resource file.
  * Compatible with Unix filesystems.
  */
-std::string ResourceManager::resolveProjectPath(const string& argv)
+string ResourceManager::resolveProjectPath(const string& argv)
 {
-  /* if we are in /build/src directory */
+  // if we are in /build/src directory 
   if (argv == "./demo") return "../../";
-  /* if we are in build directory */
+  // if we are in build directory 
   if (argv == "./src/demo") return "../"; 
-  /* if we are in project directory */
+  // if we are in project directory 
   if (argv == "./build/src/demo") return "./";
-  /* if we are above or nested above project directory */
-  std::string project{"cpp-tetris"};
-  std::string path{argv};
-  std::size_t pos{argv.find(project)};
-  if(pos != std::string::npos) {
+  // if we are above or nested above project directory 
+  string project{"cpp-tetris"};
+  string path{argv};
+  size_t pos{argv.find(project)};
+  if(pos != string::npos) {
         path.erase((path.begin()+pos+project.length()), path.end());
         return path + "/";
   }
-  /* if we are below or nested below build directory */
+  // if we are below or nested below build directory 
   else if(argv[1] == '.') {
   pos = argv.rfind("../");
   path.erase(path.begin()+pos+3, path.end());
-  std::cout << path + ".." << std::endl;
+  cout << path + ".." << endl;
   return path + "../";
   }
 
-  throw std::runtime_error("Failed to resolve project path.");
+  throw runtime_error("Failed to resolve project path.");
 }
 
 } // namespace cpp_tetris
