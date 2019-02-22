@@ -2,19 +2,21 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "window.hpp"
 #include "resource_manager.hpp"
-#include "game_object.hpp"
-#include "block.hpp"
-
-#include <iostream>
-
+#include "window.hpp"
+#include "game.hpp"
 
 //void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 //void process_input(GLFWwindow *window);
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
+  cpp_tetris::ResourceManager resource_manager{"./src/demo"};
+  cpp_tetris::Game game{resource_manager, 800, 600};
+  game.init();
+  return 0;
+}
+
+
 //  cpp_tetris::Init();	
 //  cpp_tetris::Window win{800, 600, "cpp-tetris"};
 //  cpp_tetris::ResourceManager rm(argv[0]);
@@ -62,5 +64,5 @@ int main(int argc, char* argv[])
 //// glDeleteVertexArrays(1, &VAO);
 //// glDeleteBuffers(1, &VBO);
 //
-  return 0;
-}
+//  return 0;
+//}

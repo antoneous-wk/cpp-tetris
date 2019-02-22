@@ -14,6 +14,7 @@ Window::Window(unsigned width, unsigned height, const char* title)
 Window:: ~Window() {
   glfwTerminate();
   win_ = nullptr;
+  isInit = false;
 }
 
 void Window::init() {

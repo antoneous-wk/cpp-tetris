@@ -3,6 +3,7 @@
 
 #include "resource_manager.hpp"
 #include "window.hpp"
+#include "sprite_renderer.hpp"
 
 namespace cpp_tetris {
 
@@ -23,13 +24,17 @@ class Game {
     void render(float delta_time);
 
 	Window* getWin() const { return win_; } 	
+    SpriteRenderer* getRenderer() const { return renderer_; }
+    
 
   private:
     gameState state_;
     bool keys_[1024];
     int width_, height_ ;
-    const ResourceManager& manager_;
     Window* win_;
+    SpriteRenderer* renderer_;
+    ResourceManager& manager_;
+
 };
 
 } // namespace cpp_tetris

@@ -10,8 +10,6 @@
 
 #include "window.hpp"
 #include "resource_manager.hpp"
-#include "game_object.hpp"
-#include "block.hpp"
 #include "game.hpp"
 #include "sprite_renderer.hpp"
 
@@ -40,30 +38,37 @@ class GameTest : public ::testing::Test {
 
     cpp_tetris::ResourceManager resource_manager{"./src/demo"};
     cpp_tetris::Game game{resource_manager, 800, 600};
-}; 
+};
 
-TEST_F(WindowTest, isInitFalse) {
+/*
+TEST_F(WindowTest, windowInitTest1) {
   ASSERT_EQ(cpp_tetris::Window::isInit, false);
 }
 
-TEST_F(WindowTest, isInitTrue) {
+TEST_F(WindowTest, windowInitTest2) {
   myWin.init();  
   ASSERT_EQ(cpp_tetris::Window::isInit, true);
 }
 
-TEST_F(WindowTest, isInitTrue2) {
+TEST_F(WindowTest, windowInitTest3) {
   myWin.init();
   myWin.init();
   ASSERT_EQ(cpp_tetris::Window::isInit, true);
 }
+*/
 
-TEST(GameTest, gameInitTest1) {
-  cpp_tetris::ResourceManager resource_manager{"./src/demo"};
-  cpp_tetris::Game game{resource_manager, 800, 600};
+TEST_F(GameTest, gameInitTest1) {
   ASSERT_EQ(0, game.getWin());
   game.init();
   ASSERT_EQ(true, static_cast<bool>(game.getWin()));	
 }
+
+TEST_F(GameTest, gameInitTest2) {
+  ASSERT_EQ(0, game.getRenderer());
+  game.init();
+  ASSERT_EQ(true, static_cast<bool>(game.getRenderer()));
+}
+
 
 /*
 int main(int argc, char** argv) {

@@ -9,7 +9,7 @@ void Shader::compileProgram() {
   unsigned vertexShader, fragmentShader;
 
   // create vertex shader object and compile 
-  vertexShader = glCreateShader(GL_VERTEX_SHADER);
+  vertexShader = glCreateShader(GL_VERTEX_SHADER); 
   glShaderSource(vertexShader, 1, &vertexShaderCode, NULL);
   glCompileShader(vertexShader);
 
@@ -20,7 +20,7 @@ void Shader::compileProgram() {
   fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(fragmentShader, 1, &fragmentShaderCode, NULL);
   glCompileShader(fragmentShader);
-	
+
   // check to see if compilation was sucessful 
   checkCompileErrors(fragmentShader, true, "Fragment shader compilation failed."); 
 	
@@ -64,6 +64,10 @@ void Shader::checkCompileErrors(unsigned name, bool is_shader,
 
 void Shader::useProgram() {
   glUseProgram(ID);
+}
+
+void Shader::setUniform1ui(const std::string& name, unsigned u0) const {
+  glUniform1ui(glGetUniformLocation(ID, name.c_str()), u0);
 }
 
 void Shader::setUniform4i(const std::string& name, int v0, int v1, int v2, 
