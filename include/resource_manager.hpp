@@ -17,6 +17,7 @@ class ResourceManager
 {
   public:
     ResourceManager(const string argv);    
+    ~ResourceManager();
 	
     // get project path 
     const string& getPath() const { return project_path; }
@@ -32,8 +33,8 @@ class ResourceManager
 
   private:
     string resolveProjectPath(const string& argv);
-    map<string, shared_ptr<Shader>> Shaders;	
-    map<string, shared_ptr<Texture2D>> Textures2D;
+    map<string, Shader*> Shaders;
+    map<string, Texture2D*> Textures2D;
     const string project_path;
 };
 

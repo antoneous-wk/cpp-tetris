@@ -9,6 +9,24 @@ namespace cpp_tetris {
 ResourceManager::ResourceManager(const string argv)
   : project_path{resolveProjectPath(argv)} { }
 
+ResourceManager::~ResourceManager() {
+  // when we fetch an element from a map, we get object of type 'pair'
+  // each element has data members 'first' and 'second' 
+  // 'first' is key, 'second' is value
+  for(auto &shader : Shaders) {
+    if(shader.second) { 
+      delete shader.second;
+      shader.second = nullptr;
+    }
+  }
+  for(auto &texture : Textures2D) {
+    if(texture.second) {
+      delete texture.second;
+      texture.second = nullptr;
+    }
+   }
+}
+
 void ResourceManager::loadShader(const string& name, 
 								 const char* vertexShaderPath,
 								 const char* fragmentShaderPath) { 
@@ -43,7 +61,7 @@ void ResourceManager::loadShader(const string& name,
   const char* vShaderCode{vertexShaderCode.c_str()};
   const char* fShaderCode{fragmentShaderCode.c_str()};
 
-  shared_ptr<Shader> shader{make_shared<Shader>(vShaderCode, fShaderCode)};
+  Shader* shader{new Shader{vShaderCode, fShaderCode}};
   shader->compileProgram();
   Shaders[name] = shader;
 }	
@@ -59,8 +77,9 @@ void ResourceManager::loadTexture2D(const string& name,
     &width, &height, &nrChannels, 0)};
 
   if (data) {
-    shared_ptr<Texture2D> texture{make_shared<Texture2D>(wrapS, wrapT, 
-	  filterMin, filterMax, width, height,  format, data)};
+    Texture2D* texture{new Texture2D{wrapS, wrapT, filterMin, filterMax, 
+      width, height,  format, data}};
+
     texture->generate();
     Textures2D[name] = texture;
     stbi_image_free(data);
