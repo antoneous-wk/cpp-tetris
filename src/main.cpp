@@ -17,21 +17,6 @@ int main(int argc, char* argv[]) {
 }
 
 
-//  cpp_tetris::Init();	
-//  cpp_tetris::Window win{800, 600, "cpp-tetris"};
-//  cpp_tetris::ResourceManager rm(argv[0]);
-//
-//  rm.loadShader("myProgram", "src/vertex_shader.glsl", "src/fragment_shader.glsl");
-//  rm.loadTexture2D("stick", "resources/textures/box.png", GL_REPEAT, GL_REPEAT,
-//    GL_LINEAR, GL_LINEAR, GL_RGBA);
-//
-//  /* create block instance */
-//  cpp_tetris::Block block{rm};
-//  block.Init();
-//
-//  /* glm::mat4 constructor that takes a single value constructs diagonal (identity) matrix */
-//  glm::mat4 trans{1.0f};
-//	
 //  glEnable(GL_BLEND);
 //  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //

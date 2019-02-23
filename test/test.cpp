@@ -17,18 +17,6 @@
 
 namespace {
 
-//char** my_argv;
-
-class WindowTest : public ::testing::Test {
-  protected:
-    WindowTest() {}
-    ~WindowTest() override {}
-    void SetUp() override {}
-    void TearDown() override {}
-
-    cpp_tetris::Window myWin{800, 600, "Tetris"};
-};
-
 class GameTest : public ::testing::Test {
   protected:
 	GameTest() {}
@@ -40,33 +28,21 @@ class GameTest : public ::testing::Test {
     cpp_tetris::Game game{resource_manager, 800, 600};
 };
 
-/*
-TEST_F(WindowTest, windowInitTest1) {
-  ASSERT_EQ(cpp_tetris::Window::isInit, false);
-}
-
-TEST_F(WindowTest, windowInitTest2) {
-  myWin.init();  
-  ASSERT_EQ(cpp_tetris::Window::isInit, true);
-}
-
-TEST_F(WindowTest, windowInitTest3) {
-  myWin.init();
-  myWin.init();
-  ASSERT_EQ(cpp_tetris::Window::isInit, true);
-}
-*/
-
-TEST_F(GameTest, gameInitTest1) {
+TEST_F(GameTest, gameInitTest) {
   ASSERT_EQ(0, game.getWin());
-  game.init();
-  ASSERT_EQ(true, static_cast<bool>(game.getWin()));	
-}
-
-TEST_F(GameTest, gameInitTest2) {
   ASSERT_EQ(0, game.getRenderer());
   game.init();
+  ASSERT_EQ(true, static_cast<bool>(game.getWin()));	
   ASSERT_EQ(true, static_cast<bool>(game.getRenderer()));
+}
+
+TEST_F(GameTest, mainLoopTest) {
+  game.init();
+  cpp_tetris::Window* win{game.getWin()};
+  while(!glfwWindowShouldClose(win->getWin())) {
+    cpp_tetris::process_input(win->getWin());
+    glfwPollEvents();
+  }
 }
 
 

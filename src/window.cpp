@@ -5,9 +5,6 @@ namespace cpp_tetris {
 // static members
 bool Window::isInit{false};
 
-// forward declarations
-void framebuffer_size_callback(GLFWwindow* win, int width, int height);
-
 Window::Window(unsigned width, unsigned height, const char* title)
   : win_{nullptr}, width_{width}, height_{height}, title_{title} { }
 
@@ -49,4 +46,4 @@ void process_input(GLFWwindow* win) {
     glfwSetWindowShouldClose(win, true);
 }
 
-}
+} // namespace cpp_tetris
