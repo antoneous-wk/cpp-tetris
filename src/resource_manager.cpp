@@ -11,7 +11,7 @@ ResourceManager::ResourceManager(const string argv)
 
 ResourceManager::~ResourceManager() {
   // when we fetch an element from a map, we get object of type 'pair'
-  // each element has data members 'first' and 'second' 
+  // each element has public data members 'first' and 'second' 
   // 'first' is key, 'second' is value
   for(auto &shader : Shaders) {
     if(shader.second) { 
