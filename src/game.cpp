@@ -44,8 +44,8 @@ void Game::processInput() { }
 void Game::update(float delta_time) { }
 
 void Game::render(float delta_time) {
-  renderer_->drawSprite(manager_.getTexture2D("zee"), glm::vec2(100, 100), 
-    glm::vec2(100, 100), 90.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+  renderer_->drawSprite(manager_.getTexture2D("zee"), glm::vec2(0, 0), 
+    glm::vec2(50, 50), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 }
     
 

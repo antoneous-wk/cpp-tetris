@@ -45,6 +45,20 @@ TEST_F(GameTest, mainLoopTest) {
   }
 }
 
+TEST_F(GameTest, renderTest) {
+  game.init();
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  cpp_tetris::Window* win{game.getWin()};
+  // game loop
+  while(!glfwWindowShouldClose(win->getWin())) {
+    cpp_tetris::process_input(win->getWin());
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    game.render(0.0f);
+    glfwSwapBuffers(win->getWin());
+    glfwPollEvents();
+  }
+}
 
 /*
 int main(int argc, char** argv) {

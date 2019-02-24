@@ -71,7 +71,7 @@ void ResourceManager::loadTexture2D(const string& name,
 									int wrapS, int wrapT, int filterMin, 
 									int filterMax, int format) {
 
-  stbi_set_flip_vertically_on_load(true);
+  stbi_set_flip_vertically_on_load(false);
   int width, height, nrChannels;
   unsigned char *data{stbi_load((project_path + texturePath).c_str(), 
     &width, &height, &nrChannels, 0)};
