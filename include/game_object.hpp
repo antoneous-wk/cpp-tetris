@@ -14,8 +14,8 @@ namespace cpp_tetris {
 
 class GameObject {
   public:
-    GameObject();
-    GameObject(glm::vec2 pos, glm::vec2 size, Texture2D sprite, 
+    GameObject(Texture2D& sprite);
+    GameObject(glm::vec2 pos, glm::vec2 size, Texture2D& sprite, 
                glm::vec3 color, glm::vec2 velocity);
     virtual void draw(SpriteRenderer& renderer);
 
@@ -26,7 +26,7 @@ class GameObject {
     bool isSolid_;
     bool destroyed_;
     
-    Texture2D sprite_;
+    Texture2D& sprite_;
 };
 
 } // namespace cpp_tetris
