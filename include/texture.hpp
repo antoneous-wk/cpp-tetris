@@ -12,6 +12,7 @@ class Texture2D {
   friend class ResourceManager;
 	
   public:
+    Texture2D();
     Texture2D(int wrap_s, int wrap_t, int filterMin, int filterMax, 
 			  int width, int height, int format, unsigned char* data); 
 

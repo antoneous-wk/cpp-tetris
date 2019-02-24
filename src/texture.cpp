@@ -2,6 +2,10 @@
 
 namespace cpp_tetris {
 
+Texture2D::Texture2D()
+  : wrapS_{GL_REPEAT}, wrapT_{GL_REPEAT}, filterMin_{GL_LINEAR},
+    filterMax_{GL_LINEAR}, width_{0}, height_{0}, format_{GL_RGBA} { }
+
 Texture2D::Texture2D(int wrapS, int wrapT, int filterMin, int filterMax, 
 					 int width, int height, int format, unsigned char* data)
   : wrapS_{wrapS}, wrapT_{wrapT}, filterMin_{filterMin}, filterMax_{filterMax},

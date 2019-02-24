@@ -8,7 +8,6 @@
 #include "texture.hpp"
 #include "shader.hpp"
 
-
 namespace cpp_tetris {
 
 class SpriteRenderer {

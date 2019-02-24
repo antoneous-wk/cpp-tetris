@@ -1,28 +1,32 @@
 #ifndef CPP_TETRIS_GAME_OBJECT_HPP
 #define CPP_TETRIS_GAME_OBJECT_HPP
 
-#include <memory>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glad/glad.h>
+#include "sprite_renderer.hpp"
+#include "texture.hpp"
 
 using namespace std;
 
-namespace cpp_tetris
-{
+namespace cpp_tetris {
 
-class GameObject
-{
+class GameObject {
   public:
-    GameObject(ResourceManager& rm) : resourceManager{rm} { } 
+    GameObject();
+    GameObject(glm::vec2 pos, glm::vec2 size, Texture2D sprite, 
+               glm::vec3 color, glm::vec2 velocity);
+    virtual void draw(SpriteRenderer& renderer);
 
-    virtual void Init() = 0;
-    virtual const unsigned& getVAO() const { return VAO; }
-    virtual const unsigned& getVBO() const { return VBO; }
-    
   protected:
-    ResourceManager& resourceManager;
-	std::string shaderName;
-	std::string textureName;
-    unsigned VAO;
-    unsigned VBO;
+    glm::vec2 position_, size_, velocity_;
+    glm::vec3 color_;
+    float rotation_;
+    bool isSolid_;
+    bool destroyed_;
+    
+    Texture2D sprite_;
 };
 
 } // namespace cpp_tetris

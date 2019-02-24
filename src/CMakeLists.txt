@@ -5,6 +5,7 @@ set(SOURCE_FILES
     texture.cpp
 	resource_manager.cpp
 	sprite_renderer.cpp
+    game_object.cpp
 	game.cpp
 	main.cpp)
 
