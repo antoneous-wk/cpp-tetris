@@ -25,7 +25,6 @@ class Game {
 
 	Window* getWin() const { return win_; } 	
     SpriteRenderer* getRenderer() const { return renderer_; }
-    
 
   private:
     gameState state_;

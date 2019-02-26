@@ -25,7 +25,7 @@ class GameTest : public ::testing::Test {
 	void TearDown() override {}
 
     cpp_tetris::ResourceManager resource_manager{"./src/demo"};
-    cpp_tetris::Game game{resource_manager, 800, 600};
+    cpp_tetris::Game game{resource_manager, 620, 600};
 };
 
 TEST_F(GameTest, gameInitTest) {
@@ -34,15 +34,6 @@ TEST_F(GameTest, gameInitTest) {
   game.init();
   ASSERT_EQ(true, static_cast<bool>(game.getWin()));	
   ASSERT_EQ(true, static_cast<bool>(game.getRenderer()));
-}
-
-TEST_F(GameTest, mainLoopTest) {
-  game.init();
-  cpp_tetris::Window* win{game.getWin()};
-  while(!glfwWindowShouldClose(win->getWin())) {
-    cpp_tetris::process_input(win->getWin());
-    glfwPollEvents();
-  }
 }
 
 TEST_F(GameTest, renderTest) {

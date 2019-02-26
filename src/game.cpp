@@ -18,7 +18,7 @@ Game::~Game() {
 
 void Game::init() {
   // create window and initialize
-  win_ = new Window{this->width_, this->height_, "cpp-tetris"};
+  win_ = new Window{width_, this->height_, "cpp-tetris"};
   win_->init();
    
   // load shaders
@@ -26,17 +26,19 @@ void Game::init() {
     "src/sprite_fragment_shader.glsl");
 
   // configure shaders
-  glm::mat4 projection{glm::ortho(0.0f, static_cast<float>(this->width_), 
-    static_cast<float>(this->height_), 0.0f, -1.0f, 1.0f)};
-  this->manager_.getShader("sprite").useProgram();
-  this->manager_.getShader("sprite").setUniform1ui("image", 0);
-  this->manager_.getShader("sprite").setUniformMatrix4f("projection", projection);
+  glm::mat4 projection{glm::ortho(0.0f, static_cast<float>(width_), 
+    static_cast<float>(height_), 0.0f, -1.0f, 1.0f)};
+  manager_.getShader("sprite").useProgram();
+  manager_.getShader("sprite").setUniform1ui("image", 0);
+  manager_.getShader("sprite").setUniformMatrix4f("projection", projection);
 
   // load textures
-  this->manager_.loadTexture2D("zee", "resources/textures/zee.png", GL_REPEAT,
-    GL_REPEAT, GL_LINEAR, GL_LINEAR, GL_RGBA);
+  manager_.loadTexture2D("bground_layer0", "resources/textures/bgroundl0.png", 
+    GL_REPEAT, GL_REPEAT, GL_LINEAR, GL_LINEAR, GL_RGBA);
+  manager_.loadTexture2D("bground_layer1", "resources/textures/bgroundl1.png",
+    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
   
-  renderer_ = new SpriteRenderer{this->manager_.getShader("sprite")};
+  renderer_ = new SpriteRenderer{manager_.getShader("sprite")};
 }
 
 void Game::processInput() { }
@@ -44,8 +46,15 @@ void Game::processInput() { }
 void Game::update(float delta_time) { }
 
 void Game::render(float delta_time) {
-  renderer_->drawSprite(manager_.getTexture2D("zee"), glm::vec2(0, 0), 
-    glm::vec2(50, 50), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+  if(state_ == GAME_ACTIVE) {  
+    // draw background
+    renderer_->drawSprite(manager_.getTexture2D("bground_layer0"), 
+      glm::vec2(0, 0), glm::vec2(width_, height_));
+    renderer_->drawSprite(manager_.getTexture2D("bground_layer1"),
+      glm::vec2(10, 10), glm::vec2(600, 580));
+  }
+
+
 }
     
 

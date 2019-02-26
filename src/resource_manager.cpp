@@ -78,7 +78,7 @@ void ResourceManager::loadTexture2D(const string& name,
 
   if (data) {
     Texture2D* texture{new Texture2D{wrapS, wrapT, filterMin, filterMax, 
-      width, height,  format, data}};
+      width, height, format, data}};
 
     texture->generate();
     Textures2D[name] = texture;
