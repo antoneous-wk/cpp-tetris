@@ -37,6 +37,11 @@ void Game::init() {
     GL_REPEAT, GL_REPEAT, GL_LINEAR, GL_LINEAR, GL_RGBA);
   manager_.loadTexture2D("bground_layer1", "resources/textures/bgroundl1.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
+  manager_.loadTexture2D("saw", "resources/textures/saw.png",
+    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
+
+
+
   
   renderer_ = new SpriteRenderer{manager_.getShader("sprite")};
 }
@@ -47,14 +52,12 @@ void Game::update(float delta_time) { }
 
 void Game::render(float delta_time) {
   if(state_ == GAME_ACTIVE) {  
-    // draw background
+    // draw background layers
     renderer_->drawSprite(manager_.getTexture2D("bground_layer0"), 
       glm::vec2(0, 0), glm::vec2(width_, height_));
     renderer_->drawSprite(manager_.getTexture2D("bground_layer1"),
-      glm::vec2(10, 10), glm::vec2(600, 580));
+      glm::vec2(0, 0), glm::vec2(690, 600));
   }
-
-
 }
     
 

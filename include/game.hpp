@@ -24,7 +24,7 @@ class Game {
     void render(float delta_time);
 
 	Window* getWin() const { return win_; } 	
-    SpriteRenderer* getRenderer() const { return renderer_; }
+    SpriteRenderer& getRenderer() const { return *renderer_; }
 
   private:
     gameState state_;
