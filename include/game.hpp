@@ -3,6 +3,7 @@
 
 #include "resource_manager.hpp"
 #include "window.hpp"
+#include "model.hpp"
 #include "sprite_renderer.hpp"
 
 namespace cpp_tetris {
@@ -31,6 +32,7 @@ class Game {
     bool keys_[1024];
     int width_, height_ ;
     Window* win_;
+    Model* model_;
     SpriteRenderer* renderer_;
     ResourceManager& manager_;
 

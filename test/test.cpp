@@ -19,6 +19,7 @@
 
 namespace {
 
+/*
 class GameTest : public ::testing::Test {
   protected:
 	GameTest() {}
@@ -29,7 +30,8 @@ class GameTest : public ::testing::Test {
     cpp_tetris::ResourceManager resource_manager{"./src/demo"};
     cpp_tetris::Game game{resource_manager, 690, 600};
 };
-
+*/
+/*
 class GameObjectTest : public ::testing::Test {
   protected:
     GameObjectTest() : brick{nullptr} {
@@ -47,7 +49,25 @@ class GameObjectTest : public ::testing::Test {
    cpp_tetris::Game game{manager, 690, 600};
    cpp_tetris::GameObject* brick;
 };
+*/
 
+class ModelTest : public ::testing::Test {
+  protected:
+    ModelTest() {
+      game.init();
+      glEnable(GL_BLEND);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      win = game.getWin();
+    }
+    ~ModelTest() {}
+    void SetUp() override {}
+    void TearDown() override {}
+
+    cpp_tetris::ResourceManager manager{"./src/demo"};
+    cpp_tetris::Game game{manager, 690, 600};
+    cpp_tetris::Window* win;
+};
+   
 /*
 TEST_F(GameTest, gameInitTest) {
   ASSERT_EQ(0, game.getWin());
@@ -56,7 +76,7 @@ TEST_F(GameTest, gameInitTest) {
   ASSERT_EQ(true, static_cast<bool>(game.getWin()));	
   ASSERT_EQ(true, static_cast<bool>(game.getRenderer()));
 }
-
+/*
 TEST_F(GameTest, renderTest) {
   game.init();
   glEnable(GL_BLEND);
@@ -72,7 +92,7 @@ TEST_F(GameTest, renderTest) {
   }
 }
 */
-
+/*
 TEST_F(GameObjectTest, drawTest) {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -90,6 +110,36 @@ TEST_F(GameObjectTest, drawTest) {
     glfwPollEvents();
   }
 }
+*/
+/*
+TEST_F(ModelTest, drawTest) {
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  cpp_tetris::Window* win{game.getWin()};
+  // game loop
+  while(!glfwWindowShouldClose(win->getWin())) {
+    cpp_tetris::process_input(win->getWin());
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    game.render(0.0f);
+    glfwSwapBuffers(win->getWin());
+    glfwPollEvents();
+  }
+
+}
+*/
+
+TEST_F(ModelTest, updateTest) {
+  // game loop
+  while(!glfwWindowShouldClose(win->getWin())) {
+    cpp_tetris::process_input(win->getWin());
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    game.update(0.0f);
+    game.render(0.0f);
+    glfwSwapBuffers(win->getWin());
+    glfwPollEvents();
+  }
+}
+
 
 /*
 int main(int argc, char** argv) {

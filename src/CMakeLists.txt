@@ -7,8 +7,9 @@ set(SOURCE_FILES
 	sprite_renderer.cpp
     game_object.cpp
     model.cpp
+    main.cpp
 	game.cpp
-	main.cpp)
+	)
 
 # set variable in parent scope
 set(SOURCE_FILES ${SOURCE_FILES} PARENT_SCOPE)
