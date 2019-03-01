@@ -44,8 +44,8 @@ void Game::init() {
     GL_REPEAT, GL_REPEAT, GL_LINEAR, GL_LINEAR, GL_RGBA);
   manager_.loadTexture2D("bground_layer1", "resources/textures/bgroundl1.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("saw", "resources/textures/saw.png",
-    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
+  manager_.loadTexture2D("test_block", "resources/textures/test_block.png",
+    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGB);
   
   renderer_ = new SpriteRenderer{manager_.getShader("sprite")};
 }
