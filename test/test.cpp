@@ -19,6 +19,7 @@
 
 namespace {
 
+//old test fixtures
 /*
 class GameTest : public ::testing::Test {
   protected:
@@ -67,7 +68,8 @@ class ModelTest : public ::testing::Test {
     cpp_tetris::Game game{manager, 690, 600};
     cpp_tetris::Window* win;
 };
-   
+
+// old tests   
 /*
 TEST_F(GameTest, gameInitTest) {
   ASSERT_EQ(0, game.getWin());
@@ -139,7 +141,6 @@ TEST_F(ModelTest, updateTest) {
     glfwPollEvents();
   }
 }
-
 
 /*
 int main(int argc, char** argv) {

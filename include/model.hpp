@@ -5,12 +5,12 @@
 #include "game_object.hpp"
 #include "texture.hpp"
 #include <vector>
-
+#include <string>
 #include <iostream>
+#include <random>
+#include <ctime>
 
 namespace cpp_tetris {
-
-//class GameObject;
 
 enum brickType {
   B_LEFT, 
@@ -19,6 +19,8 @@ enum brickType {
   B_TEE,
   B_ZEE,
   B_SAW,  
+  B_BOX,
+  NUM_OF_TYPES
 };
 
 class Model {
