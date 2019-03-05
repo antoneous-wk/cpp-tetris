@@ -15,6 +15,8 @@ void Controller::processInput(GameObject& object, float deltaTime) {
     object.moveX(userInput::LEFT, deltaTime);
   if(glfwGetKey(window_, GLFW_KEY_RIGHT) == GLFW_PRESS)
     object.moveX(userInput::RIGHT, deltaTime);
+  if(glfwGetKey(window_, GLFW_KEY_DOWN) == GLFW_PRESS)
+    object.moveY(userInput::DOWN, deltaTime);
 }
 
 } // namespace cpp_tetris

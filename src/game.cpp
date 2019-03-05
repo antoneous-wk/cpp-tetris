@@ -3,9 +3,8 @@
 namespace cpp_tetris {
 
 Game::Game(ResourceManager& manager, int width, int height)
-  : state_{GAME_ACTIVE}, keys_{}, width_{width}, height_{height},
-    manager_{manager}, win_{nullptr}, model_{nullptr}, controller_{nullptr}, 
-    renderer_{nullptr} { }
+  : state_{GAME_ACTIVE}, width_{width}, height_{height}, manager_{manager}, 
+    win_{nullptr}, model_{nullptr}, controller_{nullptr}, renderer_{nullptr} { }
 
 Game::~Game() {
   if(model_)
@@ -30,9 +29,10 @@ void Game::init() {
   win_ = new Window{width_, this->height_, "cpp-tetris"};
   win_->init();
  
-  // Model class manages game logic
+  // model_ manages game logic
   model_ = new Model(manager_);
 
+  // controller_ manages user input
   controller_ = new Controller(win_->getWin());
 
   // load shaders

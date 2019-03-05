@@ -24,6 +24,10 @@ void Model::generate() {
   std::string brick_name;
   glm::vec3 color;
   glm::vec2 size; 
+  unsigned min_x;
+  unsigned max_x;
+  unsigned min_y;
+  unsigned max_y;
 
   switch(u(e)) {
     case (brickType::B_LEFT):
@@ -76,7 +80,7 @@ void Model::update(Controller& controller, float deltaTime) {
     generate();
 
   for(GameObject* brick : bricks_) {
-    if(brick->position_.y >= 500)  
+    if(brick->position_.y >= brick->max_y)  
       brick->isPlaced_ = true;
     if(!brick->isPlaced_) {
       controller.processInput(*brick, deltaTime);
@@ -89,6 +93,6 @@ void Model::draw(SpriteRenderer& renderer, float deltaTime) {
   // run draw method for all bricks in bricks_ 
   for(GameObject* brick : bricks_) 
     brick->draw(renderer);
-  }  
+}
 
 } // namespace cpp_tetris

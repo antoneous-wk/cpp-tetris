@@ -30,7 +30,6 @@ class Game {
 
   private:
     gameState state_;
-    bool keys_[1024];
     int width_, height_ ;
     Window* win_;
     Model* model_;

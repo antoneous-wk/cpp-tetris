@@ -15,21 +15,33 @@ namespace cpp_tetris {
 enum userInput {
   LEFT,
   RIGHT,
+  DOWN
+};
+
+enum gameArea {
+  MIN_X = 20,
+  MAX_X = 420,
+  MIN_Y = 20,
+  MAX_Y = 580
 };
 
 class GameObject {
+
   friend class Model;
 
   public:
     GameObject(glm::vec2 pos, glm::vec2 size, Texture2D& sprite, 
                glm::vec3 color, glm::vec2 velocity);
 
+    void moveY(userInput direction, float deltaTime);
     void moveY(float deltaTime);
     void moveX(userInput direction, float deltaTime);
+    void rotate(float deltaTime);
 
     void draw(SpriteRenderer& renderer);
 
   private:
+    Texture2D& sprite_;
     glm::vec2 position_; 
     glm::vec2 size_;
     glm::vec2 velocity_;
@@ -38,7 +50,11 @@ class GameObject {
     bool isPlaced_;
     bool isDestroyed_;
 
-    Texture2D& sprite_;
+    unsigned min_x;
+    unsigned max_x;
+    unsigned min_y;
+    unsigned max_y;
+   
 };
 
 } // namespace cpp_tetris
