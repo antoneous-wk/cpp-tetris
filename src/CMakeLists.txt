@@ -7,6 +7,7 @@ set(SOURCE_FILES
 	sprite_renderer.cpp
     game_object.cpp
     model.cpp
+    controller.cpp
     main.cpp
 	game.cpp
 	)

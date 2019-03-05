@@ -11,20 +11,21 @@ void GameObject::moveY(float deltaTime) {
   static float dy = 0.0f;
   dy += velocity_.y * deltaTime;
   if(dy >= 20) {
-    position_.y += 20;
+    position_.y += dy;
     dy = 0.0f;
   }
 }
 
 void GameObject::moveX(userInput direction, float deltaTime) {
+//  float dx{velocity_.x * deltaTime};
   static float dx = 0.0f;
   dx += velocity_.x * deltaTime;
+
   if(dx>=40) {
     if(direction == userInput::RIGHT)   
-      position_.x += 40;
+      position_.x += dx;
     if(direction == userInput::LEFT) 
-      position_.x -= 40; 
-    dx = 0.0f;
+      position_.x -= dx; 
   }
 }
 

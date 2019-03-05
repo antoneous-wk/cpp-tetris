@@ -3,6 +3,7 @@
 
 #include "resource_manager.hpp"
 #include "game_object.hpp"
+#include "controller.hpp"
 #include "texture.hpp"
 #include <vector>
 #include <string>
@@ -28,13 +29,12 @@ class Model {
     Model(ResourceManager& manager);
     ~Model();
 
+    void getInput();
     // iterate through vector and update state of each brick
-    void update();
-
+    void update(Controller& controller, float deltaTime);
     // iterate through vector and draw each brick
     // each brick has a state, will draw based on state
-    void draw(SpriteRenderer& renderer);
-
+    void draw(SpriteRenderer& renderer, float deltaTime);
   private:
     // generate random brick and append to vector
     void generate();

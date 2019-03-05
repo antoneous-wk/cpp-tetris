@@ -63,29 +63,32 @@ void Model::generate() {
       break;
   }
 
-  bricks_.push_back(new GameObject{glm::vec2{20,0}, size, 
-    manager_.getTexture2D(brick_name), color, glm::vec3{0.0f}});
+  bricks_.push_back(new GameObject{glm::vec2{20, 0}, size, 
+    manager_.getTexture2D(brick_name), color, glm::vec2{500.0f, 60.0f}});
 }
 
-void Model::update() {
-  for(GameObject* brick : bricks_) {
-    if(brick->position_.y >= 500)  
-      brick->isPlaced_ = true;
-    if(!brick->isPlaced_)
-      brick->move();
-  }
-}
-
-void Model::draw(SpriteRenderer& renderer) {
+void Model::update(Controller& controller, float deltaTime) {
   // generate initial brick
   if(bricks_.empty())
     generate(); 
   // generate another brick if previous brick has been placed or destroyed
   if(!bricks_.empty() && (*--bricks_.end())->isPlaced_)
     generate();
+
+  for(GameObject* brick : bricks_) {
+    if(brick->position_.y >= 500)  
+      brick->isPlaced_ = true;
+    if(!brick->isPlaced_) {
+      controller.processInput(*brick, deltaTime);
+      brick->moveY(deltaTime);
+    }
+  }
+}
+
+void Model::draw(SpriteRenderer& renderer, float deltaTime) {
   // run draw method for all bricks in bricks_ 
   for(GameObject* brick : bricks_) 
     brick->draw(renderer);
-}
+  }  
 
 } // namespace cpp_tetris

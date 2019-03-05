@@ -11,6 +11,7 @@
 #include "window.hpp"
 #include "resource_manager.hpp"
 #include "game_object.hpp"
+#include "controller.hpp"
 #include "game.hpp"
 #include "model.hpp"
 #include "sprite_renderer.hpp"
@@ -131,14 +132,22 @@ TEST_F(ModelTest, drawTest) {
 */
 
 TEST_F(ModelTest, updateTest) {
+  float currentTime{0.0f}; 
+  float lastTime{0.0f};
+  float deltaTime{0.0f};
+
   // game loop
   while(!glfwWindowShouldClose(win->getWin())) {
-    cpp_tetris::process_input(win->getWin());
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    game.update(0.0f);
-    game.render(0.0f);
-    glfwSwapBuffers(win->getWin());
+    currentTime = glfwGetTime();
+    deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
     glfwPollEvents();
+
+    game.processInput(); 
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    game.update(deltaTime);
+    game.render(deltaTime);
+    glfwSwapBuffers(win->getWin());
   }
 }
 

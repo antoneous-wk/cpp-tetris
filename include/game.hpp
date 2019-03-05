@@ -5,6 +5,7 @@
 #include "window.hpp"
 #include "model.hpp"
 #include "sprite_renderer.hpp"
+#include "controller.hpp"
 
 namespace cpp_tetris {
 
@@ -21,8 +22,8 @@ class Game {
 
     void init();
     void processInput();
-    void update(float delta_time);
-    void render(float delta_time);
+    void update(float deltaTime);
+    void render(float deltaTime);
 
 	Window* getWin() const { return win_; } 	
     SpriteRenderer& getRenderer() const { return *renderer_; }
@@ -33,6 +34,7 @@ class Game {
     int width_, height_ ;
     Window* win_;
     Model* model_;
+    Controller* controller_;
     SpriteRenderer* renderer_;
     ResourceManager& manager_;
 

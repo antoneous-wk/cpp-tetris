@@ -4,12 +4,17 @@ namespace cpp_tetris {
 
 Game::Game(ResourceManager& manager, int width, int height)
   : state_{GAME_ACTIVE}, keys_{}, width_{width}, height_{height},
-    manager_{manager}, win_{nullptr}, model_{nullptr}, renderer_{nullptr} { }
+    manager_{manager}, win_{nullptr}, model_{nullptr}, controller_{nullptr}, 
+    renderer_{nullptr} { }
 
 Game::~Game() {
   if(model_)
     delete model_;
   model_ = nullptr;
+ 
+  if(controller_)
+    delete controller_;
+  controller_ = nullptr;
 
   if(renderer_)
     delete renderer_;
@@ -27,6 +32,8 @@ void Game::init() {
  
   // Model class manages game logic
   model_ = new Model(manager_);
+
+  controller_ = new Controller(win_->getWin());
 
   // load shaders
   manager_.loadShader("sprite", "src/sprite_vertex_shader.glsl",
@@ -66,13 +73,15 @@ void Game::init() {
   renderer_ = new SpriteRenderer{manager_.getShader("sprite")};
 }
 
-void Game::processInput() { }
-
-void Game::update(float delta_time) { 
-  model_->update();
+void Game::processInput() { 
+  controller_->processInput();
+}
+ 
+void Game::update(float deltaTime) { 
+  model_->update(*controller_, deltaTime);
 }
 
-void Game::render(float delta_time) {
+void Game::render(float deltaTime) {
   if(state_ == GAME_ACTIVE) {  
     // draw background layers
     renderer_->drawSprite(manager_.getTexture2D("bground_layer0"), 
@@ -83,7 +92,7 @@ void Game::render(float delta_time) {
       glm::vec2(0, 0), glm::vec2(690, 600));
     
     // draw GameObjects
-    model_->draw(*renderer_);
+    model_->draw(*renderer_, deltaTime);
   }
 }
     

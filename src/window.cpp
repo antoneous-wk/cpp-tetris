@@ -41,9 +41,4 @@ void framebuffer_size_callback(GLFWwindow* win, int width, int height) {
   glViewport(0, 0, width, height);
 }
 
-void process_input(GLFWwindow* win) {
-  if(glfwGetKey(win, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    glfwSetWindowShouldClose(win, true);
-}
-
 } // namespace cpp_tetris

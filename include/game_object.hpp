@@ -12,16 +12,21 @@ using namespace std;
 
 namespace cpp_tetris {
 
+enum userInput {
+  LEFT,
+  RIGHT,
+};
+
 class GameObject {
   friend class Model;
 
   public:
-    GameObject(Texture2D& sprite);
-    ~GameObject() = default;
     GameObject(glm::vec2 pos, glm::vec2 size, Texture2D& sprite, 
                glm::vec3 color, glm::vec2 velocity);
 
-    void move();
+    void moveY(float deltaTime);
+    void moveX(userInput direction, float deltaTime);
+
     void draw(SpriteRenderer& renderer);
 
   private:
