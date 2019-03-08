@@ -24,10 +24,6 @@ void Model::generate() {
   std::string brick_name;
   glm::vec3 color;
   glm::vec2 size; 
-  unsigned min_x;
-  unsigned max_x;
-  unsigned min_y;
-  unsigned max_y;
 
   switch(u(e)) {
     case (brickType::B_LEFT):
@@ -67,7 +63,7 @@ void Model::generate() {
       break;
   }
 
-  bricks_.push_back(new GameObject{glm::vec2{20, 0}, size, 
+  bricks_.push_back(new GameObject{glm::vec2{140, 0}, size, 
     manager_.getTexture2D(brick_name), color, glm::vec2{500.0f, 60.0f}});
 }
 

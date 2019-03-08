@@ -66,7 +66,7 @@ class ModelTest : public ::testing::Test {
     void TearDown() override {}
 
     cpp_tetris::ResourceManager manager{"./src/demo"};
-    cpp_tetris::Game game{manager, 690, 600};
+    cpp_tetris::Game game{manager, 690, 680};
     cpp_tetris::Window* win;
 };
 

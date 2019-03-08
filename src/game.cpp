@@ -87,9 +87,9 @@ void Game::render(float deltaTime) {
     renderer_->drawSprite(manager_.getTexture2D("bground_layer0"), 
       glm::vec2(0, 0), glm::vec2(width_, height_));
     renderer_->drawSprite(manager_.getTexture2D("bground_layer1"),
-      glm::vec2(0, 0), glm::vec2(690, 600));
+      glm::vec2(0, 0), glm::vec2(width_, height_));
     renderer_->drawSprite(manager_.getTexture2D("grid_layer2"),
-      glm::vec2(0, 0), glm::vec2(690, 600));
+      glm::vec2(0, 0), glm::vec2(width_, height_));
     
     // draw GameObjects
     model_->draw(*renderer_, deltaTime);

@@ -7,6 +7,7 @@
 #include <glad/glad.h>
 #include "sprite_renderer.hpp"
 #include "texture.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ enum gameArea {
   MIN_X = 20,
   MAX_X = 420,
   MIN_Y = 20,
-  MAX_Y = 580
+  MAX_Y = 660
 };
 
 class GameObject {
@@ -33,11 +34,11 @@ class GameObject {
     GameObject(glm::vec2 pos, glm::vec2 size, Texture2D& sprite, 
                glm::vec3 color, glm::vec2 velocity);
 
+    void defineLimits();
     void moveY(userInput direction, float deltaTime);
     void moveY(float deltaTime);
     void moveX(userInput direction, float deltaTime);
     void rotate(float deltaTime);
-
     void draw(SpriteRenderer& renderer);
 
   private:

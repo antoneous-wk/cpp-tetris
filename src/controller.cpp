@@ -11,6 +11,8 @@ void Controller::processInput() {
 }
 
 void Controller::processInput(GameObject& object, float deltaTime) {
+  if(glfwGetKey(window_, GLFW_KEY_K) == GLFW_PRESS)
+    object.rotate(deltaTime);
   if(glfwGetKey(window_, GLFW_KEY_LEFT) == GLFW_PRESS)
     object.moveX(userInput::LEFT, deltaTime);
   if(glfwGetKey(window_, GLFW_KEY_RIGHT) == GLFW_PRESS)
