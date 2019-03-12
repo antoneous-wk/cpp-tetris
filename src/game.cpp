@@ -55,6 +55,7 @@ void Game::init() {
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
 
   // load block textures 
+  /*
   manager_.loadTexture2D("left", "resources/textures/left.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
   manager_.loadTexture2D("right", "resources/textures/right.png",
@@ -69,7 +70,10 @@ void Game::init() {
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
   manager_.loadTexture2D("box", "resources/textures/box.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-
+  */
+  manager_.loadTexture2D("block", "resources/textures/block.png",
+    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
+  
   renderer_ = new SpriteRenderer{manager_.getShader("sprite")};
 }
 

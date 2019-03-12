@@ -3,71 +3,36 @@
 namespace cpp_tetris {
 
 Model::Model(ResourceManager& manager)
-  : manager_{manager} {}
+  : manager_{manager} { }
 
 Model::~Model() {
-  for(GameObject* i : bricks_) {
-    if(i) {
-      delete i;
-      i = nullptr;
+  for(Tetromino* t : tetrominos_) {
+    if(t) {
+      delete t;
+      t = nullptr;
     }
   }
 }
 
-void Model::generate() {
-  unsigned number_of_bricks{brickType::NUM_OF_TYPES-1};
+unsigned Model::generateRandom() {
+  unsigned number_of_bricks{tetrominoType::COUNT-1};
   // create new engine & seed it 
   static default_random_engine e{time(0)};
+  // advance internal state without generating numbers (this prevents same first #)
+  e.discard(10);
   // generate random distribution from 0 to num_of_bricks inclusive
   static uniform_int_distribution<unsigned> u{0, number_of_bricks};
+  return u(e);
+}
 
-  std::string brick_name;
-  glm::vec3 color;
-  glm::vec2 size; 
-
-  switch(u(e)) {
-    case (brickType::B_LEFT):
-      brick_name = "left";
-      color = {1.0f, 0.5f, 0.0f}; // orange
-      size = {160, 80};
-      break;
-    case (brickType::B_RIGHT):
-      brick_name = "right";
-      color = {0.0f, 0.0f, 1.0f}; // blue
-      size = {160, 80};
-      break;
-    case (brickType::B_STICK):
-      brick_name = "stick";
-      color = {0.3f, 1.0f, 1.0f}; // cyan
-      size = {160, 40};
-      break;
-    case (brickType::B_TEE):
-      brick_name = "tee";
-      color = {1.0f, 0.3f, 1.0f}; // pink
-      size = {120, 80};
-      break;
-    case (brickType::B_ZEE):
-      brick_name = "zee";
-      color = {1.0f, 0.0f, 0.0f}; // red
-      size = {120, 80};
-      break;
-    case (brickType::B_SAW):
-      brick_name = "saw";
-      color = {0.3f, 1.0f, 0.3f}; // green
-      size = {120, 80};
-      break;
-    case (brickType::B_BOX):
-      brick_name = "box";
-      color = {1.0f, 1.0f, 0.3f}; // yellow
-      size = {80, 80};
-      break;
-  }
-
-  bricks_.push_back(new GameObject{glm::vec2{140, 0}, size, 
-    manager_.getTexture2D(brick_name), color, glm::vec2{500.0f, 60.0f}});
+void Model::generateTetromino() {
+  tetrominos_.push_back(new Tetromino{generateRandom()});
+/*  tetrominos_.push_back(new Tetromino{glm::vec2{140, 0}, size, 
+    manager_.getTexture2D(brick_name), color, glm::vec2{500.0f, 60.0f}}); */
 }
 
 void Model::update(Controller& controller, float deltaTime) {
+/*
   // generate initial brick
   if(bricks_.empty())
     generate(); 
@@ -83,12 +48,13 @@ void Model::update(Controller& controller, float deltaTime) {
       brick->moveY(deltaTime);
     }
   }
+*/
 }
 
 void Model::draw(SpriteRenderer& renderer, float deltaTime) {
-  // run draw method for all bricks in bricks_ 
-  for(GameObject* brick : bricks_) 
-    brick->draw(renderer);
+  // run draw method for all tetrominos in tetrominos__ 
+//  for(Tetromino* tetromino : tetrominos_) 
+//    tetromino->draw(renderer);
 }
 
 } // namespace cpp_tetris

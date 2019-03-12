@@ -2,44 +2,31 @@
 #define CPP_TETRIS_MODEL_HPP
 
 #include "resource_manager.hpp"
-#include "game_object.hpp"
+#include "sprite_renderer.hpp"
+#include "tetromino.hpp"
 #include "controller.hpp"
 #include "texture.hpp"
 #include <vector>
 #include <string>
+#include <bitset>
 #include <iostream>
 #include <random>
 #include <ctime>
 
-namespace cpp_tetris {
+using namespace std;
 
-enum brickType {
-  B_LEFT, 
-  B_RIGHT,
-  B_STICK,
-  B_TEE,
-  B_ZEE,
-  B_SAW,  
-  B_BOX,
-  NUM_OF_TYPES
-};
+namespace cpp_tetris {
 
 class Model {
   public:
     Model(ResourceManager& manager);
     ~Model();
-
-    void getInput();
-    // iterate through vector and update state of each brick
     void update(Controller& controller, float deltaTime);
-    // iterate through vector and draw each brick
-    // each brick has a state, will draw based on state
     void draw(SpriteRenderer& renderer, float deltaTime);
-  private:
-    // generate random brick and append to vector
-    void generate();
-
-    std::vector<GameObject*> bricks_;
+//  private:
+    void generateTetromino();
+    unsigned generateRandom();
+    vector<Tetromino*> tetrominos_;
     ResourceManager& manager_;
 };
 

@@ -7,8 +7,9 @@ GameObject::GameObject(glm::vec2 pos, glm::vec2 size, Texture2D& sprite,
   : position_{pos}, size_{size}, velocity_{velocity}, color_{color}, 
     rotation_{0.0f}, sprite_{sprite}, isPlaced_{false}, isDestroyed_{false} { 
 
-  defineLimits();
+//  defineLimits();
 } 
+
 
 // define max and min coordinates for each brick 
 void GameObject::defineLimits() {
@@ -87,5 +88,6 @@ void GameObject::draw(SpriteRenderer& renderer) {
   renderer.drawSprite(this->sprite_, this->position_, this->size_,
     this->rotation_, this->color_);
 }
+
 
 }  // namespace cpp_tetris

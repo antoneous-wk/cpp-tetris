@@ -5,9 +5,10 @@ set(SOURCE_FILES
     texture.cpp
 	resource_manager.cpp
 	sprite_renderer.cpp
-    game_object.cpp
     model.cpp
     controller.cpp
+    tetromino.cpp
+    block.cpp
     main.cpp
 	game.cpp
 	)

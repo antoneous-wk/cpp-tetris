@@ -10,6 +10,7 @@ void Controller::processInput() {
     glfwSetWindowShouldClose(window_, true);
 }
 
+/*
 void Controller::processInput(GameObject& object, float deltaTime) {
   if(glfwGetKey(window_, GLFW_KEY_K) == GLFW_PRESS)
     object.rotate(deltaTime);
@@ -20,5 +21,6 @@ void Controller::processInput(GameObject& object, float deltaTime) {
   if(glfwGetKey(window_, GLFW_KEY_DOWN) == GLFW_PRESS)
     object.moveY(userInput::DOWN, deltaTime);
 }
+*/
 
 } // namespace cpp_tetris
