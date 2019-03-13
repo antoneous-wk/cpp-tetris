@@ -39,12 +39,27 @@ class ModelTest : public ::testing::Test {
 };
 */
 
-TEST(TetrominoTest, generateBlockTest) {
-  cpp_tetris::ResourceManager manager{"./src/demo"};
-  cpp_tetris::Model model{manager};
-  model.generateTetromino();
-  for(cpp_tetris::Tetromino* tetromino : model.tetrominos_)
-    tetromino->resolveBlockCoordinates(270);
+class TetrominoTest : public ::testing::Test {
+  protected:
+    TetrominoTest() {
+      game.init();
+      glEnable(GL_BLEND);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      win = game.getWin();
+    }
+    ~TetrominoTest() {}
+    void SetUp() override {}
+    void TearDown() override {}
+
+    cpp_tetris::ResourceManager manager{"./src/demo"};
+    cpp_tetris::Game game{manager, 690, 680};
+    cpp_tetris::Window* win;
+};
+
+TEST_F(TetrominoTest, generateBlockTest) {
+  game.model_->generateTetromino();
+//  for(cpp_tetris::Tetromino* tetromino : game->model.tetrominos_)
+//    tetromino->resolveBlockCoordinates(270);
 }
 
 /*
@@ -72,7 +87,6 @@ TEST_F(ModelTest, updateTest) {
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   my_argv = argv; 
-  std::cout << "I am here" << std::endl;
   return RUN_ALL_TESTS();
 */
  

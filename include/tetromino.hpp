@@ -45,9 +45,9 @@ static vector<vector<bitset<16>>> tetrominos =
 
 class Tetromino {
   public:
-    Tetromino(unsigned tetromino);    
+    Tetromino(unsigned tetromino, Texture2D& sprite);    
     ~Tetromino();
-//  private:
+  private:
     void setAttributes(unsigned tetromino);
     void resolveBlockCoordinates(unsigned orientation);
     void generateBlocks(Texture2D& sprite);

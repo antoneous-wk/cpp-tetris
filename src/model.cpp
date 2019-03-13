@@ -26,9 +26,8 @@ unsigned Model::generateRandom() {
 }
 
 void Model::generateTetromino() {
-  tetrominos_.push_back(new Tetromino{generateRandom()});
-/*  tetrominos_.push_back(new Tetromino{glm::vec2{140, 0}, size, 
-    manager_.getTexture2D(brick_name), color, glm::vec2{500.0f, 60.0f}}); */
+  tetrominos_.push_back(new Tetromino{generateRandom(),
+    manager_.getTexture2D("block")});
 }
 
 void Model::update(Controller& controller, float deltaTime) {

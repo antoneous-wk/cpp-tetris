@@ -54,23 +54,7 @@ void Game::init() {
   manager_.loadTexture2D("grid_layer2", "resources/textures/grid.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
 
-  // load block textures 
-  /*
-  manager_.loadTexture2D("left", "resources/textures/left.png",
-    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("right", "resources/textures/right.png",
-    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("stick", "resources/textures/stick.png",
-    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("tee", "resources/textures/tee.png",
-    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("zee", "resources/textures/zee.png",
-    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("saw", "resources/textures/saw.png",
-    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("box", "resources/textures/box.png",
-    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  */
+  // load block texture 
   manager_.loadTexture2D("block", "resources/textures/block.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
   
