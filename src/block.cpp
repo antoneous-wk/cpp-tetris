@@ -2,20 +2,14 @@
 
 namespace cpp_tetris {
 
-Block::Block(glm::vec2 gridPosition)
-  : gridPosition_{gridPosition} { }
+Block::Block(glm::vec2 position, Texture2D& sprite, glm::vec3 color)
+  : position_{position},
+    sprite_{sprite},
+    color_{color},
+    size_{40, 40},
+    velocity_{0},
+    rotation_{0} { }
 
-// transform grid position to absolute position (in pixels)
-void Block::transformPosition() {
-  // size of grid square in pixels
-  unsigned grid_size{40};
-  // x offset from top left
-  unsigned x_offset{20};
-  // y offset from top
-  unsigned y_offset{20};
-  absolutePosition_.x = x_offset + grid_size * gridPosition_.x;
-  absolutePosition_.y = y_offset + grid_size * gridPosition_.y;
-}
 
 /*
 void Block::draw(SpriteRenderer& renderer) {

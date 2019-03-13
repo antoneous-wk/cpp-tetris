@@ -11,6 +11,9 @@
 
 using namespace std;
 
+// foward declaration
+class Texture2D; 
+
 namespace cpp_tetris {
 
 enum tetrominoType {
@@ -43,10 +46,11 @@ static vector<vector<bitset<16>>> tetrominos =
 class Tetromino {
   public:
     Tetromino(unsigned tetromino);    
+    ~Tetromino();
 //  private:
     void setAttributes(unsigned tetromino);
     void resolveBlockCoordinates(unsigned orientation);
-    void generateBlocks();
+    void generateBlocks(Texture2D& sprite);
     vector<unsigned> blockCoordinates_;
     vector<bitset<16>> tetromino_;
     glm::vec2 tetrominoCoordinates_;

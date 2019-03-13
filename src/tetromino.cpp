@@ -6,6 +6,16 @@ Tetromino::Tetromino(unsigned tetromino) {
   setAttributes(tetromino);
 }
 
+Tetromino::~Tetromino() {
+  for(Block* b : blocks_) {
+    if(b) {
+      delete b;
+      b = nullptr;
+    }
+  }
+
+}
+
 void Tetromino::setAttributes(unsigned tetromino) {
   // set starting position for tetromino
   tetrominoCoordinates_ = {4, 0};
@@ -80,13 +90,17 @@ void Tetromino::resolveBlockCoordinates(unsigned orientation) {
     blockCoordinates_[j+1] += tetrominoCoordinates_.y;
     blockCoordinates_[j+1] = blockCoordinates_[j+1] * grid_spacing + y_offset; 
   }
+/*
   for(unsigned j = 0; j < 7; j+=2)
     std::cout << blockCoordinates_[j] << " " << blockCoordinates_[j+1] << endl;
+*/
 }
 
-void Tetromino::generateBlocks() {
-
+void Tetromino::generateBlocks(Texture2D& sprite) {
+  for(unsigned j = 0; j < 7; j+=2) {
+    blocks_.push_back(new Block{glm::vec2{blockCoordinates_[j],
+      blockCoordinates_[j+1]}, sprite, color_});
+  }
 }
-
 
 }  // namespace cpp_tetris
