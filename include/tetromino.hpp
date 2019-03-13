@@ -46,6 +46,7 @@ class Tetromino {
 //  private:
     void setAttributes(unsigned tetromino);
     void resolveBlockCoordinates(unsigned orientation);
+    void generateBlocks();
     vector<unsigned> blockCoordinates_;
     vector<bitset<16>> tetromino_;
     glm::vec2 tetrominoCoordinates_;

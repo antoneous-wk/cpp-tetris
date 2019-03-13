@@ -18,7 +18,7 @@ unsigned Model::generateRandom() {
   unsigned number_of_bricks{tetrominoType::COUNT-1};
   // create new engine & seed it 
   static default_random_engine e{time(0)};
-  // advance internal state without generating numbers (this prevents same first #)
+  // advance internal state without generating #s (this prevents same first #)
   e.discard(10);
   // generate random distribution from 0 to num_of_bricks inclusive
   static uniform_int_distribution<unsigned> u{0, number_of_bricks};
