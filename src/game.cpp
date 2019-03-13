@@ -79,7 +79,7 @@ void Game::render(float deltaTime) {
     renderer_->drawSprite(manager_.getTexture2D("grid_layer2"),
       glm::vec2(0, 0), glm::vec2(width_, height_));
     
-    // draw GameObjects
+    // draw Tetrominos
     model_->draw(*renderer_, deltaTime);
   }
 }

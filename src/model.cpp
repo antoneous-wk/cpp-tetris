@@ -31,29 +31,27 @@ void Model::generateTetromino() {
 }
 
 void Model::update(Controller& controller, float deltaTime) {
-/*
-  // generate initial brick
-  if(bricks_.empty())
-    generate(); 
+  // generate initial tetromino 
+  if(tetrominos_.empty())
+    generateTetromino(); 
   // generate another brick if previous brick has been placed or destroyed
-  if(!bricks_.empty() && (*--bricks_.end())->isPlaced_)
-    generate();
+  if(!tetrominos_.empty() && (*--tetrominos_.end())->isPlaced_)
+    generateTetromino();
 
-  for(GameObject* brick : bricks_) {
-    if(brick->position_.y >= brick->max_y)  
-      brick->isPlaced_ = true;
-    if(!brick->isPlaced_) {
-      controller.processInput(*brick, deltaTime);
-      brick->moveY(deltaTime);
-    }
-  }
-*/
+//  for(Tetromino* tetromino : tetrominos_) {
+//    if(tetromino->position_.y >= brick->max_y)  
+//      brick->isPlaced_ = true;
+//    if(!brick->isPlaced_) {
+//      controller.processInput(*brick, deltaTime);
+//      brick->moveY(deltaTime);
+//    }
+//  }
 }
 
 void Model::draw(SpriteRenderer& renderer, float deltaTime) {
   // run draw method for all tetrominos in tetrominos__ 
-//  for(Tetromino* tetromino : tetrominos_) 
-//    tetromino->draw(renderer);
+  for(Tetromino* tetromino : tetrominos_) 
+    tetromino->draw(renderer);
 }
 
 } // namespace cpp_tetris

@@ -11,8 +11,10 @@
 
 using namespace std;
 
-// foward declaration
-class Texture2D; 
+// foward declarations
+class Model;
+//class Texture2D; 
+//class SpriteRenderer;
 
 namespace cpp_tetris {
 
@@ -44,9 +46,11 @@ static vector<vector<bitset<16>>> tetrominos =
    {0xCC00, 0xCC00, 0xCC00, 0xCC00}};    // 'box'
 
 class Tetromino {
+    friend class Model;
   public:
     Tetromino(unsigned tetromino, Texture2D& sprite);    
     ~Tetromino();
+    void draw(SpriteRenderer& renderer);
   private:
     void setAttributes(unsigned tetromino);
     void resolveBlockCoordinates(unsigned orientation);
@@ -56,6 +60,7 @@ class Tetromino {
     glm::vec2 tetrominoCoordinates_;
     glm::vec3 color_;
     vector<Block*> blocks_;
+    bool isPlaced_;
 };
 
 } // namespace cpp_tetris

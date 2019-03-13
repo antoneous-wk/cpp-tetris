@@ -6,7 +6,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
 #include "sprite_renderer.hpp"
-#include "texture.hpp"
+
+// foward declaration
+class Texture;
 
 namespace cpp_tetris {
 
@@ -23,7 +25,6 @@ class Block {
     glm::vec2 size_;
     glm::vec2 velocity_;
     float rotation_;
-    //bool isPlaced_;
     //bool isDestroyed_;
 };
 

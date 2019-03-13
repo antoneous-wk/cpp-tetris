@@ -20,25 +20,6 @@
 
 namespace {
 
-/*
-class ModelTest : public ::testing::Test {
-  protected:
-    ModelTest() {
-      game.init();
-      glEnable(GL_BLEND);
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      win = game.getWin();
-    }
-    ~ModelTest() {}
-    void SetUp() override {}
-    void TearDown() override {}
-
-    cpp_tetris::ResourceManager manager{"./src/demo"};
-    cpp_tetris::Game game{manager, 690, 680};
-    cpp_tetris::Window* win;
-};
-*/
-
 class TetrominoTest : public ::testing::Test {
   protected:
     TetrominoTest() {
@@ -57,13 +38,6 @@ class TetrominoTest : public ::testing::Test {
 };
 
 TEST_F(TetrominoTest, generateBlockTest) {
-  game.model_->generateTetromino();
-//  for(cpp_tetris::Tetromino* tetromino : game->model.tetrominos_)
-//    tetromino->resolveBlockCoordinates(270);
-}
-
-/*
-TEST_F(ModelTest, updateTest) {
   float currentTime{0.0f}; 
   float lastTime{0.0f};
   float deltaTime{0.0f};
@@ -73,15 +47,13 @@ TEST_F(ModelTest, updateTest) {
     deltaTime = currentTime - lastTime;
     lastTime = currentTime;
     glfwPollEvents();
-
     game.processInput(); 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-//    game.update(deltaTime);
-//    game.render(deltaTime);
+    game.update(deltaTime);
+    game.render(deltaTime);
     glfwSwapBuffers(win->getWin());
   }
 }
-*/
 
 /*
 int main(int argc, char** argv) {

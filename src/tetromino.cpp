@@ -2,7 +2,8 @@
 
 namespace cpp_tetris {
 
-Tetromino::Tetromino(unsigned tetromino, Texture2D& sprite) {
+Tetromino::Tetromino(unsigned tetromino, Texture2D& sprite)
+  : isPlaced_{false} {
   setAttributes(tetromino);
   // resolve block coordinates at 0 deg orientation
   resolveBlockCoordinates(0);    
@@ -16,6 +17,11 @@ Tetromino::~Tetromino() {
       b = nullptr;
     }
   }
+}
+
+void Tetromino::draw(SpriteRenderer& renderer) {
+  for(Block* block : blocks_)  
+    block->draw(renderer);
 }
 
 void Tetromino::setAttributes(unsigned tetromino) {

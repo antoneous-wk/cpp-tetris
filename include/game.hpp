@@ -28,7 +28,7 @@ class Game {
 	Window* getWin() const { return win_; } 	
     SpriteRenderer& getRenderer() const { return *renderer_; }
 
-//  private:
+  private:
     gameState state_;
     int width_, height_ ;
     Window* win_;
