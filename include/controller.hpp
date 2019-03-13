@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "tetromino.hpp"
 
 namespace cpp_tetris {
 
@@ -11,11 +12,10 @@ class Controller {
     Controller(GLFWwindow* window);
 
     void processInput();
-//    void processInput(GameObject& object, float deltaTime); 
+    void processInput(Tetromino& object, float deltaTime); 
 
   private:
     GLFWwindow* window_;
-
 };
 
 } // namespace cpp_tetris

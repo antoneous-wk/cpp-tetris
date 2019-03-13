@@ -10,17 +10,15 @@ void Controller::processInput() {
     glfwSetWindowShouldClose(window_, true);
 }
 
-/*
-void Controller::processInput(GameObject& object, float deltaTime) {
-  if(glfwGetKey(window_, GLFW_KEY_K) == GLFW_PRESS)
-    object.rotate(deltaTime);
+void Controller::processInput(Tetromino& tetromino, float deltaTime) {
+//  if(glfwGetKey(window_, GLFW_KEY_K) == GLFW_PRESS)
+//    tetromino.rotate(deltaTime);
   if(glfwGetKey(window_, GLFW_KEY_LEFT) == GLFW_PRESS)
-    object.moveX(userInput::LEFT, deltaTime);
+    tetromino.moveX(userInput::KEY_LEFT, deltaTime);
   if(glfwGetKey(window_, GLFW_KEY_RIGHT) == GLFW_PRESS)
-    object.moveX(userInput::RIGHT, deltaTime);
-  if(glfwGetKey(window_, GLFW_KEY_DOWN) == GLFW_PRESS)
-    object.moveY(userInput::DOWN, deltaTime);
+    tetromino.moveX(userInput::KEY_RIGHT, deltaTime);
+//  if(glfwGetKey(window_, GLFW_KEY_DOWN) == GLFW_PRESS)
+//    tetromino.moveY(userInput::DOWN, deltaTime);
 }
-*/
 
 } // namespace cpp_tetris

@@ -15,7 +15,7 @@ Model::~Model() {
 }
 
 unsigned Model::generateRandom() {
-  unsigned number_of_bricks{tetrominoType::COUNT-1};
+  unsigned number_of_bricks{shape::COUNT-1};
   // create new engine & seed it 
   static default_random_engine e{time(0)};
   // advance internal state without generating #s (this prevents same first #)
@@ -38,14 +38,14 @@ void Model::update(Controller& controller, float deltaTime) {
   if(!tetrominos_.empty() && (*--tetrominos_.end())->isPlaced_)
     generateTetromino();
 
-//  for(Tetromino* tetromino : tetrominos_) {
+  for(Tetromino* tetromino : tetrominos_) {
 //    if(tetromino->position_.y >= brick->max_y)  
 //      brick->isPlaced_ = true;
-//    if(!brick->isPlaced_) {
-//      controller.processInput(*brick, deltaTime);
-//      brick->moveY(deltaTime);
-//    }
-//  }
+    if(!tetromino->isPlaced_) {
+      controller.processInput(*tetromino, deltaTime);
+      tetromino->moveY(deltaTime);
+    }
+  }
 }
 
 void Model::draw(SpriteRenderer& renderer, float deltaTime) {

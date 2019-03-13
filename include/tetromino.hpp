@@ -13,37 +13,32 @@ using namespace std;
 
 // foward declarations
 class Model;
-//class Texture2D; 
-//class SpriteRenderer;
 
 namespace cpp_tetris {
 
-enum tetrominoType {
-  tee, 
-  saw,
-  zee,
-  stick,
-  right,
-  left,
-  box,
-  COUNT  // number of tetrominoTypes 
+enum userInput {
+  KEY_LEFT,
+  KEY_RIGHT,
+  KEY_UP,
+  KEY_DOWN 
 };
 
-// each 16 bit hex number represents a tetromino orientation in 4x4 grid
-// there are four blocks per tetromino grid, example:
-// 0 1 0 0
-// 1 1 0 0
-// 0 1 0 0
-// 0 0 0 0
-static vector<vector<bitset<16>>> tetrominos = 
-    // 0    // 90   // 180  // 270
-  {{0x4640, 0x0E40, 0x4C40, 0x4E00},     // 'tee'
-   {0x8C40, 0x6C00, 0x8C40, 0x6C00},     // 'saw'
-   {0x4C80, 0xC600, 0x4C80, 0xC600},     // 'zee'
-   {0x4444, 0x0F00, 0x4444, 0x0F00},     // 'stick'
-   {0x44C0, 0x8E00, 0xC880, 0xE200},     // 'right'
-   {0x88C0, 0xE800, 0xC440, 0x2E00},     // 'left'
-   {0xCC00, 0xCC00, 0xCC00, 0xCC00}};    // 'box'
+enum grid {
+  X_OFFSET = 20,
+  Y_OFFSET = 20,
+  SPACING = 40
+};
+
+enum shape {
+  TEE, 
+  SAW,
+  ZEE,
+  STICK,
+  RIGHT,
+  LEFT,
+  BOX,
+  COUNT  // number of tetrominoTypes 
+};
 
 class Tetromino {
     friend class Model;
@@ -51,16 +46,23 @@ class Tetromino {
     Tetromino(unsigned tetromino, Texture2D& sprite);    
     ~Tetromino();
     void draw(SpriteRenderer& renderer);
+    void moveX(userInput input, float deltaTime);
+    void moveY(float deltaTime);
   private:
     void setAttributes(unsigned tetromino);
-    void resolveBlockCoordinates(unsigned orientation);
+    void resolveRelativePosition(unsigned orientation);
+    void resolveAbsolutePosition();
     void generateBlocks(Texture2D& sprite);
-    vector<unsigned> blockCoordinates_;
+    vector<unsigned> blockPosition_;
     vector<bitset<16>> tetromino_;
-    glm::vec2 tetrominoCoordinates_;
-    glm::vec3 color_;
     vector<Block*> blocks_;
+    glm::vec2 tetrominoPosition_;
+    glm::vec3 color_;
+    glm::vec2 velocity_;
     bool isPlaced_;
+
+    // static members
+    static vector<vector<bitset<16>>> tetrominos;
 };
 
 } // namespace cpp_tetris
