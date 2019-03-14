@@ -45,20 +45,27 @@ class Tetromino {
   public:
     Tetromino(unsigned tetromino, Texture2D& sprite);    
     ~Tetromino();
+    void update();
     void draw(SpriteRenderer& renderer);
+    void rotate(float deltaTime);
     void moveX(userInput input, float deltaTime);
     void moveY(float deltaTime);
   private:
-    void setAttributes(unsigned tetromino);
-    void resolveRelativePosition(unsigned orientation);
+    void setOrientation(unsigned orientation);
+    void resolveRelativePosition();
     void resolveAbsolutePosition();
     void generateBlocks(Texture2D& sprite);
+    glm::vec3 setColor(unsigned tetromino);
+    
+    // data members
     vector<unsigned> blockPosition_;
     vector<bitset<16>> tetromino_;
+    bitset<16> orientation_;
     vector<Block*> blocks_;
     glm::vec2 tetrominoPosition_;
     glm::vec3 color_;
     glm::vec2 velocity_;
+    unsigned angle_;
     bool isPlaced_;
 
     // static members

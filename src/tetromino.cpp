@@ -3,49 +3,62 @@
 namespace cpp_tetris {
 
 Tetromino::Tetromino(unsigned tetromino, Texture2D& sprite)
-  : isPlaced_{false},
-    velocity_{800, 100} {
-  setAttributes(tetromino);
-  // resolve block coordinates at 0 deg orientation
-  resolveRelativePosition(0);    
+  : tetromino_{tetrominos[tetromino]},
+    tetrominoPosition_{2, 0},
+    color_{setColor(tetromino)},
+    isPlaced_{false},
+    velocity_{0, 100}, 
+    angle_{0} {
+  
+  setOrientation(0);  
+  resolveRelativePosition();    
   resolveAbsolutePosition();
   generateBlocks(sprite);
 }
 
 Tetromino::~Tetromino() {
   for(Block* b : blocks_) {
-    if(b) {
-      delete b;
-      b = nullptr;
-    }
+    if(b) delete b;
+    b = nullptr;
   }
+}
+
+void Tetromino::update() {
+  resolveRelativePosition();
+  resolveAbsolutePosition();
 }
 
 void Tetromino::draw(SpriteRenderer& renderer) {
-  for(Block* block : blocks_)  
-    block->draw(renderer);
+  unsigned j = 0; 
+  for(Block* block : blocks_) {
+    block->draw(renderer, glm::vec2(blockPosition_[j], blockPosition_[j+1]));
+    j+=2;
+  }
+}
+
+void Tetromino::rotate(float deltaTime) {
+  if(angle_ == 270) 
+    angle_ = 0;
+  else 
+    angle_ += 90;
+  setOrientation(angle_);
 }
 
 void Tetromino::moveX(userInput input, float deltaTime) {
-  static float dx{0.0f};
-  dx += velocity_.x * deltaTime;
-  if(dx >= grid::SPACING) {
-    int deltaX; 
-    switch(input) {
-      case(userInput::KEY_LEFT): {
-        deltaX = -1;
-        break;
-      }
-      case(userInput::KEY_RIGHT): {
-        deltaX = 1;
-        break;
-      }
-    }    
-       tetrominoPosition_.x += deltaX;
-    for(Block* block : blocks_)
-      block->moveX(deltaX * grid::SPACING);
-    dx = 0.0f;
-  }
+  int deltaX; 
+  switch(input) {
+    case(userInput::KEY_LEFT): {
+      deltaX = -1;
+      break;
+    }
+    case(userInput::KEY_RIGHT): {
+      deltaX = 1;
+      break;
+    }
+  }    
+  tetrominoPosition_.x += deltaX;
+  for(Block* block : blocks_)
+    block->moveX(deltaX * grid::SPACING);
 }
 
 void Tetromino::moveY(float deltaTime) {
@@ -60,31 +73,48 @@ void Tetromino::moveY(float deltaTime) {
   }
 }
 
-void Tetromino::setAttributes(unsigned tetromino) {
-  // set starting position for tetromino
-  tetrominoPosition_ = {2, 0};
-  tetromino_ = tetrominos[tetromino];
+glm::vec3 Tetromino::setColor(unsigned tetromino) {
+  glm::vec3 color;
   switch(tetromino) {
     case(shape::LEFT):
-      color_ = {1.0f, 0.5f, 0.0f}; // orange
+      color = {1.0f, 0.5f, 0.0f}; // orange
       break;
     case(shape::RIGHT):
-      color_ = {0.0f, 0.0f, 1.0f}; // blue
+      color = {0.0f, 0.0f, 1.0f}; // blue
       break;
     case(shape::STICK):
-      color_ = {0.3f, 1.0f, 1.0f}; // cyan
+      color = {0.3f, 1.0f, 1.0f}; // cyan
       break;
     case(shape::TEE):
-      color_ = {1.0f, 0.3f, 1.0f}; // pink
+      color = {1.0f, 0.3f, 1.0f}; // pink
       break;
     case(shape::ZEE):
-      color_ = {1.0f, 0.0f, 0.0f}; // red
+      color = {1.0f, 0.0f, 0.0f}; // red
       break;
     case(shape::SAW):
-      color_ = {0.3f, 1.0f, 0.3f}; // green
+      color = {0.3f, 1.0f, 0.3f}; // green
       break;
     case(shape::BOX):
-      color_ = {1.0f, 1.0f, 0.3f}; // yellow
+      color = {1.0f, 1.0f, 0.3f}; // yellow
+      break;
+  }
+  return color;
+}
+
+void Tetromino::setOrientation(unsigned angle) {
+  angle_ = angle;
+  switch(angle_) {
+    case(0): 
+      orientation_ = tetromino_[0]; 
+      break;
+    case(90): 
+      orientation_ = tetromino_[1]; 
+      break;
+    case(180): 
+      orientation_ = tetromino_[2]; 
+      break;     
+    case(270): 
+      orientation_ = tetromino_[3]; 
       break;
   }
 }
@@ -92,17 +122,11 @@ void Tetromino::setAttributes(unsigned tetromino) {
 // resolve relative position (in grid coordinates) for each block
 // coordinates are relative to top left coordinate of 4 x 4 tetromino grid
 // order of coordinates is x1, y1, x2, y2, x3, y3, x4, y4 
-void Tetromino::resolveRelativePosition(unsigned orientation) {
-  unsigned index;
-  switch(orientation) {
-    case(0): index = 0; break;
-    case(90): index = 1; break;
-    case(180): index = 2; break;     
-    case(270): index = 3; break;
-  }
+void Tetromino::resolveRelativePosition() {
+  blockPosition_.clear();
   // resolve relative coordinates
   for(int j = 15; j >= 0; --j) {
-    if(tetromino_[index][j] == 1) {
+    if(orientation_[j] == 1) {
       // resolve relative x (column) coordinate for each block
       if(j == 15 || j == 11 || j == 7 || j == 3) 
         blockPosition_.push_back(0); 
@@ -157,9 +181,5 @@ vector<vector<bitset<16>>> Tetromino::tetrominos =
    {0x44C0, 0x8E00, 0xC880, 0xE200},     // 'right'
    {0x88C0, 0xE800, 0xC440, 0x2E00},     // 'left'
    {0xCC00, 0xCC00, 0xCC00, 0xCC00}};    // 'box'
-
-
-
-
 
 }  // namespace cpp_tetris

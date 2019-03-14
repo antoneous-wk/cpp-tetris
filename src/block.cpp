@@ -17,7 +17,8 @@ void Block::moveX(int deltaX) {
   position_.x += deltaX;
 }
 
-void Block::draw(SpriteRenderer& renderer) {
+void Block::draw(SpriteRenderer& renderer, glm::vec2 position) {
+  position_ = position;
   renderer.drawSprite(this->sprite_, this->position_, this->size_,
     this->rotation_, this->color_);
 }

@@ -38,6 +38,7 @@ class TetrominoTest : public ::testing::Test {
 };
 
 TEST_F(TetrominoTest, generateBlockTest) {
+//  glfwSetInputMode(win->getWin(), GLFW_STICKY_KEYS, 1);
   float currentTime{0.0f}; 
   float lastTime{0.0f};
   float deltaTime{0.0f};
@@ -47,7 +48,6 @@ TEST_F(TetrominoTest, generateBlockTest) {
     deltaTime = currentTime - lastTime;
     lastTime = currentTime;
     glfwPollEvents();
-    game.processInput(); 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     game.update(deltaTime);
     game.render(deltaTime);

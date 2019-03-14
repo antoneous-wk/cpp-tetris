@@ -16,7 +16,7 @@ class Block {
   public:
     Block(glm::vec2 position, Texture2D& sprite, glm::vec3 color); 
     Block(glm::vec2 gridPosition);
-    void draw(SpriteRenderer& renderer);
+    void draw(SpriteRenderer& renderer, glm::vec2 position);
     void moveY(unsigned deltaY);
     void moveX(int deltaX);
   private:

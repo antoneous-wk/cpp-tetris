@@ -62,7 +62,7 @@ void Game::init() {
 }
 
 void Game::processInput() { 
-  controller_->processInput();
+//  controller_->processInput();
 }
  
 void Game::update(float deltaTime) { 

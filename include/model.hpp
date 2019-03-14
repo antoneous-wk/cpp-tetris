@@ -15,6 +15,11 @@
 
 using namespace std;
 
+enum moveDirection {
+  X_DIRECTION,
+  Y_DIRECTION
+};
+
 // foward declaration
 class Game;
 
@@ -30,8 +35,11 @@ class Model {
   private:
     void generateTetromino();
     unsigned generateRandom();
+    bool detectCollision(moveDirection direction, const Tetromino& tetromino);
     vector<Tetromino*> tetrominos_;
     ResourceManager& manager_;
+    // static members
+    static vector<vector<bitset<12>>> grid;
 };
 
 } // namespace cpp_tetris

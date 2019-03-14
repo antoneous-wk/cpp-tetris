@@ -10,7 +10,8 @@ namespace cpp_tetris {
 class Controller {
   public:
     Controller(GLFWwindow* window);
-
+    
+    static void key_callback(GLFWwindow* win, int key, int scancode, int action, int mods);
     void processInput();
     void processInput(Tetromino& object, float deltaTime); 
 

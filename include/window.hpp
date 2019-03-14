@@ -9,6 +9,7 @@
 namespace cpp_tetris {
 
 // forward declarations
+void key_callback(GLFWwindow* win, int key, int scancode, int action, int mods);
 void framebuffer_size_callback(GLFWwindow* win, int width, int height);
 
 class Window {

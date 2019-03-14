@@ -33,9 +33,16 @@ void Window::init() {
     glViewport(0, 0, width_, height_);
     // register callback function to be called by GLFW when window is resized
     glfwSetFramebufferSizeCallback(win_, framebuffer_size_callback);
+    // register callback function to be called by GLFW when key press
+    glfwSetKeyCallback(win_, key_callback);
   }
   isInit = true;
 }
+
+void key_callback(GLFWwindow* win, int key, int scancode, int action, int mods) {
+  if(glfwGetKey(win, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    glfwSetWindowShouldClose(win, true);
+} 
 
 void framebuffer_size_callback(GLFWwindow* win, int width, int height) {
   glViewport(0, 0, width, height);
