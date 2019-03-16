@@ -13,7 +13,9 @@
 #include <random>
 #include <ctime>
 
-using namespace std;
+using std::bitset;
+using std::vector;
+using std::cout;
 
 enum moveDirection {
   X_DIRECTION,
@@ -35,11 +37,11 @@ class Model {
   private:
     void generateTetromino();
     unsigned generateRandom();
-    bool detectCollision(moveDirection direction, const Tetromino& tetromino);
+    bool detectCollisionY(Tetromino& tetromino);
     vector<Tetromino*> tetrominos_;
     ResourceManager& manager_;
     // static members
-    static vector<vector<bitset<12>>> grid;
+    static vector<bitset<10>> grid;
 };
 
 } // namespace cpp_tetris

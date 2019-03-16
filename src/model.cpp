@@ -30,13 +30,69 @@ void Model::generateTetromino() {
     manager_.getTexture2D("block")});
 }
 
-bool Model::detectCollision(moveDirection direction, const Tetromino& tetromino) {
-//  for(unsigned j = 0; j < 3, ++j)
-//    tetromino.orientation_[j]
-//    tetromino.tetrominoPosition_.x
-  
-}
+bool Model::detectCollisionY(Tetromino& tetromino) {
+  vector<bitset<10>> rows{0, 0, 0, 0};
+  unsigned h{0};
+  unsigned i{0};
+  for(unsigned j = 0; j < 16; ++j) {
+    if(j == 0 || j % 4 != 0) {
+      rows[i][h] = tetromino.orientation_[j];
+      ++h;
+    }
+    else {
+      ++i;
+      h = 0;
+      rows[i][h] = tetromino.orientation_[j]; 
+      ++h;
+    }
+  }
 
+  for(bitset<10>& bits : rows) {
+    if(tetromino.tetrominoPosition_.x <= 6)
+      bits <<= (6 - tetromino.tetrominoPosition_.x);
+    else
+	  bits >>= (tetromino.tetrominoPosition_.x - 6);
+  }
+
+  bool isCollision{false};
+  unsigned j{tetromino.tetrominoPosition_.y + 4};
+  for(unsigned i = 0; i < 4; ++i) {
+    if((rows[i] & grid[j]).any()) {
+      isCollision = true; 
+      if(j >= 1)
+        grid[j-1] = grid[j-1] | rows[i];
+    }
+    if(j >= 1) 
+      --j;
+  }
+  if(isCollision)
+    return true;
+  else
+    return false;
+}
+ 
+/*
+  unsigned j{tetromino.tetrominoPosition_.y + 4};
+  unsigned index{0};
+  for(const bitset<10>& bits : rows) {
+    if((bits & grid[j]).any()) {
+      for(unsigned k = index; k < 4 - index; ++k) 
+        grid[--j] = grid[--j] | rows[k];
+
+      //grid[j-1] = grid[j-1] | bits;
+      //cout << bits << endl;
+      //cout << grid[j] << endl;
+      //cout << (bits & grid[j]) << endl << endl;
+      return true; 
+    }
+    //if(j >= 1)
+//    ++j;
+    ++index;
+  }
+
+  return false;
+}
+*/
 
 void Model::update(Controller& controller, float deltaTime) {
   // generate initial tetromino 
@@ -50,8 +106,10 @@ void Model::update(Controller& controller, float deltaTime) {
     tetromino->update(); 
     if(!tetromino->isPlaced_) {
       controller.processInput(*tetromino, deltaTime);
-//      if(!detectCollision(moveDirection::Y_DIRECTION, *tetromino))     
-        tetromino->moveY(deltaTime);
+        if(!detectCollisionY(*tetromino))     
+          tetromino->moveY(deltaTime);
+        else
+          tetromino->isPlaced_ = true;
     }
   }
 //    if(tetromino->position_.y >= brick->max_y)  
@@ -65,11 +123,7 @@ void Model::draw(SpriteRenderer& renderer, float deltaTime) {
 }
 
 // defines a 12 x 17 grid 
-// left-most and right-most bits and bottom-most bits equal the value '1'
-// remaining bits represent a 10 x 16 grid and equal the value '0'
-vector<vector<bitset<12>>> Model::grid = {
-  {0x801}, {0x801}, {0x801}, {0x801}, {0x801}, {0x801}, {0x801}, {0x801},
-  {0x801}, {0x801}, {0x801}, {0x801}, {0x801}, {0x801}, {0x801}, {0x801},
-  {0xFFF}};
+vector<bitset<10>> Model::grid = 
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x3FF};
 
 } // namespace cpp_tetris

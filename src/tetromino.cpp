@@ -4,7 +4,7 @@ namespace cpp_tetris {
 
 Tetromino::Tetromino(unsigned tetromino, Texture2D& sprite)
   : tetromino_{tetrominos[tetromino]},
-    tetrominoPosition_{2, 0},
+    tetrominoPosition_{3, -4},
     color_{setColor(tetromino)},
     isPlaced_{false},
     velocity_{0, 100}, 

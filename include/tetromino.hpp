@@ -9,7 +9,8 @@
 #include <vector>
 #include "block.hpp"
 
-using namespace std;
+using std::vector;
+using std::bitset;
 
 // foward declarations
 class Model;
