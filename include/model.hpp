@@ -40,6 +40,7 @@ class Model {
     bool detectCollisionY(Tetromino& tetromino);
     vector<Tetromino*> tetrominos_;
     ResourceManager& manager_;
+  
     // static members
     static vector<bitset<10>> grid;
 };

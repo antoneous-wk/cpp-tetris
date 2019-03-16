@@ -35,44 +35,14 @@ void Model::generateTetromino() {
 }
 
 bool Model::detectCollisionY(Tetromino& tetromino) {
-  unsigned pos{0};
-  unsigned row{0};
-  // transform tetromino orientation into vector containing four bitset<10>
-  // 0100       0000000100  // bits[3]
-  // 0100  ---> 0000000100  // bits[2]
-  // 1100       0000001100  // bits[1]
-  // 0000       0000000000  // bits[0]
-  vector<bitset<10>> bits{0, 0, 0, 0};
-  for(unsigned b = 0; b < 16; ++b) {
-    if(b == 0 || b % 4 != 0) {
-      bits[row][pos] = tetromino.orientation_[b];
-      ++pos;
-    } 
-    else {
-      ++row;
-      pos = 0;
-      bits[row][pos] = tetromino.orientation_[b]; 
-      ++pos;
-    }
-  }
-
-  // shift bits in X direction to match current tetronimo X position
-  const unsigned offset{bits[0].size() - 4};
-  for(bitset<10>& bitRow : bits) {
-    if(tetromino.tetrominoPosition_.x <= offset)
-      bitRow <<= (offset - tetromino.tetrominoPosition_.x);
-    else
-	  bitRow >>= (tetromino.tetrominoPosition_.x - offset);
-  }
-
-  // detect tetronimo collision in the Y direction
+  // detect tetronimo collision in the Y direction and update grid
   bool isCollision{false};
   unsigned gridRow{tetromino.tetrominoPosition_.y + 4};
   for(unsigned i = 0; i < 4; ++i) {
-    if((bits[i] & grid[gridRow]).any()) {
+    if((tetromino.bits_[i] & grid[gridRow]).any()) {
       isCollision = true; 
       if(gridRow > 0)
-        grid[gridRow-1] = grid[gridRow-1] | bits[i];
+        grid[gridRow-1] = grid[gridRow-1] | tetromino.bits_[i];
     }
     if(gridRow > 0) 
       --gridRow;
