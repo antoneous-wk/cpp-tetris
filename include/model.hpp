@@ -36,7 +36,7 @@ class Model {
     void draw(SpriteRenderer& renderer, float deltaTime);
   private:
     void generateTetromino();
-    unsigned generateRandom();
+    unsigned generateRandomNumber();
     bool detectCollisionY(Tetromino& tetromino);
     vector<Tetromino*> tetrominos_;
     ResourceManager& manager_;

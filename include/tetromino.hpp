@@ -27,7 +27,7 @@ enum userInput {
 enum grid {
   X_OFFSET = 20,
   Y_OFFSET = 20,
-  SPACING = 40
+  SPACING = 40,
 };
 
 enum shape {

@@ -3,7 +3,7 @@
 namespace cpp_tetris {
 
 Model::Model(ResourceManager& manager)
-  : manager_{manager} { }
+  : manager_{manager} {}
 
 Model::~Model() {
   for(Tetromino* t : tetrominos_) {
@@ -14,11 +14,15 @@ Model::~Model() {
   }
 }
 
-unsigned Model::generateRandom() {
+// defines a 10 x 17 grid of bits
+vector<bitset<10>> Model::grid =
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x3FF};
+
+unsigned Model::generateRandomNumber() {
   unsigned number_of_shapes{shape::COUNT-1};
   // create new engine & seed it 
   static default_random_engine e{time(0)};
-  // advance internal state without generating #s (this prevents same first #)
+  // advance internal state (this prevents same first number)
   e.discard(10);
   // generate random distribution from 0 to num_of_bricks inclusive
   static uniform_int_distribution<unsigned> u{0, number_of_shapes};
@@ -26,74 +30,56 @@ unsigned Model::generateRandom() {
 }
 
 void Model::generateTetromino() {
-  tetrominos_.push_back(new Tetromino{generateRandom(),
+  tetrominos_.push_back(new Tetromino{generateRandomNumber(),
     manager_.getTexture2D("block")});
 }
 
 bool Model::detectCollisionY(Tetromino& tetromino) {
-  vector<bitset<10>> rows{0, 0, 0, 0};
-  unsigned h{0};
-  unsigned i{0};
-  for(unsigned j = 0; j < 16; ++j) {
-    if(j == 0 || j % 4 != 0) {
-      rows[i][h] = tetromino.orientation_[j];
-      ++h;
-    }
+  unsigned pos{0};
+  unsigned row{0};
+  // transform tetromino orientation into vector containing four bitset<10>
+  // 0100       0000000100  // bits[3]
+  // 0100  ---> 0000000100  // bits[2]
+  // 1100       0000001100  // bits[1]
+  // 0000       0000000000  // bits[0]
+  vector<bitset<10>> bits{0, 0, 0, 0};
+  for(unsigned b = 0; b < 16; ++b) {
+    if(b == 0 || b % 4 != 0) {
+      bits[row][pos] = tetromino.orientation_[b];
+      ++pos;
+    } 
     else {
-      ++i;
-      h = 0;
-      rows[i][h] = tetromino.orientation_[j]; 
-      ++h;
+      ++row;
+      pos = 0;
+      bits[row][pos] = tetromino.orientation_[b]; 
+      ++pos;
     }
   }
 
-  for(bitset<10>& bits : rows) {
-    if(tetromino.tetrominoPosition_.x <= 6)
-      bits <<= (6 - tetromino.tetrominoPosition_.x);
+  // shift bits in X direction to match current tetronimo X position
+  const unsigned offset{bits[0].size() - 4};
+  for(bitset<10>& bitRow : bits) {
+    if(tetromino.tetrominoPosition_.x <= offset)
+      bitRow <<= (offset - tetromino.tetrominoPosition_.x);
     else
-	  bits >>= (tetromino.tetrominoPosition_.x - 6);
+	  bitRow >>= (tetromino.tetrominoPosition_.x - offset);
   }
 
+  // detect tetronimo collision in the Y direction
   bool isCollision{false};
-  unsigned j{tetromino.tetrominoPosition_.y + 4};
+  unsigned gridRow{tetromino.tetrominoPosition_.y + 4};
   for(unsigned i = 0; i < 4; ++i) {
-    if((rows[i] & grid[j]).any()) {
+    if((bits[i] & grid[gridRow]).any()) {
       isCollision = true; 
-      if(j >= 1)
-        grid[j-1] = grid[j-1] | rows[i];
+      if(gridRow > 0)
+        grid[gridRow-1] = grid[gridRow-1] | bits[i];
     }
-    if(j >= 1) 
-      --j;
+    if(gridRow > 0) 
+      --gridRow;
   }
-  if(isCollision)
-    return true;
-  else
-    return false;
+  return isCollision;
 }
  
-/*
-  unsigned j{tetromino.tetrominoPosition_.y + 4};
-  unsigned index{0};
-  for(const bitset<10>& bits : rows) {
-    if((bits & grid[j]).any()) {
-      for(unsigned k = index; k < 4 - index; ++k) 
-        grid[--j] = grid[--j] | rows[k];
-
-      //grid[j-1] = grid[j-1] | bits;
-      //cout << bits << endl;
-      //cout << grid[j] << endl;
-      //cout << (bits & grid[j]) << endl << endl;
-      return true; 
-    }
-    //if(j >= 1)
-//    ++j;
-    ++index;
-  }
-
-  return false;
-}
-*/
-
 void Model::update(Controller& controller, float deltaTime) {
   // generate initial tetromino 
   if(tetrominos_.empty())
@@ -121,9 +107,5 @@ void Model::draw(SpriteRenderer& renderer, float deltaTime) {
   for(Tetromino* tetromino : tetrominos_) 
     tetromino->draw(renderer);
 }
-
-// defines a 12 x 17 grid 
-vector<bitset<10>> Model::grid = 
-  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x3FF};
 
 } // namespace cpp_tetris
