@@ -62,7 +62,8 @@ class Tetromino {
     // data members
     vector<unsigned> blockPosition_;
     vector<bitset<16>> tetromino_;
-    vector<bitset<10>> bits_{0, 0, 0, 0};
+//    vector<bitset<10>> bits_{0, 0, 0, 0};
+    vector<bitset<12>> bits_{0, 0, 0, 0};
     bitset<16> orientation_;
     vector<Block*> blocks_;
     glm::vec2 tetrominoPosition_;

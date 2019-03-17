@@ -15,8 +15,24 @@ Model::~Model() {
 }
 
 // defines a 10 x 17 grid of bits
+/*
 vector<bitset<10>> Model::grid =
   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x3FF};
+*/
+
+// defines a 12 x 17 grid of bits
+// grid consists of 0's bounded by 1's on left, right, bottom 
+// note: break line for depiction purposes only 
+// 1 0 0 0 0 0 0 0 0 0 0 1
+// 1 0 0 0 0 0 0 0 0 0 0 1
+// ~~~~~(break line)~~~~~~
+// 1 0 0 0 0 0 0 0 0 0 0 1
+// 1 0 0 0 0 0 0 0 0 0 0 1
+// 1 1 1 1 1 1 1 1 1 1 1 1
+vector<bitset<12>> Model::grid =
+  {0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801,  
+   0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 
+   0xFFF};
 
 unsigned Model::generateRandomNumber() {
   unsigned number_of_shapes{shape::COUNT-1};

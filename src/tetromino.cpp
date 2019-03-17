@@ -28,6 +28,8 @@ void Tetromino::update() {
   updateBits();
 }
 
+// Tetromino::updateBits() //
+/*
 void Tetromino::updateBits() {
   unsigned pos{0};
   unsigned row{0};
@@ -36,6 +38,7 @@ void Tetromino::updateBits() {
   // 0100  ---> 0000000100  // bits_[2]
   // 1100       0000001100  // bits_[1]
   // 0000       0000000000  // bits_[0]
+  bits_ = {0, 0, 0, 0};
   for(unsigned b = 0; b < 16; ++b) {
     if(b == 0 || b % 4 != 0) {
       bits_[row][pos] = orientation_[b];
@@ -51,6 +54,38 @@ void Tetromino::updateBits() {
   // shift bits in X direction to match current X position
   const unsigned offset{bits_[0].size() - 4};
   for(bitset<10>& bitRow : bits_) {
+    if(tetrominoPosition_.x <= offset)
+      bitRow <<= (offset - tetrominoPosition_.x);
+    else
+      bitRow >>= (tetrominoPosition_.x - offset);
+  }
+}
+*/
+
+void Tetromino::updateBits() {
+  unsigned pos{0};
+  unsigned row{0};
+  // transform tetromino orientation into vector containing four bitset<12>
+  // 0100       000000000100  // bits_[3]
+  // 0100  ---> 000000000100  // bits_[2]
+  // 1100       000000001100  // bits_[1]
+  // 0000       000000000000  // bits_[0]
+  bits_ = {0, 0, 0, 0};
+  for(unsigned b = 0; b < 16; ++b) {
+    if(b == 0 || b % 4 != 0) {
+      bits_[row][pos] = orientation_[b];
+      ++pos;
+    }
+    else {
+      ++row;
+      pos = 0;
+      bits_[row][pos] = orientation_[b];
+      ++pos;
+    }
+  } 
+  // shift bits in X direction to match current X position
+  const unsigned offset{bits_[0].size() - 5};
+  for(bitset<12>& bitRow : bits_) {
     if(tetrominoPosition_.x <= offset)
       bitRow <<= (offset - tetrominoPosition_.x);
     else

@@ -42,7 +42,8 @@ class Model {
     ResourceManager& manager_;
   
     // static members
-    static vector<bitset<10>> grid;
+//  static vector<bitset<10>> grid;
+    static vector<bitset<12>> grid;
 };
 
 } // namespace cpp_tetris
