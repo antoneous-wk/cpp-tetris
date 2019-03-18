@@ -28,6 +28,38 @@ void Tetromino::update() {
   updateBits();
 }
 
+vector<bitset<12>> Tetromino::updateBits(bitset<16> orientation) {
+  unsigned pos{0};
+  unsigned row{0};
+  // transform tetromino orientation into vector containing four bitset<12>
+  // 0100       000000000100  // bits[3]
+  // 0100  ---> 000000000100  // bits[2]
+  // 1100       000000001100  // bits[1]
+  // 0000       000000000000  // bits[0]
+  vector<bitset<12>> bits = {0, 0, 0, 0};
+  for(unsigned b = 0; b < 16; ++b) {
+    if(b == 0 || b % 4 != 0) {
+      bits[row][pos] = orientation[b];
+      ++pos;
+    }
+    else {
+      ++row;
+      pos = 0;
+      bits[row][pos] = orientation[b];
+      ++pos;
+    }
+  } 
+  // shift bits in X direction to match current X position
+  const unsigned offset{bits[0].size() - 5};
+  for(bitset<12>& bitRow : bits) {
+    if(tetrominoPosition_.x <= offset)
+      bitRow <<= (offset - tetrominoPosition_.x);
+    else
+      bitRow >>= (tetrominoPosition_.x - offset);
+  }
+  return bits;
+}
+
 void Tetromino::updateBits() {
   unsigned pos{0};
   unsigned row{0};
@@ -67,6 +99,51 @@ void Tetromino::draw(SpriteRenderer& renderer) {
   }
 }
 
+bool Tetromino::detectCollisionRotate(unsigned angle) {
+  vector<bitset<12>> bits; 
+  switch(angle) {
+    case(0):
+      bits = updateBits(tetromino_[0]);
+      break;
+    case(90):
+      bits = updateBits(tetromino_[1]);
+      break;
+    case(180):
+      bits = updateBits(tetromino_[2]);
+      break;
+    case(270):
+      bits = updateBits(tetromino_[3]);
+      break;
+  }
+
+  if(tetrominoPosition_.y >= -3) {
+    unsigned gridRow{tetrominoPosition_.y + 3};
+      for(unsigned i = 0; i < 4; ++i) {
+        if((bits[i] & grid[gridRow]).any())
+          return true;
+        if(gridRow > 0)
+          --gridRow;
+      }  
+  }
+  return false;
+}
+
+void Tetromino::rotate(float deltaTime) {
+  if(angle_ == 270) {
+    if(!detectCollisionRotate(0)) {
+      angle_ = 0;
+      setOrientation(angle_); 
+    }
+  }
+  else { 
+    if(!detectCollisionRotate(angle_ + 90)) {
+      angle_ += 90;
+      setOrientation(angle_); 
+    }
+  }
+}
+
+/*
 void Tetromino::rotate(float deltaTime) {
   if(angle_ == 270) 
     angle_ = 0;
@@ -74,6 +151,7 @@ void Tetromino::rotate(float deltaTime) {
     angle_ += 90;
   setOrientation(angle_);
 }
+*/
 
 void Tetromino::moveX(userInput input, float deltaTime) {
   int deltaX{0}; 
