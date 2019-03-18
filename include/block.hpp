@@ -25,7 +25,6 @@ class Block {
     glm::vec3 color_;
     glm::vec2 size_;
     float rotation_;
-    //bool isDestroyed_;
 };
 
 } // namespace cpp_tetris

@@ -14,26 +14,6 @@ Model::~Model() {
   }
 }
 
-// defines a 10 x 17 grid of bits
-/*
-vector<bitset<10>> Model::grid =
-  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x3FF};
-*/
-
-// defines a 12 x 17 grid of bits
-// grid consists of 0's bounded by 1's on left, right, bottom 
-// note: break line for depiction purposes only 
-// 1 0 0 0 0 0 0 0 0 0 0 1
-// 1 0 0 0 0 0 0 0 0 0 0 1
-// ~~~~~(break line)~~~~~~
-// 1 0 0 0 0 0 0 0 0 0 0 1
-// 1 0 0 0 0 0 0 0 0 0 0 1
-// 1 1 1 1 1 1 1 1 1 1 1 1
-vector<bitset<12>> Model::grid =
-  {0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801,  
-   0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 
-   0xFFF};
-
 unsigned Model::generateRandomNumber() {
   unsigned number_of_shapes{shape::COUNT-1};
   // create new engine & seed it 
@@ -50,22 +30,6 @@ void Model::generateTetromino() {
     manager_.getTexture2D("block")});
 }
 
-bool Model::detectCollisionY(Tetromino& tetromino) {
-  // detect tetronimo collision in the Y direction and update grid
-  bool isCollision{false};
-  unsigned gridRow{tetromino.tetrominoPosition_.y + 4};
-  for(unsigned i = 0; i < 4; ++i) {
-    if((tetromino.bits_[i] & grid[gridRow]).any()) {
-      isCollision = true; 
-      if(gridRow > 0)
-        grid[gridRow-1] = grid[gridRow-1] | tetromino.bits_[i];
-    }
-    if(gridRow > 0) 
-      --gridRow;
-  }
-  return isCollision;
-}
- 
 void Model::update(Controller& controller, float deltaTime) {
   // generate initial tetromino 
   if(tetrominos_.empty())
@@ -75,17 +39,15 @@ void Model::update(Controller& controller, float deltaTime) {
     generateTetromino();
 
   for(Tetromino* tetromino : tetrominos_) {
-    tetromino->update(); 
     if(!tetromino->isPlaced_) {
       controller.processInput(*tetromino, deltaTime);
-        if(!detectCollisionY(*tetromino))     
-          tetromino->moveY(deltaTime);
-        else
-          tetromino->isPlaced_ = true;
+      tetromino->update();
+      if(tetromino->detectCollisionY())     
+        tetromino->isPlaced_ = true;
+      else
+        tetromino->moveY(deltaTime);
     }
   }
-//    if(tetromino->position_.y >= brick->max_y)  
-//      brick->isPlaced_ = true;
 }
 
 void Model::draw(SpriteRenderer& renderer, float deltaTime) {

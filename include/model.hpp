@@ -37,13 +37,11 @@ class Model {
   private:
     void generateTetromino();
     unsigned generateRandomNumber();
-    bool detectCollisionY(Tetromino& tetromino);
     vector<Tetromino*> tetrominos_;
     ResourceManager& manager_;
   
     // static members
-//  static vector<bitset<10>> grid;
-    static vector<bitset<12>> grid;
+//    static vector<bitset<12>> grid;
 };
 
 } // namespace cpp_tetris

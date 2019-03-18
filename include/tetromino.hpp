@@ -57,12 +57,13 @@ class Tetromino {
     void resolveAbsolutePosition();
     void updateBits();
     void generateBlocks(Texture2D& sprite);
+    bool detectCollisionY();
+    bool detectCollisionX(userInput input);
     glm::vec3 setColor(unsigned tetromino);
     
     // data members
     vector<unsigned> blockPosition_;
     vector<bitset<16>> tetromino_;
-//    vector<bitset<10>> bits_{0, 0, 0, 0};
     vector<bitset<12>> bits_{0, 0, 0, 0};
     bitset<16> orientation_;
     vector<Block*> blocks_;
@@ -74,6 +75,8 @@ class Tetromino {
 
     // static members
     static vector<vector<bitset<16>>> tetrominos;
+    static vector<bitset<12>> grid;
+
 };
 
 } // namespace cpp_tetris

@@ -28,40 +28,6 @@ void Tetromino::update() {
   updateBits();
 }
 
-// Tetromino::updateBits() //
-/*
-void Tetromino::updateBits() {
-  unsigned pos{0};
-  unsigned row{0};
-  // transform tetromino orientation into vector containing four bitset<10>
-  // 0100       0000000100  // bits_[3]
-  // 0100  ---> 0000000100  // bits_[2]
-  // 1100       0000001100  // bits_[1]
-  // 0000       0000000000  // bits_[0]
-  bits_ = {0, 0, 0, 0};
-  for(unsigned b = 0; b < 16; ++b) {
-    if(b == 0 || b % 4 != 0) {
-      bits_[row][pos] = orientation_[b];
-      ++pos;
-    }
-    else {
-      ++row;
-      pos = 0;
-      bits_[row][pos] = orientation_[b];
-      ++pos;
-    }
-  } 
-  // shift bits in X direction to match current X position
-  const unsigned offset{bits_[0].size() - 4};
-  for(bitset<10>& bitRow : bits_) {
-    if(tetrominoPosition_.x <= offset)
-      bitRow <<= (offset - tetrominoPosition_.x);
-    else
-      bitRow >>= (tetrominoPosition_.x - offset);
-  }
-}
-*/
-
 void Tetromino::updateBits() {
   unsigned pos{0};
   unsigned row{0};
@@ -110,14 +76,16 @@ void Tetromino::rotate(float deltaTime) {
 }
 
 void Tetromino::moveX(userInput input, float deltaTime) {
-  int deltaX; 
+  int deltaX{0}; 
   switch(input) {
     case(userInput::KEY_LEFT): {
-      deltaX = -1;
+      if(!detectCollisionX(input))      
+        deltaX = -1;
       break;
     }
     case(userInput::KEY_RIGHT): {
-      deltaX = 1;
+      if(!detectCollisionX(input))      
+        deltaX = 1;
       break;
     }
   }    
@@ -136,6 +104,50 @@ void Tetromino::moveY(float deltaTime) {
       block->moveY(deltaY * grid::SPACING);
     dy = 0.0f;
   }
+}
+
+bool Tetromino::detectCollisionY() {
+  // detect tetromino collision in the Y direction and update grid
+  bool isCollision{false};
+  unsigned gridRow{tetrominoPosition_.y + 4};
+  for(unsigned i = 0; i < 4; ++i) {
+    if((bits_[i] & grid[gridRow]).any()) {
+      isCollision = true;
+      if(gridRow > 0)
+        grid[gridRow-1] = grid[gridRow-1] | bits_[i];
+    }
+    if(gridRow > 0)
+      --gridRow;
+  }
+  return isCollision;
+}
+
+bool Tetromino::detectCollisionX(userInput input) {
+  // detect tetromino collision in the X direction
+  if(tetrominoPosition_.y >= -3) {
+    unsigned gridRow{tetrominoPosition_.y + 3};
+    switch(input) {
+      case(userInput::KEY_LEFT): {
+        for(unsigned i = 0; i < 4; ++i) {
+          if(((bits_[i] << 1) & grid[gridRow]).any())
+            return true;
+          if(gridRow > 0)
+            --gridRow;
+        }
+        break;
+      }
+      case(userInput::KEY_RIGHT): {
+        for(unsigned i = 0; i < 4; ++i) {
+          if(((bits_[i] >> 1) & grid[gridRow]).any())
+            return true;
+          if(gridRow > 0)
+            --gridRow;
+        }
+        break;
+      }
+    }
+  }
+  return false;
 }
 
 glm::vec3 Tetromino::setColor(unsigned tetromino) {
@@ -246,5 +258,19 @@ vector<vector<bitset<16>>> Tetromino::tetrominos =
    {0x44C0, 0x8E00, 0xC880, 0xE200},     // 'right'
    {0x88C0, 0xE800, 0xC440, 0x2E00},     // 'left'
    {0xCC00, 0xCC00, 0xCC00, 0xCC00}};    // 'box'
+
+// defines a 12 x 17 grid of bits
+// grid consists of 0's bounded by 1's on left, right, bottom 
+// note: break line for depiction purposes only 
+// 1 0 0 0 0 0 0 0 0 0 0 1
+// 1 0 0 0 0 0 0 0 0 0 0 1
+// ~~~~~(break line)~~~~~~
+// 1 0 0 0 0 0 0 0 0 0 0 1
+// 1 0 0 0 0 0 0 0 0 0 0 1
+// 1 1 1 1 1 1 1 1 1 1 1 1
+vector<bitset<12>> Tetromino::grid =
+  {0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801,
+   0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801, 0x801,
+   0xFFF};
 
 }  // namespace cpp_tetris
