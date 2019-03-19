@@ -9,16 +9,26 @@
 
 // foward declaration
 class Texture;
+class Tetromino;
+
+enum grid {
+  X_OFFSET = 20,
+  Y_OFFSET = 20,
+  SPACING = 40,
+};
 
 namespace cpp_tetris {
 
 class Block {
+  friend class Tetromino;
   public:
     Block(glm::vec2 position, Texture2D& sprite, glm::vec3 color); 
     Block(glm::vec2 gridPosition);
     void draw(SpriteRenderer& renderer, glm::vec2 position);
+    void draw(SpriteRenderer& renderer);
     void moveY(unsigned deltaY);
     void moveX(int deltaX);
+    void resolveScreenPosition(); 
   private:
     glm::vec2 position_;
     Texture2D& sprite_;

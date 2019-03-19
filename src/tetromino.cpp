@@ -24,8 +24,12 @@ Tetromino::~Tetromino() {
 
 void Tetromino::update() {
   resolveGridPosition();
-  resolveScreenPosition();
   updateBits();
+  unsigned j = 0; 
+  for(Block* block : blocks_) {
+    block->position_ = {blockPosition_[j], blockPosition_[j+1]};
+    j+=2;
+  }
 }
 
 vector<bitset<12>> Tetromino::updateBits(bitset<16> orientation) {
@@ -92,11 +96,8 @@ void Tetromino::updateBits() {
 }
 
 void Tetromino::draw(SpriteRenderer& renderer) {
-  unsigned j = 0; 
-  for(Block* block : blocks_) {
-    block->draw(renderer, glm::vec2(blockPosition_[j], blockPosition_[j+1]));
-    j+=2;
-  }
+  for(Block* block : blocks_)
+    block->draw(renderer);
 }
 
 bool Tetromino::detectCollisionRotate(unsigned angle) {
@@ -143,16 +144,6 @@ void Tetromino::rotate(float deltaTime) {
   }
 }
 
-/*
-void Tetromino::rotate(float deltaTime) {
-  if(angle_ == 270) 
-    angle_ = 0;
-  else 
-    angle_ += 90;
-  setOrientation(angle_);
-}
-*/
-
 void Tetromino::moveX(userInput input, float deltaTime) {
   int deltaX{0}; 
   switch(input) {
@@ -169,7 +160,7 @@ void Tetromino::moveX(userInput input, float deltaTime) {
   }    
   tetrominoPosition_.x += deltaX;
   for(Block* block : blocks_)
-    block->moveX(deltaX * grid::SPACING);
+    block->moveX(deltaX);
 }
 
 void Tetromino::moveY(float deltaTime) {
@@ -179,7 +170,7 @@ void Tetromino::moveY(float deltaTime) {
     unsigned deltaY{1};
     tetrominoPosition_.y += deltaY;
     for(Block* block : blocks_)
-      block->moveY(deltaY * grid::SPACING);
+      block->moveY(deltaY);
     dy = 0.0f;
   }
 }
@@ -199,6 +190,7 @@ bool Tetromino::detectCollisionY() {
   }
   return isCollision;
 }
+
 
 bool Tetromino::detectCollisionX(userInput input) {
   // detect tetromino collision in the X direction
@@ -274,7 +266,7 @@ void Tetromino::setOrientation(unsigned angle) {
   }
 }
 
-// resolve block position in grid coordinates
+// resolve grid coordinates for each block
 // order of coordinates is x1, y1, x2, y2, x3, y3, x4, y4 
 void Tetromino::resolveGridPosition() {
   blockPosition_.clear();
@@ -304,17 +296,6 @@ void Tetromino::resolveGridPosition() {
    } 
   }
 }
-
-// resolve block position in screen coordinates (pixels)
-// origin (0, 0) is top left corner of screen
-void Tetromino::resolveScreenPosition() {
-  for(unsigned j = 0; j < 7; j+=2) {
-    // absolute block X position in pixels
-    blockPosition_[j] = blockPosition_[j] * grid::SPACING + grid::X_OFFSET;
-    // absolute block Y position in pixels 
-    blockPosition_[j+1] = blockPosition_[j+1] * grid::SPACING + grid::Y_OFFSET; 
-  }
-} 
 
 vector<unsigned> Tetromino::detectCompleteRow() {
   vector<unsigned> rows; 
@@ -347,6 +328,7 @@ vector<vector<bitset<16>>> Tetromino::tetrominos =
    {0x44C0, 0x8E00, 0xC880, 0xE200},     // 'right'
    {0x88C0, 0xE800, 0xC440, 0x2E00},     // 'left'
    {0xCC00, 0xCC00, 0xCC00, 0xCC00}};    // 'box'
+
 
 // defines a 12 x 17 grid of bits
 // grid consists of 0's bounded by 1's on left, right, bottom 

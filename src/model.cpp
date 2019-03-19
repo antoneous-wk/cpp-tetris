@@ -41,19 +41,20 @@ void Model::update(Controller& controller, float deltaTime) {
   for(Tetromino* tetromino : tetrominos_) {
     if(!tetromino->isPlaced_) {
       controller.processInput(*tetromino, deltaTime);
-      tetromino->update();
       if(tetromino->detectCollisionY())     
         tetromino->isPlaced_ = true;
       else
         tetromino->moveY(deltaTime);
     }
+    tetromino->update();
   }
 }
 
 void Model::draw(SpriteRenderer& renderer, float deltaTime) {
   // run draw method for all tetrominos in tetrominos__ 
-  for(Tetromino* tetromino : tetrominos_) 
+  for(Tetromino* tetromino : tetrominos_) {
     tetromino->draw(renderer);
+}
 }
 
 } // namespace cpp_tetris

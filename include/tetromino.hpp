@@ -24,12 +24,6 @@ enum userInput {
   KEY_DOWN 
 };
 
-enum grid {
-  X_OFFSET = 20,
-  Y_OFFSET = 20,
-  SPACING = 40,
-};
-
 enum shape {
   TEE, 
   SAW,
@@ -54,7 +48,6 @@ class Tetromino {
   private:
     void setOrientation(unsigned angle);
     void resolveGridPosition();
-    void resolveScreenPosition();
     void updateBits();
     vector<bitset<12>> updateBits(bitset<16> orientation);
     void generateBlocks(Texture2D& sprite);
