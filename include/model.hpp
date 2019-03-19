@@ -39,9 +39,6 @@ class Model {
     unsigned generateRandomNumber();
     vector<Tetromino*> tetrominos_;
     ResourceManager& manager_;
-  
-    // static members
-//    static vector<bitset<12>> grid;
 };
 
 } // namespace cpp_tetris

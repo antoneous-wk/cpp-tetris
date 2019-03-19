@@ -23,8 +23,8 @@ Tetromino::~Tetromino() {
 }
 
 void Tetromino::update() {
-  resolveRelativePosition();
-  resolveAbsolutePosition();
+  resolveGridPosition();
+  resolveScreenPosition();
   updateBits();
 }
 
@@ -274,45 +274,56 @@ void Tetromino::setOrientation(unsigned angle) {
   }
 }
 
-// resolve relative position (in grid coordinates) for each block
-// coordinates are relative to top left coordinate of 4 x 4 tetromino grid
+// resolve block position in grid coordinates
 // order of coordinates is x1, y1, x2, y2, x3, y3, x4, y4 
-void Tetromino::resolveRelativePosition() {
+void Tetromino::resolveGridPosition() {
   blockPosition_.clear();
-  // resolve relative coordinates
+  unsigned xpos{tetrominoPosition_.x};
+  unsigned ypos{tetrominoPosition_.y};
+  // resolve coordinates relative to top left tetromino coordinate
   for(int j = 15; j >= 0; --j) {
     if(orientation_[j] == 1) {
-      // resolve relative x (column) coordinate for each block
+      // resolve x (column) coordinate for each block
       if(j == 15 || j == 11 || j == 7 || j == 3) 
-        blockPosition_.push_back(0); 
+        blockPosition_.push_back(0 + xpos); 
       else if(j % 2 == 0 && j % 4 != 0) 
-        blockPosition_.push_back(1); 
+        blockPosition_.push_back(1 + xpos); 
       else if(j % 4 == 0) 
-        blockPosition_.push_back(3); 
+        blockPosition_.push_back(3 + xpos); 
       else 
-        blockPosition_.push_back(2); 
-      // resolve relative y (row) coordinate for each block
+        blockPosition_.push_back(2 + xpos); 
+      // resolve y (row) coordinate for each block
       if(j >= 12) 
-        blockPosition_.push_back(0); 
+        blockPosition_.push_back(0 + ypos); 
       else if(j >= 8) 
-        blockPosition_.push_back(1); 
+        blockPosition_.push_back(1 + ypos); 
       else if(j >= 4) 
-        blockPosition_.push_back(2); 
+        blockPosition_.push_back(2 + ypos); 
       else 
-        blockPosition_.push_back(3); 
+        blockPosition_.push_back(3 + ypos); 
    } 
   }
 }
 
-// resolve absolute position (in pixels) for each block
-void Tetromino::resolveAbsolutePosition() {
+// resolve block position in screen coordinates (pixels)
+// origin (0, 0) is top left corner of screen
+void Tetromino::resolveScreenPosition() {
   for(unsigned j = 0; j < 7; j+=2) {
-    blockPosition_[j] += tetrominoPosition_.x;
+    // absolute block X position in pixels
     blockPosition_[j] = blockPosition_[j] * grid::SPACING + grid::X_OFFSET;
-    blockPosition_[j+1] += tetrominoPosition_.y;
+    // absolute block Y position in pixels 
     blockPosition_[j+1] = blockPosition_[j+1] * grid::SPACING + grid::Y_OFFSET; 
   }
 } 
+
+vector<unsigned> Tetromino::detectCompleteRow() {
+  vector<unsigned> rows; 
+  for(unsigned i = 0; i < grid.size(); ++i) {
+    if(grid[0].all())
+      rows.push_back(i);
+  }
+  return rows;
+}
 
 void Tetromino::generateBlocks(Texture2D& sprite) {
   for(unsigned j = 0; j < 7; j+=2) {

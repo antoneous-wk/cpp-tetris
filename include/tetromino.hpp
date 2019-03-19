@@ -53,14 +53,15 @@ class Tetromino {
     void moveY(float deltaTime);
   private:
     void setOrientation(unsigned angle);
-    void resolveRelativePosition();
-    void resolveAbsolutePosition();
+    void resolveGridPosition();
+    void resolveScreenPosition();
     void updateBits();
     vector<bitset<12>> updateBits(bitset<16> orientation);
     void generateBlocks(Texture2D& sprite);
     bool detectCollisionY();
     bool detectCollisionX(userInput input);
     bool detectCollisionRotate(unsigned angle);
+    vector<unsigned> detectCompleteRow();
     glm::vec3 setColor(unsigned tetromino);
     
     // data members
