@@ -5,7 +5,7 @@ namespace cpp_tetris {
 Controller::Controller(GLFWwindow* window) 
   : window_{window} { }  
 
-void Controller::processInput(Tetromino& tetromino, float deltaTime) {
+void Controller::processInput(Tetromino* tetromino, float deltaTime) {
   static int keyUpOldState{GLFW_RELEASE};
 //  static int keyDownOldState{GLFW_RELEASE};
   static int keyLeftOldState{GLFW_RELEASE};
@@ -17,11 +17,11 @@ void Controller::processInput(Tetromino& tetromino, float deltaTime) {
   int keyRightNewState{glfwGetKey(window_, GLFW_KEY_RIGHT)};
 
   if(keyUpNewState == GLFW_PRESS && keyUpOldState == GLFW_RELEASE) 
-    tetromino.rotate(deltaTime);
+    tetromino->rotate(deltaTime);
   if(keyLeftNewState == GLFW_PRESS && keyLeftOldState == GLFW_RELEASE)
-    tetromino.moveX(userInput::KEY_LEFT, deltaTime);
+    tetromino->moveX(userInput::KEY_LEFT, deltaTime);
   if(keyRightNewState == GLFW_PRESS && keyRightOldState == GLFW_RELEASE)
-    tetromino.moveX(userInput::KEY_RIGHT, deltaTime);
+    tetromino->moveX(userInput::KEY_RIGHT, deltaTime);
 
   keyUpOldState = keyUpNewState;
   keyLeftOldState = keyLeftNewState;

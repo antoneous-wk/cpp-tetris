@@ -30,31 +30,50 @@ void Model::generateTetromino() {
     manager_.getTexture2D("block")});
 }
 
-void Model::update(Controller& controller, float deltaTime) {
-  // generate initial tetromino 
-  if(tetrominos_.empty())
-    generateTetromino(); 
-  // generate another brick if previous brick has been placed or destroyed
-  if(!tetrominos_.empty() && (*--tetrominos_.end())->isPlaced_)
-    generateTetromino();
-
-  for(Tetromino* tetromino : tetrominos_) {
-    if(!tetromino->isPlaced_) {
-      controller.processInput(*tetromino, deltaTime);
-      if(tetromino->detectCollisionY())     
+void Model::processInput(Controller& controller, float deltaTime) {
+    // process input for the last (newest) tetromino in the vector
+    Tetromino*& tetromino{*--tetrominos_.end()}; 
+    if(!tetrominos_.empty() && !(tetromino->isPlaced_)) {
+      controller.processInput(tetromino, deltaTime);
+      if(tetromino->detectCollisionY())
         tetromino->isPlaced_ = true;
       else
         tetromino->moveY(deltaTime);
     }
-    tetromino->update();
-  }
 }
 
-void Model::draw(SpriteRenderer& renderer, float deltaTime) {
-  // run draw method for all tetrominos in tetrominos__ 
-  for(Tetromino* tetromino : tetrominos_) {
-    tetromino->draw(renderer);
+void Model::update(float deltaTime) {
+  // generate initial tetromino 
+  if(tetrominos_.empty())
+    generateTetromino(); 
+  // generate another tetromino if previous tetromino has been placed
+  if(!tetrominos_.empty() && (*--tetrominos_.end())->isPlaced_)
+    generateTetromino();
+  // update
+  for(Tetromino* tetromino : tetrominos_) 
+    if(!tetromino->isPlaced_) 
+      tetromino->update();
 }
+
+/*
+bool Model::detectCompleteRow() {
+  for(unsigned i = Tetromino::grid.size()-2; i >= 0; --i) {
+    if(Tetromino::grid[i].all())
+      return true;
+  }
+  return false;
+}
+
+void Model::destroyBlocks() {
+  for(Tetromino* tetromino : tetrominos_)
+    if(tetromino->isPlaced_)
+      tetromino->destroyBlocks();
+}
+*/
+
+void Model::draw(SpriteRenderer& renderer, float deltaTime) {
+  for(Tetromino* tetromino : tetrominos_) 
+    tetromino->draw(renderer);
 }
 
 } // namespace cpp_tetris

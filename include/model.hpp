@@ -32,11 +32,14 @@ class Model {
   public:
     Model(ResourceManager& manager);
     ~Model();
-    void update(Controller& controller, float deltaTime);
+    void processInput(Controller& controller, float deltaTime);
+    void update(float deltaTime);
     void draw(SpriteRenderer& renderer, float deltaTime);
-  private:
+    private:
     void generateTetromino();
     unsigned generateRandomNumber();
+    bool detectCompleteRow();
+    void destroyBlocks();
     vector<Tetromino*> tetrominos_;
     ResourceManager& manager_;
 };

@@ -10,7 +10,7 @@ namespace cpp_tetris {
 class Controller {
   public:
     Controller(GLFWwindow* window);
-    void processInput(Tetromino& object, float deltaTime); 
+    void processInput(Tetromino* tetromino, float deltaTime); 
   private:
     GLFWwindow* window_;
 };

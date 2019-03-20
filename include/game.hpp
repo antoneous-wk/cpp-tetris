@@ -21,7 +21,7 @@ class Game {
     ~Game();
 
     void init();
-    void processInput();
+    void processInput(float deltaTime);
     void update(float deltaTime);
     void render(float deltaTime);
 

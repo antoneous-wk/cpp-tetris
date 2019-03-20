@@ -61,12 +61,12 @@ void Game::init() {
   renderer_ = new SpriteRenderer{manager_.getShader("sprite")};
 }
 
-void Game::processInput() { 
-//  controller_->processInput();
+void Game::processInput(float deltaTime) { 
+  model_->processInput(*controller_, deltaTime);
 }
  
 void Game::update(float deltaTime) { 
-  model_->update(*controller_, deltaTime);
+  model_->update(deltaTime);
 }
 
 void Game::render(float deltaTime) {

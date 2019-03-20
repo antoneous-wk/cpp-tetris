@@ -23,18 +23,18 @@ class Block {
   friend class Tetromino;
   public:
     Block(glm::vec2 position, Texture2D& sprite, glm::vec3 color); 
-    Block(glm::vec2 gridPosition);
-    void draw(SpriteRenderer& renderer, glm::vec2 position);
     void draw(SpriteRenderer& renderer);
-    void moveY(unsigned deltaY);
-    void moveX(int deltaX);
-    void resolveScreenPosition(); 
+//    void moveY(unsigned deltaY);
+//    void moveX(int deltaX);
+    glm::vec2 resolveScreenCoordinates(); 
   private:
     glm::vec2 position_;
     Texture2D& sprite_;
     glm::vec3 color_;
     glm::vec2 size_;
+    bool isDestroyed_;
     float rotation_;
+    
 };
 
 } // namespace cpp_tetris

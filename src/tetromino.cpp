@@ -7,6 +7,7 @@ Tetromino::Tetromino(unsigned tetromino, Texture2D& sprite)
     tetrominoPosition_{3, -4},
     color_{setColor(tetromino)},
     isPlaced_{false},
+    isDestroyed_{false},
     velocity_{0, 100}, 
     angle_{0} {
   
@@ -159,8 +160,8 @@ void Tetromino::moveX(userInput input, float deltaTime) {
     }
   }    
   tetrominoPosition_.x += deltaX;
-  for(Block* block : blocks_)
-    block->moveX(deltaX);
+//  for(Block* block : blocks_)
+//    block->moveX(deltaX);
 }
 
 void Tetromino::moveY(float deltaTime) {
@@ -169,8 +170,8 @@ void Tetromino::moveY(float deltaTime) {
   if(dy >= grid::SPACING) {
     unsigned deltaY{1};
     tetrominoPosition_.y += deltaY;
-    for(Block* block : blocks_)
-      block->moveY(deltaY);
+//    for(Block* block : blocks_)
+//      block->moveY(deltaY);
     dy = 0.0f;
   }
 }
@@ -297,13 +298,26 @@ void Tetromino::resolveGridPosition() {
   }
 }
 
-vector<unsigned> Tetromino::detectCompleteRow() {
-  vector<unsigned> rows; 
+void Tetromino::destroyBlocks() {
+  vector<unsigned> completeRows; 
   for(unsigned i = 0; i < grid.size(); ++i) {
-    if(grid[0].all())
-      rows.push_back(i);
+    if(grid[i].all())
+      completeRows.push_back(i);
   }
-  return rows;
+  if(!completeRows.empty()) {
+    for(unsigned row : completeRows) {
+      for(Block* block : blocks_)
+        if(block->position_.y == row)
+          block->isDestroyed_ = true; 
+    }
+    unsigned numberOfBlocks{blocks_.size()};
+    for(unsigned i = 0; i < numberOfBlocks; ++i) {
+      if(blocks_[i]->isDestroyed_) {  
+        delete blocks_[i];
+        blocks_.erase(blocks_.begin() + i);
+      }
+    }
+  }
 }
 
 void Tetromino::generateBlocks(Texture2D& sprite) {

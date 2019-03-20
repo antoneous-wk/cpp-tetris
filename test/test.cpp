@@ -49,6 +49,7 @@ TEST_F(TetrominoTest, generateBlockTest) {
     lastTime = currentTime;
     glfwPollEvents();
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    game.processInput(deltaTime);
     game.update(deltaTime);
     game.render(deltaTime);
     glfwSwapBuffers(win->getWin());
