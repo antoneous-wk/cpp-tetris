@@ -25,7 +25,7 @@ Tetromino::~Tetromino() {
 
 void Tetromino::update() {
   resolveGridPosition();
-  updateBits();
+  updateBits(); 
   unsigned j = 0; 
   for(Block* block : blocks_) {
     block->position_ = {blockPosition_[j], blockPosition_[j+1]};
@@ -160,8 +160,6 @@ void Tetromino::moveX(userInput input, float deltaTime) {
     }
   }    
   tetrominoPosition_.x += deltaX;
-//  for(Block* block : blocks_)
-//    block->moveX(deltaX);
 }
 
 void Tetromino::moveY(float deltaTime) {
@@ -170,8 +168,6 @@ void Tetromino::moveY(float deltaTime) {
   if(dy >= grid::SPACING) {
     unsigned deltaY{1};
     tetrominoPosition_.y += deltaY;
-//    for(Block* block : blocks_)
-//      block->moveY(deltaY);
     dy = 0.0f;
   }
 }
@@ -298,24 +294,17 @@ void Tetromino::resolveGridPosition() {
   }
 }
 
-void Tetromino::destroyBlocks() {
-  vector<unsigned> completeRows; 
-  for(unsigned i = 0; i < grid.size(); ++i) {
-    if(grid[i].all())
-      completeRows.push_back(i);
-  }
-  if(!completeRows.empty()) {
-    for(unsigned row : completeRows) {
-      for(Block* block : blocks_)
-        if(block->position_.y == row)
-          block->isDestroyed_ = true; 
+void Tetromino::destroyBlocks(vector<unsigned> completeRows) {
+  for(unsigned row : completeRows) {
+    for(Block* block : blocks_) {
+      if(block->position_.y == row) 
+        block->isDestroyed_ = true; 
     }
-    unsigned numberOfBlocks{blocks_.size()};
-    for(unsigned i = 0; i < numberOfBlocks; ++i) {
-      if(blocks_[i]->isDestroyed_) {  
-        delete blocks_[i];
-        blocks_.erase(blocks_.begin() + i);
-      }
+  }
+  for(auto block = blocks_.begin(); block < blocks_.end(); ++block) {
+    if((*block)->isDestroyed_) {
+      delete *block;
+      blocks_.erase(block);
     }
   }
 }

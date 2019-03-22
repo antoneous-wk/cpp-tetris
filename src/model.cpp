@@ -49,27 +49,34 @@ void Model::update(float deltaTime) {
   // generate another tetromino if previous tetromino has been placed
   if(!tetrominos_.empty() && (*--tetrominos_.end())->isPlaced_)
     generateTetromino();
+  // detect and destroy any complete rows
+  if(detectCompleteRows()) {
+    destroyCompleteRows();
+  }
   // update
   for(Tetromino* tetromino : tetrominos_) 
-    if(!tetromino->isPlaced_) 
-      tetromino->update();
+    tetromino->update();
 }
 
-/*
-bool Model::detectCompleteRow() {
-  for(unsigned i = Tetromino::grid.size()-2; i >= 0; --i) {
-    if(Tetromino::grid[i].all())
-      return true;
-  }
-  return false;
+bool Model::detectCompleteRows() {
+  completeRows_.clear();
+  bool isCompleteRow{false};
+  for(unsigned i = Tetromino::grid.size()-2; i > 0; --i) {
+    if(Tetromino::grid[i].all()) {
+       isCompleteRow = true; 
+  //     Tetromino::grid[i] = 0x801;
+       completeRows_.push_back(i);
+    }
+  } 
+  return isCompleteRow;
 }
 
-void Model::destroyBlocks() {
-  for(Tetromino* tetromino : tetrominos_)
+void Model::destroyCompleteRows() {
+  for(Tetromino* tetromino : tetrominos_) {
     if(tetromino->isPlaced_)
-      tetromino->destroyBlocks();
+      tetromino->destroyBlocks(completeRows_);
+  }
 }
-*/
 
 void Model::draw(SpriteRenderer& renderer, float deltaTime) {
   for(Tetromino* tetromino : tetrominos_) 

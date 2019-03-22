@@ -54,7 +54,7 @@ class Tetromino {
     bool detectCollisionY();
     bool detectCollisionX(userInput input);
     bool detectCollisionRotate(unsigned angle);
-    void destroyBlocks();
+    void destroyBlocks(vector<unsigned> completeRows);
     glm::vec3 setColor(unsigned tetromino);
     
     // data members

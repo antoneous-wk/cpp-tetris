@@ -36,10 +36,11 @@ class Model {
     void update(float deltaTime);
     void draw(SpriteRenderer& renderer, float deltaTime);
     private:
+    vector<unsigned> completeRows_;
     void generateTetromino();
     unsigned generateRandomNumber();
-    bool detectCompleteRow();
-    void destroyBlocks();
+    bool detectCompleteRows();
+    void destroyCompleteRows();
     vector<Tetromino*> tetrominos_;
     ResourceManager& manager_;
 };
