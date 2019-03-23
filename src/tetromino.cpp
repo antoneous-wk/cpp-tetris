@@ -8,7 +8,7 @@ Tetromino::Tetromino(unsigned tetromino, Texture2D& sprite)
     color_{setColor(tetromino)},
     isPlaced_{false},
     isDestroyed_{false},
-    velocity_{0, 100}, 
+    velocity_{0, 200}, 
     angle_{0} {
   
   setOrientation(0);  
@@ -301,10 +301,21 @@ void Tetromino::destroyBlocks(vector<unsigned> completeRows) {
         block->isDestroyed_ = true; 
     }
   }
-  for(auto block = blocks_.begin(); block < blocks_.end(); ++block) {
+  for(auto block = blocks_.begin(); block != blocks_.end(); ++block) {
     if((*block)->isDestroyed_) {
-      delete *block;
-      blocks_.erase(block);
+      grid[(*block)->position_.y][11-(*block)->position_.x-1] = 0;
+//      delete *block;
+//      blocks_.erase(block);
+    }
+  }
+ 
+  for(unsigned row : completeRows) {
+    for(Block* block : blocks_) {
+      if(block->position_.y < row) {
+        grid[block->position_.y][11-block->position_.x-1] = 0;
+        grid[block->position_.y+1][11-block->position_.x-1] = 1;
+        block->position_.y += 1;
+      }
     }
   }
 }

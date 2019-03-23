@@ -11,8 +11,10 @@ Block::Block(glm::vec2 position, Texture2D& sprite, glm::vec3 color)
     rotation_{0} { }
 
 void Block::draw(SpriteRenderer& renderer) {
+  if(!isDestroyed_) {
   renderer.drawSprite(this->sprite_, resolveScreenCoordinates(), this->size_,
     this->rotation_, this->color_);
+  }
 }
 
 // transform block position from grid coordinates to screen coordinates (pixels)
@@ -23,15 +25,5 @@ glm::vec2 Block::resolveScreenCoordinates() {
   position.y = position_.y * grid::SPACING + grid::Y_OFFSET;
   return position;
 }
-
-/*
-void Block::moveY(unsigned deltaY) {
-  position_.y += deltaY * grid::SPACING; 
-}
-
-void Block::moveX(int deltaX) {
-  position_.x += deltaX * grid::SPACING;
-}
-*/
 
 } // namespace cpp_tetris

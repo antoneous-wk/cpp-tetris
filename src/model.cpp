@@ -26,9 +26,20 @@ unsigned Model::generateRandomNumber() {
 }
 
 void Model::generateTetromino() {
-  tetrominos_.push_back(new Tetromino{generateRandomNumber(),
-    manager_.getTexture2D("block")});
+  static unsigned count{0};
+  if (count == 0 || count == 1) {
+    tetrominos_.push_back(new Tetromino{3, manager_.getTexture2D("block")});
+    ++count;
+  }
+  else if(count == 2) {
+    tetrominos_.push_back(new Tetromino{6, manager_.getTexture2D("block")});
+    ++count;
+  }
+  else
+   tetrominos_.push_back(new Tetromino{generateRandomNumber(), 
+     manager_.getTexture2D("block")});
 }
+
 
 void Model::processInput(Controller& controller, float deltaTime) {
     // process input for the last (newest) tetromino in the vector
@@ -54,20 +65,26 @@ void Model::update(float deltaTime) {
     destroyCompleteRows();
   }
   // update
-  for(Tetromino* tetromino : tetrominos_) 
-    tetromino->update();
+  for(Tetromino* tetromino : tetrominos_) {
+    if(!tetromino->isPlaced_)
+      tetromino->update();
+  }
+   
 }
 
 bool Model::detectCompleteRows() {
   completeRows_.clear();
   bool isCompleteRow{false};
-  for(unsigned i = Tetromino::grid.size()-2; i > 0; --i) {
+  for(unsigned i = 0; i < 16; ++i) {
     if(Tetromino::grid[i].all()) {
        isCompleteRow = true; 
-  //     Tetromino::grid[i] = 0x801;
        completeRows_.push_back(i);
     }
   } 
+/*
+  for(unsigned row : completeRows_)
+    Tetromino::grid[row] = 0x801;
+*/
   return isCompleteRow;
 }
 

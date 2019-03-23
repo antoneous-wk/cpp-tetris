@@ -69,6 +69,7 @@ class Tetromino {
     unsigned angle_;
     bool isPlaced_;
     bool isDestroyed_;
+
     // static members
     static vector<vector<bitset<16>>> tetrominos;
     static vector<bitset<12>> grid;
