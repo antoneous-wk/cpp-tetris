@@ -60,16 +60,16 @@ class Tetromino {
     tetrominoType shape_;
     glm::vec3 color_;
     unsigned angle_;
+    glm::vec2 position_;
+    glm::vec2 velocity_;
     bitset<16> orientation_;
 
     vector<bitset<12>> bits_{0, 0, 0, 0};
-
+    void calcBlockPosition();
 
 
     vector<unsigned> blockPosition_;
     vector<Block*> blocks_;
-    glm::vec2 tetrominoPosition_;
-    glm::vec2 velocity_;
     bool isPlaced_;
     bool isDestroyed_;
 

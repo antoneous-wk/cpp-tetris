@@ -6,14 +6,14 @@ Tetromino::Tetromino(tetrominoType shape, glm::vec3 color, Texture2D& sprite)
   : shape_{shape}, 
     color_{color},
     angle_{0}, 
+    position_{3, -4},
+    velocity_{0, 200},
     orientation_{tetrominos[shape_][angle_]},
 
 
 //    tetrominos[shape_]{tetrominos[shape]},
-    tetrominoPosition_{3, -4},
     isPlaced_{false},
-    isDestroyed_{false},
-    velocity_{0, 200} {
+    isDestroyed_{false} {
   
   update();
   generateBlocks(sprite);
@@ -60,10 +60,10 @@ vector<bitset<12>> Tetromino::updateBits(bitset<16> orientation) {
   // shift bits in X direction to match current X position
   const unsigned offset{bits[0].size() - 5};
   for(bitset<12>& bitRow : bits) {
-    if(tetrominoPosition_.x <= offset)
-      bitRow <<= (offset - tetrominoPosition_.x);
+    if(position_.x <= offset)
+      bitRow <<= (offset - position_.x);
     else
-      bitRow >>= (tetrominoPosition_.x - offset);
+      bitRow >>= (position_.x - offset);
   }
   return bits;
 }
@@ -92,10 +92,10 @@ void Tetromino::updateBits() {
   // shift bits in X direction to match current X position
   const unsigned offset{bits_[0].size() - 5};
   for(bitset<12>& bitRow : bits_) {
-    if(tetrominoPosition_.x <= offset)
-      bitRow <<= (offset - tetrominoPosition_.x);
+    if(position_.x <= offset)
+      bitRow <<= (offset - position_.x);
     else
-      bitRow >>= (tetrominoPosition_.x - offset);
+      bitRow >>= (position_.x - offset);
   }
 }
 
@@ -121,8 +121,8 @@ bool Tetromino::detectCollisionRotate(unsigned angle) {
       break;
   }
 
-  if(tetrominoPosition_.y >= -3) {
-    unsigned gridRow{tetrominoPosition_.y + 3};
+  if(position_.y >= -3) {
+    unsigned gridRow{position_.y + 3};
       for(unsigned i = 0; i < 4; ++i) {
         if((bits[i] & grid[gridRow]).any())
           return true;
@@ -162,7 +162,7 @@ void Tetromino::moveX(userInput input, float deltaTime) {
       break;
     }
   }    
-  tetrominoPosition_.x += deltaX;
+  position_.x += deltaX;
 }
 
 void Tetromino::moveY(float deltaTime) {
@@ -170,7 +170,7 @@ void Tetromino::moveY(float deltaTime) {
   dy += velocity_.y * deltaTime;
   if(dy >= grid::SPACING) {
     unsigned deltaY{1};
-    tetrominoPosition_.y += deltaY;
+    position_.y += deltaY;
     dy = 0.0f;
   }
 }
@@ -178,7 +178,7 @@ void Tetromino::moveY(float deltaTime) {
 bool Tetromino::detectCollisionY() {
   // detect tetromino collision in the Y direction and update grid
   bool isCollision{false};
-  unsigned gridRow{tetrominoPosition_.y + 4};
+  unsigned gridRow{position_.y + 4};
   for(unsigned i = 0; i < 4; ++i) {
     if((bits_[i] & grid[gridRow]).any()) {
       isCollision = true;
@@ -194,8 +194,8 @@ bool Tetromino::detectCollisionY() {
 
 bool Tetromino::detectCollisionX(userInput input) {
   // detect tetromino collision in the X direction
-  if(tetrominoPosition_.y >= -3) {
-    unsigned gridRow{tetrominoPosition_.y + 3};
+  if(position_.y >= -3) {
+    unsigned gridRow{position_.y + 3};
     switch(input) {
       case(userInput::KEY_LEFT): {
         for(unsigned i = 0; i < 4; ++i) {
@@ -242,30 +242,19 @@ void Tetromino::setOrientation(unsigned angle) {
 // order of coordinates is x1, y1, x2, y2, x3, y3, x4, y4 
 void Tetromino::calculateBlockPosition() {
   blockPosition_.clear();
-  unsigned xpos{tetrominoPosition_.x};
-  unsigned ypos{tetrominoPosition_.y};
-  // resolve coordinates relative to top left tetromino coordinate
-  for(int j = 15; j >= 0; --j) {
-    if(orientation_[j] == 1) {
-      // resolve x (column) coordinate for each block
-      if(j == 15 || j == 11 || j == 7 || j == 3) 
-        blockPosition_.push_back(0 + xpos); 
-      else if(j % 2 == 0 && j % 4 != 0) 
-        blockPosition_.push_back(1 + xpos); 
-      else if(j % 4 == 0) 
-        blockPosition_.push_back(3 + xpos); 
-      else 
-        blockPosition_.push_back(2 + xpos); 
-      // resolve y (row) coordinate for each block
-      if(j >= 12) 
-        blockPosition_.push_back(0 + ypos); 
-      else if(j >= 8) 
-        blockPosition_.push_back(1 + ypos); 
-      else if(j >= 4) 
-        blockPosition_.push_back(2 + ypos); 
-      else 
-        blockPosition_.push_back(3 + ypos); 
-   } 
+  unsigned xCoordinate = 3;
+  unsigned yCoordinate = 3;
+  for(unsigned bitPosition = 0; bitPosition < 16; ++bitPosition) {
+    if(bitPosition != 0 && bitPosition % 4 == 0) {
+      xCoordinate = 3;
+      --yCoordinate;
+    }
+    if(orientation_[bitPosition]) {
+      blockPosition_.push_back(xCoordinate + position_.x);
+      blockPosition_.push_back(yCoordinate + position_.y);  
+    }
+    if(xCoordinate > 0)
+      --xCoordinate;
   }
 }
 
