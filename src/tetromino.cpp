@@ -2,16 +2,19 @@
 
 namespace cpp_tetris {
 
-Tetromino::Tetromino(unsigned shape, Texture2D& sprite)
-  : shape_{setShape(shape)}, 
+Tetromino::Tetromino(tetrominoType shape, glm::vec3 color, Texture2D& sprite)
+  : shape_{shape}, 
+    color_{color},
+    angle_{0}, 
+    orientation_{tetrominos[shape_][angle_]},
+
+
 //    tetrominos[shape_]{tetrominos[shape]},
     tetrominoPosition_{3, -4},
     isPlaced_{false},
     isDestroyed_{false},
-    velocity_{0, 200}, 
-    angle_{0} {
+    velocity_{0, 200} {
   
-  setOrientation(0);  
   update();
   generateBlocks(sprite);
 }
@@ -22,28 +25,6 @@ Tetromino::~Tetromino() {
     b = nullptr;
   }
 }
-
-tetrominoType Tetromino::setShape(unsigned shape) {
-  switch(shape) {
-    case(tetrominoType::TEE):
-      return tetrominoType::TEE;
-    case(tetrominoType::SAW):
-      return tetrominoType::SAW;
-    case(tetrominoType::ZEE):
-      return tetrominoType::ZEE;
-    case(tetrominoType::STICK):
-      return tetrominoType::STICK;
-    case(tetrominoType::RIGHT):
-      return tetrominoType::RIGHT;
-    case(tetrominoType::LEFT):
-      return tetrominoType::LEFT;
-    case(tetrominoType::BOX):
-      return tetrominoType::BOX;
-  }
-}
-
-
-
 
 void Tetromino::update() {
   calculateBlockPosition();
@@ -239,25 +220,6 @@ bool Tetromino::detectCollisionX(userInput input) {
   return false;
 }
 
-glm::vec3 Tetromino::getColor() {
-  switch(shape_) {
-    case(tetrominoType::TEE):
-      return {1.0f, 0.3f, 1.0f}; // pink
-    case(tetrominoType::SAW):
-      return {0.3f, 1.0f, 0.3f}; // green
-    case(tetrominoType::ZEE):
-      return {1.0f, 0.0f, 0.0f}; // red
-    case(tetrominoType::STICK):
-      return {0.3f, 1.0f, 1.0f}; // cyan
-    case(tetrominoType::LEFT):
-      return {1.0f, 0.5f, 0.0f}; // orange
-    case(tetrominoType::RIGHT):
-      return {0.0f, 0.0f, 1.0f}; // blue
-    case(tetrominoType::BOX):
-      return {1.0f, 1.0f, 0.3f}; // yellow
-  }
-}
-
 void Tetromino::setOrientation(unsigned angle) {
   angle_ = angle;
   switch(angle_) {
@@ -336,7 +298,7 @@ void Tetromino::destroyBlocks(vector<unsigned> completeRows) {
 void Tetromino::generateBlocks(Texture2D& sprite) {
   for(unsigned j = 0; j < 7; j+=2) {
     blocks_.push_back(new Block{glm::vec2{blockPosition_[j],
-      blockPosition_[j+1]}, sprite, getColor()});
+      blockPosition_[j+1]}, sprite, color_});
   }
 }
 

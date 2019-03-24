@@ -26,18 +26,39 @@ unsigned Model::generateRandomNumber() {
 }
 
 void Model::generateTetromino() {
-  static unsigned count{0};
-  if (count == 0 || count == 1) {
-    tetrominos_.push_back(new Tetromino{3, manager_.getTexture2D("block")});
-    ++count;
+  tetrominoType shape;
+  glm::vec3 color;
+  switch(generateRandomNumber()) {
+    case(tetrominoType::TEE):
+      color = {1.0f, 0.3f, 1.0f}; // pink
+      shape = tetrominoType::TEE;
+      break;
+    case(tetrominoType::SAW):
+      color = {0.3f, 1.0f, 0.3f}; // green
+      shape = tetrominoType::SAW;
+      break;
+    case(tetrominoType::ZEE):
+      color = {1.0f, 0.0f, 0.0f}; // red
+      shape = tetrominoType::ZEE;
+      break;
+    case(tetrominoType::STICK):
+      color = {0.3f, 1.0f, 1.0f}; // cyan
+      shape = tetrominoType::STICK;
+      break;
+    case(tetrominoType::RIGHT):
+      color = {0.0f, 0.0f, 1.0f}; // blue
+      shape = tetrominoType::RIGHT;
+      break;
+    case(tetrominoType::LEFT):
+      color = {1.0f, 0.5f, 0.0f}; // orange
+      shape = tetrominoType::LEFT;
+      break;
+    case(tetrominoType::BOX):
+      color = {1.0f, 1.0f, 0.3f}; // yellow
+      shape = tetrominoType::BOX;
+      break;
   }
-  else if(count == 2) {
-    tetrominos_.push_back(new Tetromino{6, manager_.getTexture2D("block")});
-    ++count;
-  }
-  else
-   tetrominos_.push_back(new Tetromino{generateRandomNumber(), 
-     manager_.getTexture2D("block")});
+  tetrominos_.push_back(new Tetromino{shape, color, manager_.getTexture2D("block")});
 }
 
 

@@ -12,20 +12,13 @@
 using std::vector;
 using std::bitset;
 
-// foward declarations
+// forward declarations
 class Model;
 
 namespace cpp_tetris {
 
-enum userInput {
-  KEY_LEFT,
-  KEY_RIGHT,
-  KEY_UP,
-  KEY_DOWN 
-};
-
 enum tetrominoType {
-  TEE, 
+  TEE,
   SAW,
   ZEE,
   STICK,
@@ -35,10 +28,17 @@ enum tetrominoType {
   COUNT  // number of tetrominoTypes 
 };
 
+enum userInput {
+  KEY_LEFT,
+  KEY_RIGHT,
+  KEY_UP,
+  KEY_DOWN 
+};
+
 class Tetromino {
     friend class Model;
   public:
-    Tetromino(unsigned tetromino, Texture2D& sprite);    
+    Tetromino(tetrominoType shape, glm::vec3 color, Texture2D& sprite);    
     ~Tetromino();
     void update();
     void draw(SpriteRenderer& renderer);
@@ -46,10 +46,6 @@ class Tetromino {
     void moveX(userInput input, float deltaTime);
     void moveY(float deltaTime);
   private:
-    tetrominoType setShape(unsigned shape);
-    glm::vec3 getColor();
-
-
     void setOrientation(unsigned angle);
     void calculateBlockPosition();
     void updateBits();
@@ -62,8 +58,10 @@ class Tetromino {
 
     // data members
     tetrominoType shape_;
-
+    glm::vec3 color_;
+    unsigned angle_;
     bitset<16> orientation_;
+
     vector<bitset<12>> bits_{0, 0, 0, 0};
 
 
@@ -72,7 +70,6 @@ class Tetromino {
     vector<Block*> blocks_;
     glm::vec2 tetrominoPosition_;
     glm::vec2 velocity_;
-    unsigned angle_;
     bool isPlaced_;
     bool isDestroyed_;
 
