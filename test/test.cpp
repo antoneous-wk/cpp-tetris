@@ -38,7 +38,6 @@ class TetrominoTest : public ::testing::Test {
 };
 
 TEST_F(TetrominoTest, generateBlockTest) {
-//  glfwSetInputMode(win->getWin(), GLFW_STICKY_KEYS, 1);
   float currentTime{0.0f}; 
   float lastTime{0.0f};
   float deltaTime{0.0f};
