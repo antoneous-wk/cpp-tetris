@@ -15,7 +15,7 @@ Model::~Model() {
 }
 
 unsigned Model::generateRandomNumber() {
-  unsigned number_of_shapes{shape::COUNT-1};
+  unsigned number_of_shapes{tetrominoType::COUNT-1};
   // create new engine & seed it 
   static default_random_engine e{time(0)};
   // advance internal state (this prevents same first number)
@@ -81,10 +81,6 @@ bool Model::detectCompleteRows() {
        completeRows_.push_back(i);
     }
   } 
-/*
-  for(unsigned row : completeRows_)
-    Tetromino::grid[row] = 0x801;
-*/
   return isCompleteRow;
 }
 

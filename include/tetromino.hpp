@@ -24,7 +24,7 @@ enum userInput {
   KEY_DOWN 
 };
 
-enum shape {
+enum tetrominoType {
   TEE, 
   SAW,
   ZEE,
@@ -46,8 +46,12 @@ class Tetromino {
     void moveX(userInput input, float deltaTime);
     void moveY(float deltaTime);
   private:
+    tetrominoType setShape(unsigned shape);
+    glm::vec3 getColor();
+
+
     void setOrientation(unsigned angle);
-    void resolveGridPosition();
+    void calculateBlockPosition();
     void updateBits();
     vector<bitset<12>> updateBits(bitset<16> orientation);
     void generateBlocks(Texture2D& sprite);
@@ -55,23 +59,25 @@ class Tetromino {
     bool detectCollisionX(userInput input);
     bool detectCollisionRotate(unsigned angle);
     void destroyBlocks(vector<unsigned> completeRows);
-    glm::vec3 setColor(unsigned tetromino);
-    
+
     // data members
-    vector<unsigned> blockPosition_;
-    vector<bitset<16>> tetromino_;
-    vector<bitset<12>> bits_{0, 0, 0, 0};
+    tetrominoType shape_;
+
     bitset<16> orientation_;
+    vector<bitset<12>> bits_{0, 0, 0, 0};
+
+
+
+    vector<unsigned> blockPosition_;
     vector<Block*> blocks_;
     glm::vec2 tetrominoPosition_;
-    glm::vec3 color_;
     glm::vec2 velocity_;
     unsigned angle_;
     bool isPlaced_;
     bool isDestroyed_;
 
     // static members
-    static vector<vector<bitset<16>>> tetrominos;
+    const static vector<vector<bitset<16>>> tetrominos;
     static vector<bitset<12>> grid;
 
 };

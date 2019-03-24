@@ -2,10 +2,10 @@
 
 namespace cpp_tetris {
 
-Tetromino::Tetromino(unsigned tetromino, Texture2D& sprite)
-  : tetromino_{tetrominos[tetromino]},
+Tetromino::Tetromino(unsigned shape, Texture2D& sprite)
+  : shape_{setShape(shape)}, 
+//    tetrominos[shape_]{tetrominos[shape]},
     tetrominoPosition_{3, -4},
-    color_{setColor(tetromino)},
     isPlaced_{false},
     isDestroyed_{false},
     velocity_{0, 200}, 
@@ -23,8 +23,30 @@ Tetromino::~Tetromino() {
   }
 }
 
+tetrominoType Tetromino::setShape(unsigned shape) {
+  switch(shape) {
+    case(tetrominoType::TEE):
+      return tetrominoType::TEE;
+    case(tetrominoType::SAW):
+      return tetrominoType::SAW;
+    case(tetrominoType::ZEE):
+      return tetrominoType::ZEE;
+    case(tetrominoType::STICK):
+      return tetrominoType::STICK;
+    case(tetrominoType::RIGHT):
+      return tetrominoType::RIGHT;
+    case(tetrominoType::LEFT):
+      return tetrominoType::LEFT;
+    case(tetrominoType::BOX):
+      return tetrominoType::BOX;
+  }
+}
+
+
+
+
 void Tetromino::update() {
-  resolveGridPosition();
+  calculateBlockPosition();
   updateBits(); 
   unsigned j = 0; 
   for(Block* block : blocks_) {
@@ -105,16 +127,16 @@ bool Tetromino::detectCollisionRotate(unsigned angle) {
   vector<bitset<12>> bits; 
   switch(angle) {
     case(0):
-      bits = updateBits(tetromino_[0]);
+      bits = updateBits(tetrominos[shape_][0]);
       break;
     case(90):
-      bits = updateBits(tetromino_[1]);
+      bits = updateBits(tetrominos[shape_][1]);
       break;
     case(180):
-      bits = updateBits(tetromino_[2]);
+      bits = updateBits(tetrominos[shape_][2]);
       break;
     case(270):
-      bits = updateBits(tetromino_[3]);
+      bits = updateBits(tetrominos[shape_][3]);
       break;
   }
 
@@ -217,55 +239,46 @@ bool Tetromino::detectCollisionX(userInput input) {
   return false;
 }
 
-glm::vec3 Tetromino::setColor(unsigned tetromino) {
-  glm::vec3 color;
-  switch(tetromino) {
-    case(shape::LEFT):
-      color = {1.0f, 0.5f, 0.0f}; // orange
-      break;
-    case(shape::RIGHT):
-      color = {0.0f, 0.0f, 1.0f}; // blue
-      break;
-    case(shape::STICK):
-      color = {0.3f, 1.0f, 1.0f}; // cyan
-      break;
-    case(shape::TEE):
-      color = {1.0f, 0.3f, 1.0f}; // pink
-      break;
-    case(shape::ZEE):
-      color = {1.0f, 0.0f, 0.0f}; // red
-      break;
-    case(shape::SAW):
-      color = {0.3f, 1.0f, 0.3f}; // green
-      break;
-    case(shape::BOX):
-      color = {1.0f, 1.0f, 0.3f}; // yellow
-      break;
+glm::vec3 Tetromino::getColor() {
+  switch(shape_) {
+    case(tetrominoType::TEE):
+      return {1.0f, 0.3f, 1.0f}; // pink
+    case(tetrominoType::SAW):
+      return {0.3f, 1.0f, 0.3f}; // green
+    case(tetrominoType::ZEE):
+      return {1.0f, 0.0f, 0.0f}; // red
+    case(tetrominoType::STICK):
+      return {0.3f, 1.0f, 1.0f}; // cyan
+    case(tetrominoType::LEFT):
+      return {1.0f, 0.5f, 0.0f}; // orange
+    case(tetrominoType::RIGHT):
+      return {0.0f, 0.0f, 1.0f}; // blue
+    case(tetrominoType::BOX):
+      return {1.0f, 1.0f, 0.3f}; // yellow
   }
-  return color;
 }
 
 void Tetromino::setOrientation(unsigned angle) {
   angle_ = angle;
   switch(angle_) {
     case(0): 
-      orientation_ = tetromino_[0]; 
+      orientation_ = tetrominos[shape_][0];
       break;
     case(90): 
-      orientation_ = tetromino_[1]; 
+      orientation_ = tetrominos[shape_][1]; 
       break;
     case(180): 
-      orientation_ = tetromino_[2]; 
+      orientation_ = tetrominos[shape_][2]; 
       break;     
     case(270): 
-      orientation_ = tetromino_[3]; 
+      orientation_ = tetrominos[shape_][3]; 
       break;
   }
 }
 
-// resolve grid coordinates for each block
+// resolve position for each block in grid coordinates
 // order of coordinates is x1, y1, x2, y2, x3, y3, x4, y4 
-void Tetromino::resolveGridPosition() {
+void Tetromino::calculateBlockPosition() {
   blockPosition_.clear();
   unsigned xpos{tetrominoPosition_.x};
   unsigned ypos{tetrominoPosition_.y};
@@ -323,7 +336,7 @@ void Tetromino::destroyBlocks(vector<unsigned> completeRows) {
 void Tetromino::generateBlocks(Texture2D& sprite) {
   for(unsigned j = 0; j < 7; j+=2) {
     blocks_.push_back(new Block{glm::vec2{blockPosition_[j],
-      blockPosition_[j+1]}, sprite, color_});
+      blockPosition_[j+1]}, sprite, getColor()});
   }
 }
 
@@ -333,7 +346,7 @@ void Tetromino::generateBlocks(Texture2D& sprite) {
 // 1 1 0 0
 // 0 1 0 0
 // 0 0 0 0
-vector<vector<bitset<16>>> Tetromino::tetrominos =
+const vector<vector<bitset<16>>> Tetromino::tetrominos =
     // 0    // 90   // 180  // 270
   {{0x4640, 0x0E40, 0x4C40, 0x4E00},     // 'tee'
    {0x8C40, 0x6C00, 0x8C40, 0x6C00},     // 'saw'
