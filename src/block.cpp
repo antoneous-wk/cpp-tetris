@@ -17,6 +17,15 @@ void Block::draw(SpriteRenderer& renderer) {
   }
 }
 
+void Block::moveX(int deltaX) {
+  position_.x += deltaX;
+}
+
+void Block::moveY(int deltaY) {
+  position_.y += deltaY;
+}
+
+
 // transform block position from grid coordinates to screen coordinates (pixels)
 // origin (0, 0) is top left corner of screen
 glm::vec2 Block::resolveScreenCoordinates() {

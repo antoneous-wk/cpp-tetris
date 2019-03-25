@@ -10,8 +10,6 @@ Tetromino::Tetromino(tetrominoType shape, glm::vec3 color, Texture2D& sprite)
     velocity_{0, 200},
     orientation_{tetrominos[shape_][angle_]},
 
-
-//    tetrominos[shape_]{tetrominos[shape]},
     isPlaced_{false},
     isDestroyed_{false} {
   
@@ -27,13 +25,7 @@ Tetromino::~Tetromino() {
 }
 
 void Tetromino::update() {
-  calculateBlockPosition();
   updateBits(); 
-  unsigned j = 0; 
-  for(Block* block : blocks_) {
-    block->position_ = {blockPosition_[j], blockPosition_[j+1]};
-    j+=2;
-  }
 }
 
 vector<bitset<12>> Tetromino::updateBits(bitset<16> orientation) {
@@ -134,17 +126,38 @@ bool Tetromino::detectCollisionRotate(unsigned angle) {
 }
 
 void Tetromino::rotate(float deltaTime) {
+  // get block coordinates for current tetromino orientation
+  // the order of coordinates is {x0, y0}, {x1, y1}, {x2, y2}, {x3, y3}
+  vector<glm::vec2> oldBlockCoordinates{getBlockCoordinates(orientation_)};
+  // set new tetromino orientation if no collision
   if(angle_ == 270) {
     if(!detectCollisionRotate(0)) {
       angle_ = 0;
       setOrientation(angle_); 
     }
   }
-  else { 
-    if(!detectCollisionRotate(angle_ + 90)) {
+  else if(!detectCollisionRotate(angle_ + 90)) {
       angle_ += 90;
       setOrientation(angle_); 
-    }
+  }
+  else 
+  // return if collision
+    return;
+  // get block coordinates for new tetromino orientation
+  vector<glm::vec2> newBlockCoordinates{getBlockCoordinates(orientation_)};
+  // calculate deltas and move each block according to respective delta
+  vector<glm::vec2>& obc = oldBlockCoordinates;
+  vector<glm::vec2>& nbc = newBlockCoordinates;
+  vector<glm::vec2> delta =
+    {{nbc[0].x - obc[0].x, nbc[0].y - obc[0].y},
+     {nbc[1].x - obc[1].x, nbc[1].y - obc[1].y},
+     {nbc[2].x - obc[2].x, nbc[2].y - obc[2].y},
+     {nbc[3].x - obc[3].x, nbc[3].y - obc[3].y}};
+  unsigned i = 0;
+  for(Block* block : blocks_) {
+    block->moveX(delta[i].x);
+    block->moveY(delta[i].y);
+    ++i;
   }
 }
 
@@ -163,6 +176,8 @@ void Tetromino::moveX(userInput input, float deltaTime) {
     }
   }    
   position_.x += deltaX;
+  for(Block* block : blocks_)
+    block->moveX(deltaX);
 }
 
 void Tetromino::moveY(float deltaTime) {
@@ -171,6 +186,8 @@ void Tetromino::moveY(float deltaTime) {
   if(dy >= grid::SPACING) {
     unsigned deltaY{1};
     position_.y += deltaY;
+    for(Block* block : blocks_)
+      block->moveY(deltaY);
     dy = 0.0f;
   }
 }
@@ -238,10 +255,24 @@ void Tetromino::setOrientation(unsigned angle) {
   }
 }
 
-// resolve position for each block in grid coordinates
-// order of coordinates is x1, y1, x2, y2, x3, y3, x4, y4 
-void Tetromino::calculateBlockPosition() {
-  blockPosition_.clear();
+bitset<16> Tetromino::getOrientation(unsigned angle) const {
+  switch(angle) {
+    case(0): 
+      return tetrominos[shape_][0];
+    case(90): 
+      return tetrominos[shape_][1]; 
+    case(180): 
+      return tetrominos[shape_][2]; 
+    case(270): 
+      return tetrominos[shape_][3]; 
+  }
+}
+
+// uses current tetromino position and a given orientation to determine the position 
+// for each block in the tetromino (in grid coordinates).
+// the order of coordinates is {x0, y0}, {x1, y1}, {x2, y2}, {x3, y3}
+vector<glm::vec2> Tetromino::getBlockCoordinates(bitset<16> orientation) {
+  vector<glm::vec2> blockCoordinates;
   unsigned xCoordinate = 3;
   unsigned yCoordinate = 3;
   for(unsigned bitPosition = 0; bitPosition < 16; ++bitPosition) {
@@ -249,13 +280,14 @@ void Tetromino::calculateBlockPosition() {
       xCoordinate = 3;
       --yCoordinate;
     }
-    if(orientation_[bitPosition]) {
-      blockPosition_.push_back(xCoordinate + position_.x);
-      blockPosition_.push_back(yCoordinate + position_.y);  
+    if(orientation[bitPosition]) {
+      blockCoordinates.push_back({xCoordinate + position_.x,
+        yCoordinate + position_.y});
     }
     if(xCoordinate > 0)
       --xCoordinate;
   }
+  return blockCoordinates;
 }
 
 void Tetromino::destroyBlocks(vector<unsigned> completeRows) {
@@ -285,10 +317,9 @@ void Tetromino::destroyBlocks(vector<unsigned> completeRows) {
 }
 
 void Tetromino::generateBlocks(Texture2D& sprite) {
-  for(unsigned j = 0; j < 7; j+=2) {
-    blocks_.push_back(new Block{glm::vec2{blockPosition_[j],
-      blockPosition_[j+1]}, sprite, color_});
-  }
+  vector<glm::vec2> blockCoordinates{getBlockCoordinates(orientation_)}; 
+  for(unsigned i = 0; i < 4; ++i) 
+    blocks_.push_back(new Block{blockCoordinates[i], sprite, color_});
 }
 
 // each 16 bit hex number represents a tetromino orientation in 4x4 grid

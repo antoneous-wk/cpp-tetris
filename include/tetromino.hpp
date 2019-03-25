@@ -47,7 +47,7 @@ class Tetromino {
     void moveY(float deltaTime);
   private:
     void setOrientation(unsigned angle);
-    void calculateBlockPosition();
+//    void calculateBlockPosition();
     void updateBits();
     vector<bitset<12>> updateBits(bitset<16> orientation);
     void generateBlocks(Texture2D& sprite);
@@ -63,9 +63,14 @@ class Tetromino {
     glm::vec2 position_;
     glm::vec2 velocity_;
     bitset<16> orientation_;
+    
+    // member functions
+    vector<glm::vec2> getBlockCoordinates(bitset<16> orientation);
+    bitset<16> getOrientation(unsigned angle) const;
+
 
     vector<bitset<12>> bits_{0, 0, 0, 0};
-    void calcBlockPosition();
+
 
 
     vector<unsigned> blockPosition_;

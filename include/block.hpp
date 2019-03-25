@@ -24,8 +24,8 @@ class Block {
   public:
     Block(glm::vec2 position, Texture2D& sprite, glm::vec3 color); 
     void draw(SpriteRenderer& renderer);
-//    void moveY(unsigned deltaY);
-//    void moveX(int deltaX);
+    void moveY(int deltaY);
+    void moveX(int deltaX);
     glm::vec2 resolveScreenCoordinates(); 
   private:
     glm::vec2 position_;
