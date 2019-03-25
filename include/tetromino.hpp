@@ -40,17 +40,18 @@ class Tetromino {
   public:
     Tetromino(tetrominoType shape, glm::vec3 color, Texture2D& sprite);    
     ~Tetromino();
-    void update();
-    void draw(SpriteRenderer& renderer);
-    void rotate(float deltaTime);
     void moveX(userInput input, float deltaTime);
     void moveY(float deltaTime);
+    void rotate(float deltaTime);
+    void draw(SpriteRenderer& renderer);
   private:
-    void setOrientation(unsigned angle);
-    vector<bitset<12>> updateBits(bitset<16> orientation);
+    // member functions
     void generateBlocks(Texture2D& sprite);
-    bool detectCollisionY();
+    vector<glm::vec2> getBlockCoordinates(bitset<16> orientation);
+    void setOrientation(unsigned angle);
+    vector<bitset<12>> transform(bitset<16> orientation);
     bool detectCollisionX(userInput input);
+    bool detectCollisionY();
     bool detectCollisionRotate(unsigned angle);
     void destroyBlocks(vector<unsigned> completeRows);
 
@@ -61,12 +62,6 @@ class Tetromino {
     glm::vec2 position_;
     glm::vec2 velocity_;
     bitset<16> orientation_;
-    
-    // member functions
-    vector<glm::vec2> getBlockCoordinates(bitset<16> orientation);
-
-
-
     vector<Block*> blocks_;
     bool isPlaced_;
     bool isDestroyed_;

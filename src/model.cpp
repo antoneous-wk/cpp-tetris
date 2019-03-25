@@ -82,15 +82,8 @@ void Model::update(float deltaTime) {
   if(!tetrominos_.empty() && (*--tetrominos_.end())->isPlaced_)
     generateTetromino();
   // detect and destroy any complete rows
-  if(detectCompleteRows()) {
+  if(detectCompleteRows()) 
     destroyCompleteRows();
-  }
-  // update
-  for(Tetromino* tetromino : tetrominos_) {
-    if(!tetromino->isPlaced_)
-      tetromino->update();
-  }
-   
 }
 
 bool Model::detectCompleteRows() {
