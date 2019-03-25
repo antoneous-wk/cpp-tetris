@@ -12,20 +12,19 @@ Tetromino::Tetromino(tetrominoType shape, glm::vec3 color, Texture2D& sprite)
 
     isPlaced_{false},
     isDestroyed_{false} {
-  
-  update();
+  // generates (4) blocks to form a tetromino
   generateBlocks(sprite);
 }
 
 Tetromino::~Tetromino() {
   for(Block* b : blocks_) {
-    if(b) delete b;
-    b = nullptr;
+    if(b) 
+      delete b;
   }
 }
 
 void Tetromino::update() {
-  updateBits(); 
+  //updateBits(orientation_); 
 }
 
 vector<bitset<12>> Tetromino::updateBits(bitset<16> orientation) {
@@ -58,37 +57,6 @@ vector<bitset<12>> Tetromino::updateBits(bitset<16> orientation) {
       bitRow >>= (position_.x - offset);
   }
   return bits;
-}
-
-void Tetromino::updateBits() {
-  unsigned pos{0};
-  unsigned row{0};
-  // transform tetromino orientation into vector containing four bitset<12>
-  // 0100       000000000100  // bits_[3]
-  // 0100  ---> 000000000100  // bits_[2]
-  // 1100       000000001100  // bits_[1]
-  // 0000       000000000000  // bits_[0]
-  bits_ = {0, 0, 0, 0};
-  for(unsigned b = 0; b < 16; ++b) {
-    if(b == 0 || b % 4 != 0) {
-      bits_[row][pos] = orientation_[b];
-      ++pos;
-    }
-    else {
-      ++row;
-      pos = 0;
-      bits_[row][pos] = orientation_[b];
-      ++pos;
-    }
-  } 
-  // shift bits in X direction to match current X position
-  const unsigned offset{bits_[0].size() - 5};
-  for(bitset<12>& bitRow : bits_) {
-    if(position_.x <= offset)
-      bitRow <<= (offset - position_.x);
-    else
-      bitRow >>= (position_.x - offset);
-  }
 }
 
 void Tetromino::draw(SpriteRenderer& renderer) {
@@ -193,14 +161,15 @@ void Tetromino::moveY(float deltaTime) {
 }
 
 bool Tetromino::detectCollisionY() {
+  vector<bitset<12>> bits{updateBits(orientation_)};
   // detect tetromino collision in the Y direction and update grid
   bool isCollision{false};
   unsigned gridRow{position_.y + 4};
   for(unsigned i = 0; i < 4; ++i) {
-    if((bits_[i] & grid[gridRow]).any()) {
+    if((bits[i] & grid[gridRow]).any()) {
       isCollision = true;
       if(gridRow > 0)
-        grid[gridRow-1] = grid[gridRow-1] | bits_[i];
+        grid[gridRow-1] = grid[gridRow-1] | bits[i];
     }
     if(gridRow > 0)
       --gridRow;
@@ -210,13 +179,14 @@ bool Tetromino::detectCollisionY() {
 
 
 bool Tetromino::detectCollisionX(userInput input) {
+  vector<bitset<12>> bits{updateBits(orientation_)};
   // detect tetromino collision in the X direction
   if(position_.y >= -3) {
     unsigned gridRow{position_.y + 3};
     switch(input) {
       case(userInput::KEY_LEFT): {
         for(unsigned i = 0; i < 4; ++i) {
-          if(((bits_[i] << 1) & grid[gridRow]).any())
+          if(((bits[i] << 1) & grid[gridRow]).any())
             return true;
           if(gridRow > 0)
             --gridRow;
@@ -225,7 +195,7 @@ bool Tetromino::detectCollisionX(userInput input) {
       }
       case(userInput::KEY_RIGHT): {
         for(unsigned i = 0; i < 4; ++i) {
-          if(((bits_[i] >> 1) & grid[gridRow]).any())
+          if(((bits[i] >> 1) & grid[gridRow]).any())
             return true;
           if(gridRow > 0)
             --gridRow;
@@ -252,19 +222,6 @@ void Tetromino::setOrientation(unsigned angle) {
     case(270): 
       orientation_ = tetrominos[shape_][3]; 
       break;
-  }
-}
-
-bitset<16> Tetromino::getOrientation(unsigned angle) const {
-  switch(angle) {
-    case(0): 
-      return tetrominos[shape_][0];
-    case(90): 
-      return tetrominos[shape_][1]; 
-    case(180): 
-      return tetrominos[shape_][2]; 
-    case(270): 
-      return tetrominos[shape_][3]; 
   }
 }
 
