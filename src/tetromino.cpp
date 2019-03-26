@@ -91,8 +91,10 @@ void Tetromino::rotate(float deltaTime) {
 }
 
 void Tetromino::draw(SpriteRenderer& renderer) {
-  for(Block* block : blocks_)
-    block->draw(renderer);
+  for(Block* block : blocks_) {
+    if(block)
+      block->draw(renderer);
+  }
 }
 
 void Tetromino::generateBlocks(Texture2D& sprite) {
@@ -256,27 +258,23 @@ bool Tetromino::detectCollisionRotate(unsigned angle) {
 
 void Tetromino::destroyBlocks(vector<unsigned> completeRows) {
   for(unsigned row : completeRows) {
-    for(Block* block : blocks_) {
-      if(block->position_.y == row) 
-        block->isDestroyed_ = true; 
-    }
-  }
-  for(auto block = blocks_.begin(); block != blocks_.end(); ++block) {
-    if((*block)->isDestroyed_) {
-      grid[(*block)->position_.y][11-(*block)->position_.x-1] = 0;
-//      delete *block;
-//      blocks_.erase(block);
+    for(Block*& block : blocks_) {
+      if(block && block->position_.y == row) { 
+        grid[block->position_.y][11-block->position_.x-1] = 0;
+        delete block;
+        block = nullptr;
+      }
     }
   }
   for(unsigned row : completeRows) {
     for(Block* block : blocks_) {
-      if(block->position_.y < row) {
+      if(block && block->position_.y < row) { 
         grid[block->position_.y][11-block->position_.x-1] = 0;
         grid[block->position_.y+1][11-block->position_.x-1] = 1;
-        block->position_.y += 1;
+        block->moveY(1);
       }
     }
-  }
+  }   
 }
 
 // each 16 bit hex number represents a tetromino orientation in 4x4 grid
