@@ -217,13 +217,18 @@ bool Tetromino::detectCollisionY() {
   bool isCollision{false};
   unsigned gridRow{position_.y + 4};
   for(unsigned i = 0; i < 4; ++i) {
-    if((bits[i] & grid[gridRow]).any()) {
+    if((bits[i] & grid[gridRow]).any()) 
       isCollision = true;
-      if(gridRow > 0)
-        grid[gridRow-1] = grid[gridRow-1] | bits[i];
-    }
     if(gridRow > 0)
       --gridRow;
+  }
+  gridRow = position_.y + 4;
+  if(isCollision) {
+    for(unsigned i = 0; i < 4; ++i) {
+      grid[gridRow-1] = grid[gridRow-1] | bits[i];
+      if(gridRow > 0)
+        --gridRow; 
+    }
   }
   return isCollision;
 }

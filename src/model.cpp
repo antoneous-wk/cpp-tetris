@@ -67,8 +67,12 @@ void Model::processInput(Controller& controller, float deltaTime) {
     Tetromino*& tetromino{*--tetrominos_.end()}; 
     if(!tetrominos_.empty() && !(tetromino->isPlaced_)) {
       controller.processInput(tetromino, deltaTime);
-      if(tetromino->detectCollisionY())
+      if(tetromino->detectCollisionY()) {
         tetromino->isPlaced_ = true;
+        for(unsigned i = 0; i < 16; ++i) 
+          cout << Tetromino::grid[i] << endl;
+        cout << endl;
+      }
       else
         tetromino->moveY(deltaTime);
     }
