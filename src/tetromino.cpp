@@ -211,7 +211,7 @@ bool Tetromino::detectCollisionX(userInput input) {
   return false;
 }
 
-bool Tetromino::detectCollisionY() {
+bool Tetromino::detectCollisionY(bool update) {
   vector<bitset<12>> bits{transform(orientation_)};
   // detect tetromino collision in the Y direction and update grid
   bool isCollision{false};
@@ -222,15 +222,18 @@ bool Tetromino::detectCollisionY() {
     if(gridRow > 0)
       --gridRow;
   }
-  gridRow = position_.y + 4;
-  if(isCollision) {
-    for(unsigned i = 0; i < 4; ++i) {
-      grid[gridRow-1] = grid[gridRow-1] | bits[i];
-      if(gridRow > 0)
-        --gridRow; 
-    }
-  }
+  if(isCollision && update) 
+    updateGrid(bits);
   return isCollision;
+}
+
+void Tetromino::updateGrid(const vector<bitset<12>>& bits) {
+  unsigned gridRow{position_.y + 4};
+  for(unsigned i = 0; i < 4; ++i) {
+    grid[gridRow-1] = grid[gridRow-1] | bits[i];
+    if(gridRow > 0)
+      --gridRow; 
+  }
 }
 
 bool Tetromino::detectCollisionRotate(unsigned angle) {

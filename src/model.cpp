@@ -61,21 +61,28 @@ void Model::generateTetromino() {
   tetrominos_.push_back(new Tetromino{shape, color, manager_.getTexture2D("block")});
 }
 
-
 void Model::processInput(Controller& controller, float deltaTime) {
-    // process input for the last (newest) tetromino in the vector
-    Tetromino*& tetromino{*--tetrominos_.end()}; 
-    if(!tetrominos_.empty() && !(tetromino->isPlaced_)) {
-      controller.processInput(tetromino, deltaTime);
-      if(tetromino->detectCollisionY()) {
-        tetromino->isPlaced_ = true;
-        for(unsigned i = 0; i < 16; ++i) 
-          cout << Tetromino::grid[i] << endl;
-        cout << endl;
-      }
-      else
-        tetromino->moveY(deltaTime);
+  // implement delay to slide tetromino after placement    
+  static float timeSinceCollisionY{0.0f};
+  static bool slideDelay{false};
+  if(slideDelay)
+    timeSinceCollisionY += deltaTime;
+  // process input for the last (most current) tetromino
+  Tetromino*& tetromino{*--tetrominos_.end()}; 
+  if(!tetrominos_.empty() && !(tetromino->isPlaced_)) {
+    controller.processInput(tetromino, deltaTime);
+    // pass argument 'false' to detectCollisionY() to prevent updating grid
+    if(!slideDelay && tetromino->detectCollisionY(false)) {
+      timeSinceCollisionY = 0.0f;
+      slideDelay = true;
     }
+    if(slideDelay && timeSinceCollisionY > 0.150f && tetromino->detectCollisionY()) {
+      tetromino->isPlaced_ = true;
+      slideDelay = false;
+    }
+    if(!slideDelay && !tetromino->detectCollisionY(false)) 
+      tetromino->moveY(deltaTime);
+  }
 }
 
 void Model::update(float deltaTime) {

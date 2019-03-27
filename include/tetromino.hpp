@@ -51,7 +51,8 @@ class Tetromino {
     void setOrientation(unsigned angle);
     vector<bitset<12>> transform(bitset<16> orientation);
     bool detectCollisionX(userInput input);
-    bool detectCollisionY();
+    bool detectCollisionY(bool update = true);
+    void updateGrid(const vector<bitset<12>>& bits);
     bool detectCollisionRotate(unsigned angle);
     void destroyBlocks(vector<unsigned> completeRows);
 
