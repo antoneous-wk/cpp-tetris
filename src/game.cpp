@@ -53,6 +53,8 @@ void Game::init() {
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
   manager_.loadTexture2D("grid_layer2", "resources/textures/grid.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
+  manager_.loadTexture2D("text", "resources/textures/text.png",
+    GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
 
   // load block texture 
   manager_.loadTexture2D("block", "resources/textures/block.png",
@@ -73,6 +75,8 @@ void Game::render(float deltaTime) {
   if(state_ == GAME_ACTIVE) {  
     // draw background layers
     renderer_->drawSprite(manager_.getTexture2D("bground_layer0"), 
+      glm::vec2(0, 0), glm::vec2(width_, height_));
+    renderer_->drawSprite(manager_.getTexture2D("text"),
       glm::vec2(0, 0), glm::vec2(width_, height_));
     renderer_->drawSprite(manager_.getTexture2D("bground_layer1"),
       glm::vec2(0, 0), glm::vec2(width_, height_));

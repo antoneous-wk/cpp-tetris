@@ -23,6 +23,13 @@ unsigned Model::generateRandomNumber() {
   // generate random distribution from 0 to num_of_bricks inclusive
   static uniform_int_distribution<unsigned> u{0, number_of_shapes};
   return u(e);
+/*
+  static unsigned index;
+  if(index == 5)
+    index = 0;
+  vector<unsigned> shape{5, 0, 3, 6, 3};
+  return shape[index++]; 
+*/
 }
 
 void Model::generateTetromino() {
@@ -79,6 +86,10 @@ void Model::processInput(Controller& controller, float deltaTime) {
     if(slideDelay && timeSinceCollisionY > 0.150f && tetromino->detectCollisionY()) {
       tetromino->isPlaced_ = true;
       slideDelay = false;
+
+      for(unsigned i = 0; i < 16; ++i) 
+        cout << Tetromino::grid[i] << endl;
+      cout << endl;
     }
     if(!slideDelay && !tetromino->detectCollisionY(false)) 
       tetromino->moveY(deltaTime);
