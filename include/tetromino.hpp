@@ -38,7 +38,7 @@ enum userInput {
 class Tetromino {
     friend class Model;
   public:
-    Tetromino(tetrominoType shape, glm::vec3 color, Texture2D& sprite);    
+    Tetromino(tetrominoType shape, glm::vec3 color, glm::vec2 position, Texture2D& sprite);
     ~Tetromino();
     void moveX(userInput input, float deltaTime);
     void moveY(float deltaTime);

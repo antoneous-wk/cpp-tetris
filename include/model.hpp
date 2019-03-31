@@ -35,13 +35,16 @@ class Model {
     void processInput(Controller& controller, float deltaTime);
     void update(float deltaTime);
     void draw(SpriteRenderer& renderer, float deltaTime);
-    private:
+  private:
+    tetrominoType getShape(unsigned tetromino);
+    glm::vec3 getColor(unsigned tetromino);
     vector<unsigned> completeRows_;
     void generateTetromino();
     unsigned generateRandomNumber();
     bool detectCompleteRows();
     void destroyCompleteRows();
     vector<Tetromino*> tetrominos_;
+    Tetromino* nextTetromino_;
     ResourceManager& manager_;
 };
 

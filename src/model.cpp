@@ -3,7 +3,8 @@
 namespace cpp_tetris {
 
 Model::Model(ResourceManager& manager)
-  : manager_{manager} {}
+  : manager_{manager},
+    nextTetromino_{nullptr} {}
 
 Model::~Model() {
   for(Tetromino* t : tetrominos_) {
@@ -12,6 +13,8 @@ Model::~Model() {
       t = nullptr;
     }
   }
+  if(nextTetromino_)
+    delete nextTetromino_; 
 }
 
 unsigned Model::generateRandomNumber() {
@@ -33,39 +36,61 @@ unsigned Model::generateRandomNumber() {
 }
 
 void Model::generateTetromino() {
-  tetrominoType shape;
-  glm::vec3 color;
-  switch(generateRandomNumber()) {
-    case(tetrominoType::TEE):
-      color = {1.0f, 0.3f, 1.0f}; // pink
-      shape = tetrominoType::TEE;
-      break;
-    case(tetrominoType::SAW):
-      color = {0.3f, 1.0f, 0.3f}; // green
-      shape = tetrominoType::SAW;
-      break;
-    case(tetrominoType::ZEE):
-      color = {1.0f, 0.0f, 0.0f}; // red
-      shape = tetrominoType::ZEE;
-      break;
-    case(tetrominoType::STICK):
-      color = {0.3f, 1.0f, 1.0f}; // cyan
-      shape = tetrominoType::STICK;
-      break;
-    case(tetrominoType::RIGHT):
-      color = {0.0f, 0.0f, 1.0f}; // blue
-      shape = tetrominoType::RIGHT;
-      break;
-    case(tetrominoType::LEFT):
-      color = {1.0f, 0.5f, 0.0f}; // orange
-      shape = tetrominoType::LEFT;
-      break;
-    case(tetrominoType::BOX):
-      color = {1.0f, 1.0f, 0.3f}; // yellow
-      shape = tetrominoType::BOX;
-      break;
+  static unsigned currentTetromino; 
+  static unsigned nextTetromino{generateRandomNumber()};
+  currentTetromino = nextTetromino;
+  nextTetromino = generateRandomNumber(); 
+  tetrominos_.push_back(new Tetromino{getShape(currentTetromino), getColor(currentTetromino),     glm::vec2{3, -4}, manager_.getTexture2D("block")});
+  if(nextTetromino_) {
+    delete nextTetromino_;
+    nextTetromino_ = nullptr;
   }
-  tetrominos_.push_back(new Tetromino{shape, color, manager_.getTexture2D("block")});
+  if(nextTetromino == tetrominoType::STICK) {
+    nextTetromino_ =  new Tetromino{getShape(nextTetromino), getColor(nextTetromino), 
+      glm::vec2{13, 1}, manager_.getTexture2D("block")};
+  }
+  else {
+     nextTetromino_ =  new Tetromino{getShape(nextTetromino), getColor(nextTetromino), 
+      glm::vec2{13, 2}, manager_.getTexture2D("block")};
+  }
+}
+
+tetrominoType Model::getShape(unsigned tetromino) {
+  switch(tetromino) {
+    case(tetrominoType::TEE):
+      return tetrominoType::TEE;
+    case(tetrominoType::SAW):
+      return tetrominoType::SAW;
+    case(tetrominoType::ZEE):
+      return tetrominoType::ZEE;
+    case(tetrominoType::STICK):
+      return tetrominoType::STICK;
+    case(tetrominoType::RIGHT):
+      return tetrominoType::RIGHT;
+    case(tetrominoType::LEFT):
+      return tetrominoType::LEFT;
+    case(tetrominoType::BOX):
+      return tetrominoType::BOX;
+  }
+}
+
+glm::vec3 Model::getColor(unsigned tetromino) {
+  switch(tetromino) {
+    case(tetrominoType::TEE):
+      return {1.0f, 0.3f, 1.0f}; // pink
+    case(tetrominoType::SAW):
+      return {0.3f, 1.0f, 0.3f}; // green
+    case(tetrominoType::ZEE):
+      return {1.0f, 0.0f, 0.0f}; // red
+    case(tetrominoType::STICK):
+      return {0.3f, 1.0f, 1.0f}; // cyan
+    case(tetrominoType::RIGHT):
+      return {0.0f, 0.0f, 1.0f}; // blue
+    case(tetrominoType::LEFT):
+      return {1.0f, 0.5f, 0.0f}; // orange
+    case(tetrominoType::BOX):
+      return {1.0f, 1.0f, 0.3f}; // yellow
+  }
 }
 
 void Model::processInput(Controller& controller, float deltaTime) {
@@ -130,6 +155,7 @@ void Model::destroyCompleteRows() {
 void Model::draw(SpriteRenderer& renderer, float deltaTime) {
   for(Tetromino* tetromino : tetrominos_) 
     tetromino->draw(renderer);
+  nextTetromino_->draw(renderer);
 }
 
 } // namespace cpp_tetris

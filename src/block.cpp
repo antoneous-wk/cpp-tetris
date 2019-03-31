@@ -25,7 +25,6 @@ void Block::moveY(int deltaY) {
   position_.y += deltaY;
 }
 
-
 // transform block position from grid coordinates to screen coordinates (pixels)
 // origin (0, 0) is top left corner of screen
 glm::vec2 Block::resolveScreenCoordinates() {

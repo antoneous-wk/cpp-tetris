@@ -2,14 +2,14 @@
 
 namespace cpp_tetris {
 
-Tetromino::Tetromino(tetrominoType shape, glm::vec3 color, Texture2D& sprite)
+Tetromino::Tetromino(tetrominoType shape, glm::vec3 color, glm::vec2 position,
+                     Texture2D& sprite)
   : shape_{shape}, 
     color_{color},
     angle_{0}, 
-    position_{3, -4},
+    position_{position},
     velocity_{0, 200},
     orientation_{tetrominos[shape_][angle_]},
-
     isPlaced_{false},
     isDestroyed_{false} {
   // generates (4) blocks to form a tetromino
