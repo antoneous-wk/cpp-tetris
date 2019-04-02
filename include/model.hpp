@@ -13,6 +13,8 @@
 #include <random>
 #include <ctime>
 
+#define NDEBUG
+
 using std::bitset;
 using std::vector;
 using std::cout;

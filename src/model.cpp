@@ -111,10 +111,13 @@ void Model::processInput(Controller& controller, float deltaTime) {
     if(slideDelay && timeSinceCollisionY > 0.150f && tetromino->detectCollisionY()) {
       tetromino->isPlaced_ = true;
       slideDelay = false;
-
+      // prints the bitwise representation to the console 
+      // useful for debugging runtime collision & row destruction logic
+      #ifndef NDEBUG
       for(unsigned i = 0; i < 16; ++i) 
         cout << Tetromino::grid[i] << endl;
       cout << endl;
+      #endif
     }
     if(!slideDelay && !tetromino->detectCollisionY(false)) 
       tetromino->moveY(deltaTime);
