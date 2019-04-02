@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<!-- saved from url=(0272)chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/ReaderControl.html#d=https%3A%2F%2Fwww.bau.edu.jo%2FUserPortal%2FUserProfile%2FPostsAttach%2F10617_1870_1.pdf&pdf=auto&a=1&config=%2Fconfig.js&filepicker=1&preloadWorker=1&pdfnet=0&pageHistory=1&useDownloader=0 -->
+<html lang="en" moznomarginboxes="" mozdisallowselectionprint="" class=" js websqldatabase indexeddb csstransitions fullscreen"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <script>
+            try {
+                var bgColor = window.frameElement && window.frameElement.getAttribute('data-bgcolor');
+                if (bgColor) {
+                    var sheet = (function() {
+                        var style = document.createElement("style");
+                        style.appendChild(document.createTextNode(""));
+                        document.head.appendChild(style);
+                        return style.sheet;
+                    })();
+                    sheet.insertRule('body { background-color: ' + bgColor + ' !important; }', 0);
+                }
+            } catch(e) {
+                console.warn('Cannot set background color with cross origin viewer');
+            }
+        </script>
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/jquery-ui/themes/cloud/jquery-ui-1.11.1.custom.min.css" rel="stylesheet">
+        <!-- build:icons-css -->
+
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/Resources/icons/css/glyphicons.css" rel="stylesheet">
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/Resources/icons/css/customicons.css" rel="stylesheet">
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/Resources/icons/css/controls.css" rel="stylesheet">
+        
+        
+        <!-- endbuild -->
+
+        <!-- build:viewer-css -->
+
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/context.standalone.css" rel="stylesheet">
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/jquery.treeview.css" rel="stylesheet">
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/ReaderControl.css" rel="stylesheet">
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/docViewer.css" rel="stylesheet">
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/AnnotationEdit.css" rel="stylesheet">
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/drop/css/drop-theme-basic.css" rel="stylesheet">
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/drop/css/drop-theme-arrows.css" rel="stylesheet">
+        <link href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/drop/css/drop-theme-arrows-bounce.css" rel="stylesheet">
+        
+        
+        <!-- endbuild -->
+
+    <link rel="stylesheet" type="text/css" href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/pdf/PDFReaderControl.css"></head>
+    <body class="">
+        <div id="ui-display" class="left-panel-visible">
+            <div id="sidePanel" class="left-content ui-resizable" style="display: block;">
+                <div id="tabs" class="ui-tabs-hide ui-tabs ui-widget ui-widget-content ui-corner-all">
+                    <ul id="tabMenu" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
+                        <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="tabs-1" aria-labelledby="ui-id-1" aria-selected="true" aria-expanded="true"><a href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/ReaderControl.html#tabs-1" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1"><span data-i18n="[title]sidepanel.thumbnails" class="glyphicons picture active" title="Thumbnails"></span></a></li>
+                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-2" aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false"><a href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/ReaderControl.html#tabs-2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2"><span data-i18n="[title]sidepanel.outline" class="glyphicons customicons bookmark" title="Outline"></span></a></li>
+                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-3" aria-labelledby="ui-id-3" aria-selected="false" aria-expanded="false"><a href="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/ReaderControl.html#tabs-3" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3"><span data-i18n="[title]sidepanel.fullDocumentSearch" class="glyphicons search" title="Full Document Search"></span></a></li>
+                    </ul>
+                    <div id="tabs-1" style="padding: 10px; height: 763px;" aria-labelledby="ui-id-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-hidden="false">
+                        <div id="thumbnailView" class="tab-panel-stretch" style="height: 100%; visibility: visible;"></div>
+                    </div>
+                    <div id="tabs-2" aria-labelledby="ui-id-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-hidden="true" style="display: none; height: 815px;">
+                        <ul id="bookmarkView" class="filetree treeview ui-widget-content tab-panel-stretch" style="height: 100%;"></ul>
+                    </div>
+                    <div id="tabs-3" aria-labelledby="ui-id-3" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-hidden="true" style="display: none; height: 815px;">
+                        <div id="searchView" class="tab-panel-stretch" style="height: 100%;">
+                            <div id="searchOptions" class="tab-panel-item-fixed">
+                                <input type="text" name="fullSearch" id="fullSearchBox">
+                                <button id="fullSearchButton" style="position:relative; top:2px" type="button" data-i18n="sidepanel.searchTab.buttonGo">Go</button>
+                            </div>
+                            <div class="tab-panel-item-fixed">
+                                <input id="wholeWordSearch" type="checkbox"><span class="ui-label" data-i18n="sidepanel.searchTab.wholeWordOnly">Whole word only</span></div>
+                            <div class="tab-panel-item-fixed">
+                                <input id="caseSensitiveSearch" type="checkbox"><span class="ui-label" data-i18n="sidepanel.searchTab.caseSensitive">Case Sensitive</span>
+                            </div>
+                            <div id="fullSearchView" class="tab-panel-item-stretch"></div>
+                        </div>
+                    </div>
+                </div>
+            <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div>
+
+            <div class="right-content" style="margin-left: 195px;">
+                <textarea id="clipboard" readonly=""></textarea>
+                <div id="control" class="ui-widget-header toolbar" style="min-width: 690px; display: block;">
+                    <div class="left-aligned">
+                        <span id="toggleSidePanel" class="glyphicons customicons collapse_left" data-i18n="[title]controlbar.toggleSidePanel" title="Toggle Side Panel"></span>
+                        <span id="backPage" class="hidden-md glyphicons left_arrow back-forward-disabled" data-i18n="[title]controlbar.backPage;" title="Go Back"></span>
+                        <span id="forwardPage" class="hidden-md glyphicons right_arrow back-forward-disabled" data-i18n="[title]controlbar.forwardPage;" title="Go Forward"></span>
+                    </div>
+
+                    <div class="right-aligned">
+                        <div class="group">
+                            <span id="prevPage" class="glyphicons chevron-left" data-i18n="[title]controlbar.previousPage;" title="Previous Page"></span>
+                            <input type="text" pattern="[0-9]*" name="pageNumberBox" id="pageNumberBox">
+                            <div class="ui-label" id="totalPages">/0</div>
+                            <span id="nextPage" class="glyphicons chevron-right" data-i18n="[title]controlbar.nextPage;" title="Next Page"></span>
+                        </div>
+
+                        <div class="group">
+                            <span id="zoomOut" class="glyphicons zoom_out" data-i18n="[title]controlbar.zoomOut" title="Zoom Out"></span>
+                            <div class="hidden-md hidden-lg ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="slider" data-i18n="[title]controlbar.zoom" title="Zoom"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 9.54774%;"></span></div>
+                            <input type="text" name="zoomBox" id="zoomBox" data-i18n="[title]controlbar.zoom" title="Zoom">
+                            <span id="zoomIn" class="glyphicons zoom_in" data-i18n="[title]controlbar.zoomIn" title="Zoom In"></span>
+                        </div>
+
+                        <div class="drop-content group">
+                            <div id="layoutModeDropDown">
+                                <span class="current-layout drop-target glyphicons customicons page_gear drop-theme-arrows-bounce layout-mode-dropdown-content drop-element-attached-top drop-element-attached-center drop-target-attached-bottom drop-target-attached-center"></span>
+                                <div class="hidden">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="group">
+                            <div id="fitModes" class="hidden-xs toggleControl">
+                                <span id="fitWidth" class="glyphicons customicons arrow_ew" data-i18n="[title]controlbar.fitWidth;" title="Fit Width"></span>
+                                <span id="fitPage" class="glyphicons customicons arrow_nsew" data-i18n="[title]controlbar.fitPage" title="Fit Page"></span>
+                            </div>
+
+                            <div id="toolList" class="toggleControl" style="margin-left: 6px">
+                                <span data-toolmode="Pan" class="glyphicons customicons hand" data-i18n="[title]controlbar.pan" title="Pan"></span>
+                                <span data-toolmode="TextSelect" class="glyphicons customicons ibeam" data-i18n="[title]controlbar.textSelect" title="Text Select"></span>
+                                <span data-toolmode="AnnotationCreateFreeText" id="freeText" class="visiblePriority annotTool glyphicons customicons text_ibeam" data-i18n="[title]annotations.tooltips.freetext" title="Free Text" style="display: none;"></span>
+                                <span data-toolmode="AnnotationCreateTextHighlight" class="visiblePriority annotTool glyphicons customicons text_highlight" data-i18n="[title]annotations.tooltips.highlight" title="Text Highlight" style="display: none;"></span>
+                                <span data-toolmode="AnnotationCreateFreeHand" id="freeHand" class="visiblePriority annotTool glyphicons brush" data-i18n="[title]annotations.tooltips.freeHand" title="Free Hand" style="display: none;"></span>
+                                <span data-toolmode="AnnotationCreateSticky" id="overflowButton" class="annotTool glyphicons comments" data-i18n="[title]annotations.tooltips.stickyNote" title="Comment Note" style="display: none;"></span>
+                                <span id="overflowTools" class="moreButton glyphicons down_arrow" data-i18n="[title]annotations.tooltips.more" title="More Tools" style="display: none;">
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="group hidden-sm hidden-md">
+                            <span id="searchControl" class="search-component">
+                                <input id="searchBox" type="text" class="toolbar-input-text search-component" name="search" data-i18n="[title]controlbar.search" title="Search">
+                                <span id="searchButton" class="search-component glyphicons search" data-i18n="[title]controlbar.search" title="Search"></span>
+                            </span>
+                        </div>
+
+                        <div class="group">
+                            <span id="printButton" class="glyphicons print" data-i18n="[title]controlbar.print" title="Print"></span>
+                            <span id="fullScreenButton" class="glyphicons fullscreen" data-i18n="[title]controlbar.fullScreen" title="Full Screen"></span>
+                        <span class="glyphicons disk_save" id="downloadButton" data-i18n="[title]controlbar.download" title="Download File"></span><label for="input-pdf" class="file-upload glyphicons folder_open" data-i18n="[title]controlbar.open" title="Open File"></label><input id="input-pdf" accept=".pdf,.png,.jpg,.jpeg" type="file" class="input-pdf" data-i18n="[title]controlbar.open" title="Open File"></div>
+
+                        <div class="group hidden-md">
+                            <span id="toggleNotesPanel" class="glyphicons comments" data-i18n="[title]controlbar.toggleNotesPanel" title="Toggle Notes Panel"></span>
+                        </div>
+                    </div>
+                <span class="left-aligned"><span class="navbar-brand"><a href="https://www.xodo.com/" target="_blank" id="backToXodoButton"><img src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/logo_transparent.png" alt="Xodo" title="Xodo" height="30" class="hidden-sm"></a></span></span></div>
+
+                <ul id="displayModeMenuList" class="ui-widget ui-menu-dropdown" style="display: none">
+                    <li data-display-mode="single"><a href="javascript:void(0)"><span class="ui-icon ui-icon-custom-page-single"></span><div data-i18n="controlbar.layoutMode.single">Single</div></a></li>
+                    <li data-display-mode="single-cont"><a href="javascript:void(0)"><span class="ui-icon ui-icon-custom-page-single-cont"></span><div data-i18n="controlbar.layoutMode.continuous">Continuous</div></a></li>
+                    <li data-display-mode="facing"><a href="javascript:void(0)"><span class="ui-icon ui-icon-custom-page-facing"></span><div data-i18n="controlbar.layoutMode.facing">Facing</div></a></li>
+                    <li data-display-mode="facing-cont"><a href="javascript:void(0)"><span class="ui-icon ui-icon-custom-page-facing-cont"></span><div data-i18n="controlbar.layoutMode.facingContinuous">Facing Continuous</div></a></li>
+                    <li data-display-mode="cover"><a href="javascript:void(0)"><span class="ui-icon ui-icon-custom-page-cover"></span><div data-i18n="controlbar.layoutMode.cover">Cover</div></a></li>
+                    <li data-display-mode="cover-cont"><a href="javascript:void(0)"><span class="ui-icon ui-icon-custom-page-cover-cont"></span><div data-i18n="controlbar.layoutMode.coverContinuous">Cover Continuous</div></a></li>
+                </ul>
+
+
+                <div id="notesPanelWrapper" class="hidden ui-resizable ui-resizable-disabled">
+                    <div id="notesBar">
+                        <span class="glyphicons chevron-left toggleNotesButton" data-i18n="[title]controlbar.toggleNotesPanel" title="Toggle Notes Panel"></span>
+                        <div id="annotLines" style="display:none"></div>
+                    </div>
+                    <div id="noteOptionsButton" class="glyphicons expand"></div>
+                    <div id="noteOptions" class="panelElement panelElementFont" style="display:none">
+                        <span id="noteOptionsCloseButton" class="glyphicons remove_2"></span>
+                            <div data-i18n="notesPanel.orderBy" style="font-weight:bold;text-shadow: 1px 1px 1px rgb(240, 240, 240); margin: 0px 0 4px 0;color: #555;">Order by:</div>
+                        <div id="noteTypeRadio" class="ui-buttonset">
+                            <input type="radio" id="documentRadio" name="noteTypeRadio" checked="checked" class="ui-helper-hidden-accessible">
+                                <label id="documentSortButton" for="documentRadio" data-i18n="[title]notesPanel.orderDocumentDesc" title="Notes are placed relative to their position in the document" class="ui-state-active ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left" role="button"><span class="ui-button-text">
+                                    <span data-i18n="notesPanel.orderDocument">Document</span>
+                                </span></label>
+                            <input type="radio" id="timeRadio" name="noteTypeRadio" class="ui-helper-hidden-accessible">
+                                <label id="timeSortButton" for="timeRadio" data-i18n="[title]notesPanel.orderTimeDesc" title="Notes are ordered by time" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right" role="button"><span class="ui-button-text">
+                                    <span data-i18n="notesPanel.orderTime">Time</span>
+                                </span></label>
+                        </div>
+
+                        <input type="text" id="commentSearchBox" data-i18n="[placeholder]notesPanel.searchComments" placeholder="Search in the comments...">
+
+                        <button type="button" id="toggleAnnotationsButton" class="roundedCornerButton" data-i18n="annotations.buttonHide">Hide</button>
+                        <button type="button" id="saveAnnotationsButton" class="roundedCornerButton" data-i18n="annotations.buttonSave">Save</button>
+                    </div>
+                    <div id="notesPanel" class="hidden"></div>
+                <div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div></div>
+
+                <div id="overlayMessage" class="overlayMessage" style="display:none"></div>
+
+                
+
+                
+
+                <div id="printDialog" style="display:none">
+                    <div id="printPageOptions">
+                        <span data-i18n="print.pagesToPrint">Pages: </span><br>
+                        <input type="radio" id="allPages" name="pageSelectionType" checked="checked">
+                            <label id="printAllPagesButton" for="allPages" data-i18n="[title]print.allPagesRadioTitle" title="Print all pages">
+                                <span data-i18n="print.all">All</span>
+                            </label>
+                        <br>
+                        <input type="radio" id="selectedPages" name="pageSelectionType">
+                        <input type="text" id="selectedPagesInput" data-i18n="[placeholder]print.hint" placeholder="e.g. 3, 4-10">
+                    </div><br>
+                    <div id="numberPagesToPrint">
+                        <span class="numberPagesLabel"></span>
+                    </div>
+                    <div id="invalidPageSelectionError" class="error-message">
+                        <span data-i18n="print.invalidPageSelectionMsg">No valid pages specified</span>
+                    </div>
+                    <div id="printProgress"><div class="progressLabel"></div></div>
+                </div>
+
+                <div id="DocumentViewer" style="overflow: auto; height: 777px; margin-right: 18px;">
+                    <div id="docpad">
+                    </div>
+                    <div id="viewer"></div>
+                </div>
+
+                <div style="display:none" id="unsupportedErrorMessage" class="ui-widget center-screen-error">
+                    <div class="ui-state-error">
+                        <div class="ui-state-error-text">
+                            <span class="ui-icon ui-icon-alert" style="float: left;margin: 5px;"></span>
+                            <div data-i18n="unsupportedBrowser">You are viewing this application with an unsupported browser. Please see the list of supported browsers:</div>
+                        </div>
+                        <ul>
+                            <li>Internet Explorer 9+</li>
+                            <li>Google Chrome</li>
+                            <li>Firefox</li>
+                            <li>Safari</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="print-display" style="display:none">
+        </div>
+
+        <!-- build:qt-reader-js -->
+        
+        <!-- endbuild -->
+
+        <!-- build:wk-reader-js -->
+        
+        <!-- endbuild -->
+
+        <!-- build:cordova-reader-js -->
+        
+        <!-- endbuild -->
+
+        <!-- build:external-js -->
+
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/jquery-2.1.0.min.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/jquery-ui/jquery-ui-1.11.1.custom.min.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/jquery.treeview.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/jquery.mousewheel.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/jquery.flexibleArea.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/Autolinker.min.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/moment.min.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/modernizr.custom.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/drop/drop.min.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/context.js"></script>
+        
+        
+        <!-- endbuild -->
+
+        <!-- build:corecontrols-js-include -->
+        
+        
+        <!-- endbuild -->
+
+        <!-- build:corecontrols-js -->
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/CoreControls.js"></script>
+        
+        <!-- endbuild -->
+
+        <!-- build:readercontrol-js -->
+
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/WebViewerInterface.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/ControlUtils.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/AnnotationEdit.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/NotesPanel.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/BaseReaderControl.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/ReaderControl.js"></script>
+        <script src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/ReaderControlConfig.js"></script>
+        
+        
+        <!-- endbuild -->
+
+    
+
+<script type="text/javascript" src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/external/FileSaver.min.js"></script><script type="text/javascript" src="chrome-extension://ihgdgpjankaehldoaimdlekdidkjfghe/lib/html5/pdf/PDFReaderControl.js"></script><div id="pdf-progress-bar" style="display: block;"><div class="progress-text">Loading document: 20%</div><div class="progress-bar"><div style="width: 20%;">&nbsp;</div><span>&nbsp;</span></div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front no-title annotEditDialog dialogTransparent" tabindex="-1" role="dialog" aria-describedby="annotEditDialog" aria-labelledby="ui-id-4" style="display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-4" class="ui-dialog-title">&nbsp;</span><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">Close</span></button></div><div id="annotEditDialog" style="" class="ui-dialog-content ui-widget-content">
+                    <input type="hidden" autofocus="autofocus">
+                    <div id="annotEditButtons" class="horizontalButtons">
+                        <button type="button" id="annotEditDone" class="roundedCornerButton" data-i18n="annotationPopup.buttonDone">Done</button>
+                        <button type="button" id="annotEditDelete" class="roundedCornerButton" data-i18n="annotationPopup.buttonDelete">Delete</button>
+                        <button type="button" id="annotEditStyle" class="roundedCornerButton" data-i18n="annotationPopup.buttonStyle">Style</button>
+                        <button type="button" id="annotEditNote" class="roundedCornerButton" data-i18n="annotationPopup.buttonNote">Note</button>
+                    </div>
+
+                    <div id="annotEditProperties" style="display:none">
+                        <div id="colorType">
+                            <div id="colorButton" class="colorButton"><span class="glyphicons brush"></span></div>
+                            <div id="fillColorButton" class="colorButton"><span class="glyphicons customicons fill"></span></div>
+                            <div id="textColorButton" class="colorButton"><span class="glyphicons customicons text_ibeam"></span></div>
+                        </div>
+
+                        <div id="basicProperties">
+                            <div id="colorPicker">
+                                <ul class="colorPicker">
+                                    <li id="addColorButton"><div></div></li>
+                                    <li id="removeColorButton"><div></div></li>
+                                </ul>
+                            </div>
+                            <div class="annotPropertyContainer">
+                                <canvas id="annotPreviewCanvas" height="48" width="48"></canvas>
+                            </div>
+                            <div id="basicPropertyContainer" class="annotPropertyContainer">
+                                <div class="fontSizePicker propertyButtonContainer">
+                                    <div id="fontSizeRadio" class="ui-buttonset">
+                                        <input type="radio" id="fontSizeRadio8" data-value="8" name="fontSizeRadio" class="ui-helper-hidden-accessible"><label for="fontSizeRadio8" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left" role="button"><span class="ui-button-text">8</span></label>
+                                        <input type="radio" id="fontSizeRadio12" data-value="12" name="fontSizeRadio" class="ui-helper-hidden-accessible"><label for="fontSizeRadio12" class="ui-button ui-widget ui-state-default ui-button-text-only" role="button"><span class="ui-button-text">12</span></label>
+                                        <input type="radio" id="fontSizeRadio24" data-value="24" name="fontSizeRadio" class="ui-helper-hidden-accessible"><label for="fontSizeRadio24" class="ui-button ui-widget ui-state-default ui-button-text-only" role="button"><span class="ui-button-text">24</span></label>
+                                        <input type="radio" id="fontSizeRadio36" data-value="36" name="fontSizeRadio" class="ui-helper-hidden-accessible"><label for="fontSizeRadio36" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right" role="button"><span class="ui-button-text">36</span></label>
+                                        <span class="propertyValue"></span>
+                                    </div>
+                                </div>
+                                <div class="thicknessPicker propertyButtonContainer">
+                                    <div id="thicknessRadio" class="ui-buttonset">
+                                        <input type="radio" id="thicknessRadio1" data-value="1" name="thicknessRadio" class="ui-helper-hidden-accessible"><label for="thicknessRadio1" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left" role="button"><span class="ui-button-text">1</span></label>
+                                        <input type="radio" id="thicknessRadio3" data-value="3" name="thicknessRadio" class="ui-helper-hidden-accessible"><label for="thicknessRadio3" class="ui-button ui-widget ui-state-default ui-button-text-only" role="button"><span class="ui-button-text">3</span></label>
+                                        <input type="radio" id="thicknessRadio7" data-value="7" name="thicknessRadio" class="ui-helper-hidden-accessible"><label for="thicknessRadio7" class="ui-button ui-widget ui-state-default ui-button-text-only" role="button"><span class="ui-button-text">7</span></label>
+                                        <input type="radio" id="thicknessRadio12" data-value="12" name="thicknessRadio" class="ui-helper-hidden-accessible"><label for="thicknessRadio12" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right" role="button"><span class="ui-button-text">12</span></label>
+                                        <span class="propertyValue"></span>
+                                    </div>
+                                </div>
+                                <div class="opacityPicker propertyButtonContainer">
+                                    <div id="opacityRadio" class="ui-buttonset">
+                                        <input type="radio" id="opacityRadio25" data-value="25" name="opacityRadio" class="ui-helper-hidden-accessible"><label for="opacityRadio25" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left" role="button"><span class="ui-button-text">25</span></label>
+                                        <input type="radio" id="opacityRadio50" data-value="50" name="opacityRadio" class="ui-helper-hidden-accessible"><label for="opacityRadio50" class="ui-button ui-widget ui-state-default ui-button-text-only" role="button"><span class="ui-button-text">50</span></label>
+                                        <input type="radio" id="opacityRadio75" data-value="75" name="opacityRadio" class="ui-helper-hidden-accessible"><label for="opacityRadio75" class="ui-button ui-widget ui-state-default ui-button-text-only" role="button"><span class="ui-button-text">75</span></label>
+                                        <input type="radio" id="opacityRadio100" data-value="100" name="opacityRadio" class="ui-helper-hidden-accessible"><label for="opacityRadio100" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right" role="button"><span class="ui-button-text">100</span></label>
+                                        <span class="propertyValue"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="advancedProperties" style="display:none">
+                            <ul class="colorPicker advanced">
+                            <li data-color="#F8E0E0"><div style="background: rgb(248, 224, 224);"></div></li><li data-color="#F8ECE0"><div style="background: rgb(248, 236, 224);"></div></li><li data-color="#F7F8E0"><div style="background: rgb(247, 248, 224);"></div></li><li data-color="#E0F8E0"><div style="background: rgb(224, 248, 224);"></div></li><li data-color="#E0F8F7"><div style="background: rgb(224, 248, 247);"></div></li><li data-color="#E0E0F8"><div style="background: rgb(224, 224, 248);"></div></li><li data-color="#ECE0F8"><div style="background: rgb(236, 224, 248);"></div></li><li data-color="#F8E0F7"><div style="background: rgb(248, 224, 247);"></div></li><li data-color="#FFFFFF"><div style="background: rgb(255, 255, 255);"></div></li><li data-color="#F5A9A9"><div style="background: rgb(245, 169, 169);"></div></li><li data-color="#F5D0A9"><div style="background: rgb(245, 208, 169);"></div></li><li data-color="#F2F5A9"><div style="background: rgb(242, 245, 169);"></div></li><li data-color="#A9F5A9"><div style="background: rgb(169, 245, 169);"></div></li><li data-color="#A9F5F2"><div style="background: rgb(169, 245, 242);"></div></li><li data-color="#A9A9F5"><div style="background: rgb(169, 169, 245);"></div></li><li data-color="#D0A9F5"><div style="background: rgb(208, 169, 245);"></div></li><li data-color="#F5A9F2"><div style="background: rgb(245, 169, 242);"></div></li><li data-color="#E6E6E6"><div style="background: rgb(230, 230, 230);"></div></li><li data-color="#FA5858"><div style="background: rgb(250, 88, 88);"></div></li><li data-color="#FAAC58"><div style="background: rgb(250, 172, 88);"></div></li><li data-color="#F4FA58"><div style="background: rgb(244, 250, 88);"></div></li><li data-color="#58FA58"><div style="background: rgb(88, 250, 88);"></div></li><li data-color="#58FAF4"><div style="background: rgb(88, 250, 244);"></div></li><li data-color="#4848FA"><div style="background: rgb(72, 72, 250);"></div></li><li data-color="#AC58FA"><div style="background: rgb(172, 88, 250);"></div></li><li data-color="#FA58F4"><div style="background: rgb(250, 88, 244);"></div></li><li data-color="#BDBDBD"><div style="background: rgb(189, 189, 189);"></div></li><li data-color="#FF0000"><div style="background: rgb(255, 0, 0);"></div></li><li data-color="#FF8000"><div style="background: rgb(255, 128, 0);"></div></li><li data-color="#FFFF00"><div style="background: rgb(255, 255, 0);"></div></li><li data-color="#00FF00"><div style="background: rgb(0, 255, 0);"></div></li><li data-color="#00FFFF"><div style="background: rgb(0, 255, 255);"></div></li><li data-color="#0000FF"><div style="background: rgb(0, 0, 255);"></div></li><li data-color="#8000FF"><div style="background: rgb(128, 0, 255);"></div></li><li data-color="#FF00FF"><div style="background: rgb(255, 0, 255);"></div></li><li data-color="#808080"><div style="background: rgb(128, 128, 128);"></div></li><li data-color="#B40404"><div style="background: rgb(180, 4, 4);"></div></li><li data-color="#B45F04"><div style="background: rgb(180, 95, 4);"></div></li><li data-color="#AEB404"><div style="background: rgb(174, 180, 4);"></div></li><li data-color="#04B404"><div style="background: rgb(4, 180, 4);"></div></li><li data-color="#04B4AE"><div style="background: rgb(4, 180, 174);"></div></li><li data-color="#0404B4"><div style="background: rgb(4, 4, 180);"></div></li><li data-color="#5F04B4"><div style="background: rgb(95, 4, 180);"></div></li><li data-color="#B404AE"><div style="background: rgb(180, 4, 174);"></div></li><li data-color="#585858"><div style="background: rgb(88, 88, 88);"></div></li><li data-color="#800000"><div style="background: rgb(128, 0, 0);"></div></li><li data-color="#804000"><div style="background: rgb(128, 64, 0);"></div></li><li data-color="#808000"><div style="background: rgb(128, 128, 0);"></div></li><li data-color="#008000"><div style="background: rgb(0, 128, 0);"></div></li><li data-color="#008080"><div style="background: rgb(0, 128, 128);"></div></li><li data-color="#000080"><div style="background: rgb(0, 0, 128);"></div></li><li data-color="#400080"><div style="background: rgb(64, 0, 128);"></div></li><li data-color="#800080"><div style="background: rgb(128, 0, 128);"></div></li><li data-color="#444444"><div style="background: rgb(68, 68, 68);"></div></li><li data-color="#610B0B"><div style="background: rgb(97, 11, 11);"></div></li><li data-color="#61380B"><div style="background: rgb(97, 56, 11);"></div></li><li data-color="#5E610B"><div style="background: rgb(94, 97, 11);"></div></li><li data-color="#0B610B"><div style="background: rgb(11, 97, 11);"></div></li><li data-color="#0B615E"><div style="background: rgb(11, 97, 94);"></div></li><li data-color="#0B0B61"><div style="background: rgb(11, 11, 97);"></div></li><li data-color="#380B61"><div style="background: rgb(56, 11, 97);"></div></li><li data-color="#610B5E"><div style="background: rgb(97, 11, 94);"></div></li><li data-color="#2E2E2E"><div style="background: rgb(46, 46, 46);"></div></li><li data-color="#2A0A0A"><div style="background: rgb(42, 10, 10);"></div></li><li data-color="#2A1B0A"><div style="background: rgb(42, 27, 10);"></div></li><li data-color="#292A0A"><div style="background: rgb(41, 42, 10);"></div></li><li data-color="#0A2A0A"><div style="background: rgb(10, 42, 10);"></div></li><li data-color="#0A2A29"><div style="background: rgb(10, 42, 41);"></div></li><li data-color="#0A0A2A"><div style="background: rgb(10, 10, 42);"></div></li><li data-color="#1B0A2A"><div style="background: rgb(27, 10, 42);"></div></li><li data-color="#2A0A29"><div style="background: rgb(42, 10, 41);"></div></li><li data-color="#000000"><div style="background: rgb(0, 0, 0);"></div></li><li data-color="transparent"><div style="background: url(&quot;Resources/color_none.png&quot;);"></div></li></ul>
+                            <div id="advancedPropertyContainer" class="annotPropertyContainer">
+                                <div class="fontSizePicker">
+                                    <h4 data-i18n="annotations.properties.fontSize">Font Size</h4>
+                                    <div id="advancedFontSizeSlider" class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 5.97015%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 5.97015%;"></span></div>
+                                </div>
+                                <div class="thicknessPicker">
+                                    <h4 data-i18n="annotations.properties.thickness">Thickness</h4>
+                                    <div id="advancedThicknessSlider" class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 0%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 0%;"></span></div>
+                                </div>
+                                <div class="opacityPicker">
+                                    <h4 data-i18n="annotations.properties.opacity">Opacity</h4>
+                                    <div id="advancedOpacitySlider" class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 100%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 100%;"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="colorButtons">
+                            <button type="button" id="basicPropertyEdit" class="roundedCornerButton leftRounded selected" data-i18n="annotations.properties.basic">Basic</button>
+                            <button type="button" id="advancedPropertyEdit" class="roundedCornerButton rightRounded" data-i18n="annotations.properties.advanced">Advanced</button>
+                        </div>
+                    </div>
+
+                    <div id="addNewColor" style="display:none">
+                        <ul class="colorPicker advanced">
+                        <li data-color="#F8E0E0"><div style="background: rgb(248, 224, 224);"></div></li><li data-color="#F8ECE0"><div style="background: rgb(248, 236, 224);"></div></li><li data-color="#F7F8E0"><div style="background: rgb(247, 248, 224);"></div></li><li data-color="#E0F8E0"><div style="background: rgb(224, 248, 224);"></div></li><li data-color="#E0F8F7"><div style="background: rgb(224, 248, 247);"></div></li><li data-color="#E0E0F8"><div style="background: rgb(224, 224, 248);"></div></li><li data-color="#ECE0F8"><div style="background: rgb(236, 224, 248);"></div></li><li data-color="#F8E0F7"><div style="background: rgb(248, 224, 247);"></div></li><li data-color="#FFFFFF"><div style="background: rgb(255, 255, 255);"></div></li><li data-color="#F5A9A9"><div style="background: rgb(245, 169, 169);"></div></li><li data-color="#F5D0A9"><div style="background: rgb(245, 208, 169);"></div></li><li data-color="#F2F5A9"><div style="background: rgb(242, 245, 169);"></div></li><li data-color="#A9F5A9"><div style="background: rgb(169, 245, 169);"></div></li><li data-color="#A9F5F2"><div style="background: rgb(169, 245, 242);"></div></li><li data-color="#A9A9F5"><div style="background: rgb(169, 169, 245);"></div></li><li data-color="#D0A9F5"><div style="background: rgb(208, 169, 245);"></div></li><li data-color="#F5A9F2"><div style="background: rgb(245, 169, 242);"></div></li><li data-color="#E6E6E6"><div style="background: rgb(230, 230, 230);"></div></li><li data-color="#FA5858"><div style="background: rgb(250, 88, 88);"></div></li><li data-color="#FAAC58"><div style="background: rgb(250, 172, 88);"></div></li><li data-color="#F4FA58"><div style="background: rgb(244, 250, 88);"></div></li><li data-color="#58FA58"><div style="background: rgb(88, 250, 88);"></div></li><li data-color="#58FAF4"><div style="background: rgb(88, 250, 244);"></div></li><li data-color="#4848FA"><div style="background: rgb(72, 72, 250);"></div></li><li data-color="#AC58FA"><div style="background: rgb(172, 88, 250);"></div></li><li data-color="#FA58F4"><div style="background: rgb(250, 88, 244);"></div></li><li data-color="#BDBDBD"><div style="background: rgb(189, 189, 189);"></div></li><li data-color="#FF0000"><div style="background: rgb(255, 0, 0);"></div></li><li data-color="#FF8000"><div style="background: rgb(255, 128, 0);"></div></li><li data-color="#FFFF00"><div style="background: rgb(255, 255, 0);"></div></li><li data-color="#00FF00"><div style="background: rgb(0, 255, 0);"></div></li><li data-color="#00FFFF"><div style="background: rgb(0, 255, 255);"></div></li><li data-color="#0000FF"><div style="background: rgb(0, 0, 255);"></div></li><li data-color="#8000FF"><div style="background: rgb(128, 0, 255);"></div></li><li data-color="#FF00FF"><div style="background: rgb(255, 0, 255);"></div></li><li data-color="#808080"><div style="background: rgb(128, 128, 128);"></div></li><li data-color="#B40404"><div style="background: rgb(180, 4, 4);"></div></li><li data-color="#B45F04"><div style="background: rgb(180, 95, 4);"></div></li><li data-color="#AEB404"><div style="background: rgb(174, 180, 4);"></div></li><li data-color="#04B404"><div style="background: rgb(4, 180, 4);"></div></li><li data-color="#04B4AE"><div style="background: rgb(4, 180, 174);"></div></li><li data-color="#0404B4"><div style="background: rgb(4, 4, 180);"></div></li><li data-color="#5F04B4"><div style="background: rgb(95, 4, 180);"></div></li><li data-color="#B404AE"><div style="background: rgb(180, 4, 174);"></div></li><li data-color="#585858"><div style="background: rgb(88, 88, 88);"></div></li><li data-color="#800000"><div style="background: rgb(128, 0, 0);"></div></li><li data-color="#804000"><div style="background: rgb(128, 64, 0);"></div></li><li data-color="#808000"><div style="background: rgb(128, 128, 0);"></div></li><li data-color="#008000"><div style="background: rgb(0, 128, 0);"></div></li><li data-color="#008080"><div style="background: rgb(0, 128, 128);"></div></li><li data-color="#000080"><div style="background: rgb(0, 0, 128);"></div></li><li data-color="#400080"><div style="background: rgb(64, 0, 128);"></div></li><li data-color="#800080"><div style="background: rgb(128, 0, 128);"></div></li><li data-color="#444444"><div style="background: rgb(68, 68, 68);"></div></li><li data-color="#610B0B"><div style="background: rgb(97, 11, 11);"></div></li><li data-color="#61380B"><div style="background: rgb(97, 56, 11);"></div></li><li data-color="#5E610B"><div style="background: rgb(94, 97, 11);"></div></li><li data-color="#0B610B"><div style="background: rgb(11, 97, 11);"></div></li><li data-color="#0B615E"><div style="background: rgb(11, 97, 94);"></div></li><li data-color="#0B0B61"><div style="background: rgb(11, 11, 97);"></div></li><li data-color="#380B61"><div style="background: rgb(56, 11, 97);"></div></li><li data-color="#610B5E"><div style="background: rgb(97, 11, 94);"></div></li><li data-color="#2E2E2E"><div style="background: rgb(46, 46, 46);"></div></li><li data-color="#2A0A0A"><div style="background: rgb(42, 10, 10);"></div></li><li data-color="#2A1B0A"><div style="background: rgb(42, 27, 10);"></div></li><li data-color="#292A0A"><div style="background: rgb(41, 42, 10);"></div></li><li data-color="#0A2A0A"><div style="background: rgb(10, 42, 10);"></div></li><li data-color="#0A2A29"><div style="background: rgb(10, 42, 41);"></div></li><li data-color="#0A0A2A"><div style="background: rgb(10, 10, 42);"></div></li><li data-color="#1B0A2A"><div style="background: rgb(27, 10, 42);"></div></li><li data-color="#2A0A29"><div style="background: rgb(42, 10, 41);"></div></li><li data-color="#000000"><div style="background: rgb(0, 0, 0);"></div></li></ul>
+                        <span id="cancelAddColor" class="glyphicons remove_2"></span>
+                        <span id="selectAddColor" class="glyphicons ok_2 disabled" style="float:right"></span>
+                    </div>
+
+                    <div id="signatureSelectionContainer" class="horizontalButtons" style="display:none">
+                        <button type="button" id="mySignatureButton" class="roundedCornerButton leftRounded" data-i18n="signatureDialog.mySignature">My Signature</button>
+                        <button type="button" id="newSignatureButton" class="roundedCornerButton rightRounded" data-i18n="signatureDialog.newSignature">New Signature</button>
+                    </div>
+
+                    <div id="textSelectionContainer" class="horizontalButtons" style="display:none">
+                        <button type="button" id="copyButton" class="roundedCornerButton leftRounded" data-i18n="textSelection.copy">Copy</button>
+                        <button type="button" id="selectHighlightButton" class="roundedCornerButton" data-i18n="annotations.types.highlight">Highlight</button>
+                        <button type="button" id="selectStrikeoutButton" class="roundedCornerButton" data-i18n="annotations.types.strikeout">Strikeout</button>
+                        <button type="button" id="selectUnderlineButton" class="roundedCornerButton" data-i18n="annotations.types.underline">Underline</button>
+                        <button type="button" id="selectSquigglyButton" class="roundedCornerButton rightRounded" data-i18n="annotations.types.squiggly">Squiggly</button>
+                    </div>
+                </div></div><ul class="dropdown-menu compressed-context" id="dropdown-1" style="min-width: 0px;"><div id="overflowToolsContainer" class="toolsContainer">
+                                        <span data-toolmode="AnnotationCreateTextUnderline" class="annotTool glyphicons text_underline" data-i18n="[title]annotations.tooltips.underline" title="Text Underline" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreateTextStrikeout" class="annotTool glyphicons text_strike" data-i18n="[title]annotations.tooltips.strikeout" title="Text Strikeout" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreateTextSquiggly" class="annotTool glyphicons customicons text_squiggly" data-i18n="[title]annotations.tooltips.squiggly" title="Text Squiggly Underline" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreateArrow" class="annotTool glyphicons customicons vector_arrow" data-i18n="[title]annotations.tooltips.arrow" title="Arrow" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreateLine" class="annotTool glyphicons vector_path_line" data-i18n="[title]annotations.tooltips.line" title="Line" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreateSignature" class="annotTool glyphicons customicons signature" data-i18n="[title]annotations.tooltips.signature" title="Signature" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreateSticky" class="annotTool glyphicons comments" data-i18n="[title]annotations.tooltips.stickyNote" title="Comment Note" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreateCallout" class="annotTool glyphicons customicons callout" data-i18n="[title]annotations.tooltips.callout" title="Callout" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreateRectangle" class="annotTool glyphicons vector_path_square" data-i18n="[title]annotations.tooltips.rectangle" title="Rectangle" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreateEllipse" class="annotTool glyphicons vector_path_circle" data-i18n="[title]annotations.tooltips.ellipse" title="Ellipse" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreatePolygon" class="annotTool glyphicons vector_path_polygon" data-i18n="[title]annotations.tooltips.polygon" title="Polygon" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreatePolygonCloud" class="annotTool glyphicons cloud" data-i18n="[title]annotations.tooltips.polygoncloud" title="Cloud" style="display: none;"></span>
+                                        <span data-toolmode="AnnotationCreatePolyline" class="annotTool glyphicons customicons vector_path_polyline" data-i18n="[title]annotations.tooltips.polyline" title="Polyline" style="display: none;"></span>                                        <span data-toolmode="AnnotationEdit" class="annotTool glyphicons customicons multiselect" data-i18n="[title]annotations.tooltips.edit" title="Edit Annotation" style="display: none;"></span>
+                                    </div></ul><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front noCloseButton" tabindex="-1" role="dialog" aria-describedby="signatureDialog" aria-labelledby="ui-id-5" style="display: none;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-5" class="ui-dialog-title">&nbsp;</span><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">Close</span></button></div><div id="signatureDialog" style="" class="ui-dialog-content ui-widget-content">
+                    <canvas id="signatureCanvas"></canvas>
+
+                    <div>
+                        <div class="signatureButtonContainer">
+                            <button type="button" id="signatureCancelButton" class="roundedCornerButton" data-i18n="signatureDialog.cancel">Cancel</button>
+                        </div>
+
+                        <div class="signatureButtonContainer noIbar" style="float:right">
+                            <input id="makeDefaultSignature" type="checkbox" class="noIbar">
+                            <span id="makeDefaultSignatureText" data-i18n="signatureDialog.makeDefault" style="padding-right:5px" class="noselect noIbar">Make Default Signature</span>
+                            <button type="button" id="signatureClearButton" class="roundedCornerButton noIbar" data-i18n="signatureDialog.clear">Clear</button>
+                            <button type="button" id="signatureAddButton" class="roundedCornerButton unclickableButton" data-i18n="signatureDialog.add">Add Signature</button>
+                        </div>
+                    </div>
+                </div></div><iframe style="display: none;" src="./saved_resource.html"></iframe><div class="drop drop-theme-arrows-bounce layout-mode-dropdown-content drop-element drop-element-attached-top drop-element-attached-center drop-target-attached-bottom drop-target-attached-center" style="position: absolute; z-index: 50; left: -1000px; top: -1000px;"><div class="drop-content"><div class="content">
+                                        <span class="heading">
+                                            <span data-i18n="[title]controlbar.pageLayoutModes;controlbar.pageLayoutModes" title="Page Layout Modes">Page Layout Modes</span>:
+                                        </span>
+                                        <ul id="layoutModes" class="icon-picker">
+                                            <li data-layout-mode="Single" data-layout-icon="single_page" data-i18n="[title]controlbar.layoutMode.single" class="glyphicons customicons single_page" title="Single"><span></span></li>
+                                            <li data-layout-mode="Continuous" data-layout-icon="single_continuous" data-i18n="[title]controlbar.layoutMode.continuous" class="glyphicons customicons single_continuous active" title="Continuous"><span></span></li>
+                                            <li data-layout-mode="Facing" data-layout-icon="facing_page" data-i18n="[title]controlbar.layoutMode.facing" class="glyphicons customicons facing_page" title="Facing"><span></span></li>
+                                            <li data-layout-mode="FacingContinuous" data-layout-icon="facing_continuous" data-i18n="[title]controlbar.layoutMode.facingContinuous" class="glyphicons customicons facing_continuous" title="Facing Continuous"><span></span></li>
+                                            <li data-layout-mode="CoverFacing" data-layout-icon="cover_page" data-i18n="[title]controlbar.layoutMode.cover" class="glyphicons customicons cover_page" title="Cover"><span></span></li>
+                                            <li data-layout-mode="Cover" data-layout-icon="cover_continuous" data-i18n="[title]controlbar.layoutMode.coverContinuous" class="glyphicons customicons cover_continuous" title="Cover Continuous"><span></span></li>
+                                        </ul>
+                                           <span class="heading">
+                                            <span data-i18n="[title]controlbar.pageRotation.title;controlbar.pageRotation.title" title="Rotate Pages">Rotate Pages</span>:
+                                        </span>
+                                        <ul id="rotateGroup" class="icon-picker">
+                                            <li data-rotate="ccw" data-i18n="[title]controlbar.pageRotation.ccw90" class="glyphicons unshare" title="Rotate Counterclockwise 90°"><span></span></li>
+                                            <li data-rotate="cc" data-i18n="[title]controlbar.pageRotation.cc90" class="glyphicons share" title="Rotate Clockwise 90°"><span></span></li>
+                                        </ul>
+                                    </div></div></div><div data-tether-id="0" style="top: 0px; left: 0px; position: absolute;"></div></body></html>
