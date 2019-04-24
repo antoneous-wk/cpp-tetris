@@ -9,7 +9,6 @@ set(SOURCE_FILES
     controller.cpp
     tetromino.cpp
     block.cpp
-    main.cpp
 	game.cpp
 	)
 
