@@ -15,7 +15,3 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_subdirectory(src)
 add_subdirectory(test)
-
-# enable_testing()
-# add_test(NAME mytests COMMAND Test)
-

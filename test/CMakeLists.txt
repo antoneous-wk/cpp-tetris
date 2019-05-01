@@ -30,9 +30,7 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 
 set(TEST_FILES test.cpp)
 
-list(REMOVE_ITEM SOURCE_FILES main.cpp)
 list(TRANSFORM SOURCE_FILES PREPEND ${CMAKE_HOME_DIRECTORY}/src/)
 
 add_executable(Test ${TEST_FILES} ${SOURCE_FILES})
 target_link_libraries(Test ${GLFW_LIBRARIES} gtest gtest_main)
-#target_link_libraries(Test ${GLFW_LIBRARIES} gtest)
