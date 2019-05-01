@@ -47,17 +47,17 @@ void Game::init() {
   manager_.getShader("sprite").setUniformMatrix4f("projection", projection);
 
   // load background textures
-  manager_.loadTexture2D("bground_layer0", "resources/textures/bgroundl0.png", 
+  manager_.loadTexture2D("bground_layer0", "/textures/bgroundl0.png", 
     GL_REPEAT, GL_REPEAT, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("bground_layer1", "resources/textures/bgroundl1.png",
+  manager_.loadTexture2D("bground_layer1", "/textures/bgroundl1.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("grid_layer2", "resources/textures/grid.png",
+  manager_.loadTexture2D("grid_layer2", "/textures/grid.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
-  manager_.loadTexture2D("text", "resources/textures/text.png",
+  manager_.loadTexture2D("text", "/textures/text.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
 
   // load block texture 
-  manager_.loadTexture2D("block", "resources/textures/block.png",
+  manager_.loadTexture2D("block", "/textures/block.png",
     GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER, GL_LINEAR, GL_LINEAR, GL_RGBA);
   
   renderer_ = new SpriteRenderer{manager_.getShader("sprite")};
