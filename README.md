@@ -19,7 +19,7 @@ Tetris clone written in modern C++ with OpenGL.
 ![screenshot](/doc/screenshot-scaled.png)
 
 ### Dependencies
-- **cmake** minimum 3.12
+- **cmake** minimum 3.14
 - **opengl** minimum 3.3
 - **glfw3** minimum 3.2
 
@@ -27,9 +27,13 @@ Tetris clone written in modern C++ with OpenGL.
 **Linux**
 
 1.  Download & install dependencies
-2.  `$ cd /cpp-tetris/build`
-3.  `$ make`
-4.  `$ ./test/Test`
+2.  '$ git clone https://github.com/tony-redekop/cpp-tetris.git'
+3.  '$ cd cpp-tetris'
+4.  '$ mkdir build'
+5.  '$ cd build'
+6.  '$ cmake -G "Unix Makefiles" ..'
+7.  '$ make'
+8.  '$ ./test/demo'
 
 **Windows**
 

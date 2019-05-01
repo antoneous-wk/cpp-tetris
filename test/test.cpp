@@ -1,12 +1,3 @@
-//include <glad/glad.h>
-//include <GLFW/glfw3.h> 
-//include "gtest/gtest.h"
-
-//include <glm/glm.hpp>
-//include <glm/gtc/matrix_transform.hpp>
-//include <glm/gtc/type_ptr.hpp>
-//include <iostream>
-
 #include "window.hpp"
 #include "resource_manager.hpp"
 #include "block.hpp"
@@ -55,11 +46,4 @@ TEST_F(TetrominoTest, generateBlockTest) {
   }
 }
 
-/*
-int main(int argc, char** argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  my_argv = argv; 
-  return RUN_ALL_TESTS();
-*/
- 
 } // namespace
